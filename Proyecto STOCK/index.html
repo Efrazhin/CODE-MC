@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Aca enlazamos archivos relacionados al desarrollo (o en su defecto un link de una pagina).-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="style-pagina.css">
+    <link rel="stylesheet" href="barra-lateral.css">
+</head>
+<body>
+
+    <!-- Aca hacemos un div con id "sidebar" que relacionará a una categoría única de estilos en otro archivo, para el menu lateral. -->
+    <div id="sidebar" >
+        
+            <ul>
+                <h1></h1>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Acerca de</a></li>
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        
+    </div>
+
+    <!-- Aca hacemos un div con clase "menu-cuadrado" que 
+    adentro tiene otra clase "menu-toggle" que nos ayudara
+    para personalizar el menu hamburguesa en CSS. -->
+    
+
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+    
+    <!-- Aca hacemos un header relacionado clase "barra-superior" para estilizar
+    el encabezado de la pagina. -->
+    <header class="barra-superior">
+
+
+        
+        <h1 class="logo">
+            CODE MC
+        </h1>
+
+        <nav>
+            <li class="opciones-superior"><i class="ri-account-box-line"></i><a href="#">
+                Cuenta
+            </a></li>
+        </nav>
+    </header>
+
+    <footer>
+        <p> Todos los derechos reservados &copy;</p>
+    </footer>
+
+    <script src="main.js" charset="UTF-8"></script>
+</body>
+</html>

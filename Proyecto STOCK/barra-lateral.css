@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/* En este bloque personalizamos la barra lateral del menu. */
+#sidebar{
+    position: absolute;
+    width: 170px;
+    height: 100%;
+    background-color: rgb(234, 228, 228);
+    left: -170px;
+    transition: all 500ms linear;
+}
+
+#sidebar h1{
+    padding: 25px;
+    
+}
+
+#sidebar ul li a {
+  display: block;
+  font-size: 24px;
+  border-left: 5px  solid transparent;
+  text-decoration: none;
+  color: #0c0c0c;
+  transition: 0.3s all;
+  text-align: center;
+  padding: 15px 30px;
+  border-bottom: 1px  solid rgba(22, 21, 21, 0.9);
+}
+
+#sidebar:hover a:hover {
+  font-size: 29px;
+  padding: 18px 0;
+  border-left: 5px solid rgb(87, 6, 6);
+}
+
+#sidebar.active{
+    left: 0;
+}
+
+/* -------------------- fin del bloque -------------------- */
+
+/* En este bloque personalizamos el menu hamburguesa y le damos la animacion. */
+.menu-toggle {
+    position: fixed;
+    display: inline-block;
+    padding-top: 1%;
+    padding-left: 20px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 6px;
+    cursor: pointer;
+}
+  .bar {
+    width: 25px;
+    height: 5px;
+    background-color: #000000;
+    margin: 5px 0;
+    transition: all 500ms linear;
+    
+  }
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: translateX(130px) rotate(45deg) translateY(13px);
+    
+    
+  }
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: translateX(130px) rotate(-45deg) translateY(-13px);
+    
+  }
+/* -------------------- fin del bloque -------------------- */
+  
+  
+  
+
+  
