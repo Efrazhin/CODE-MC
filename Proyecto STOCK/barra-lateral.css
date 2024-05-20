@@ -43,17 +43,14 @@
 
 /* En este bloque personalizamos el menu hamburguesa y le damos la animacion. */
 .menu-toggle {
-    position: fixed;
     display: inline-block;
-    padding-top: 1%;
-    padding-left: 20px;
     cursor: pointer;
     flex-direction: column;
     justify-content: space-around;
-    height: 6px;
+    height: 50%;
     cursor: pointer;
 }
-  .bar {
+.bar {
     width: 25px;
     height: 5px;
     background-color: #000000;
@@ -63,8 +60,6 @@
   }
   .menu-toggle.active .bar:nth-child(1) {
     transform: translateX(130px) rotate(45deg) translateY(13px);
-    
-    
   }
   .menu-toggle.active .bar:nth-child(2) {
     opacity: 0;
