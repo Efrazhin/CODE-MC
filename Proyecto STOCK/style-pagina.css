@@ -2,8 +2,7 @@ body {
     min-height: 100%;
     background: url(Imagenes/fondo_ropa.jpg) no-repeat center center fixed;
     background-size: cover;
-    
-    
+      
 }
 
 .overlay {
@@ -15,21 +14,24 @@ body {
     background-color: rgba(221, 225, 230, 0.4);
     
 }
-/* En este bloque estilizamos el encabezado de la pagina. */
-.barra-superior {
+/* Estilizamos el encabezado de la pagina. */
+header nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content:space-around;
     background-color: white;
-    padding: 4px;
+    padding: 10px 5%;
 }
+/* Estilizamos el logo */
 .logo {
-    padding-left: 50%;
+    text-align: center;
     color: black;
-    text-shadow: 1px 1px 1px black;
+    text-shadow: 1px 1px 4px rgb(255, 166, 0);
+    font-size: 30px;
 }
+/* Estilizamos el botón de cuenta*/
 .opciones-superior {
-    display: inline-block;
+    display:inline-block;
     color: rgb(0, 0, 0);
     text-decoration: none;
     font-weight: bold;
@@ -45,10 +47,10 @@ body {
     
     color:rgb(148, 15, 15);
 }
-.opciones-superior>a:hover {
-    color: black;
+.opciones-superior a:hover {
+    color: rgb(156, 5, 5);
 }
-
+/* Estilizamos el pie de página */
 footer {
     background-color: black;
     color: white;

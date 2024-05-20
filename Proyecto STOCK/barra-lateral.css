@@ -4,6 +4,7 @@
 }
 /* En este bloque personalizamos la barra lateral del menu. */
 #sidebar{
+    display:block;
     position: absolute;
     width: 170px;
     height: 100%;
@@ -39,15 +40,13 @@
     left: 0;
 }
 
-/* -------------------- fin del bloque -------------------- */
-
-/* En este bloque personalizamos el menu hamburguesa y le damos la animacion. */
+/* En este bloque personalizamos las líneas que activan el menú y le damos la animacion. */
 .menu-toggle {
     display: inline-block;
     cursor: pointer;
     flex-direction: column;
     justify-content: space-around;
-    height: 50%;
+    height: 100%;
     cursor: pointer;
 }
 .bar {
