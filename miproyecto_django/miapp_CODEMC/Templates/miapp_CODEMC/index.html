@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+{% load static %}
 <html lang="es">
 
 <head>
@@ -7,8 +9,8 @@
     <title>CODE MC - Inicio</title>
     <!-- Aca enlazamos archivos/páginas relacionad@s al desarrollo.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-    <link rel="stylesheet" href="style-pagina.css">
-    <link rel="stylesheet" href="barra-lateral.css">
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/style-pagina.css' %}">
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/barra-lateral.css'%}">
     
 </head>
 <body>
@@ -58,7 +60,8 @@
         <p> Todos los derechos reservados &copy;</p>
     </footer>
 
-    
+    <script src="{% static 'miapp_CODEMC/js/main.js'%}" charset="UTF-8"></script>
     
 </body>
+
 </html>
