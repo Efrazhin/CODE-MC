@@ -10,58 +10,39 @@
     <!-- Aca enlazamos archivos/páginas relacionad@s al desarrollo.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/style-pagina.css' %}">
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/barra-lateral.css'%}">
-    
 </head>
 <body>
-    <!-- Establecemos un header relacionado con la clase "barra-superior" para estilizar
+    <!-- Establecemos un header relacionado con la clase "header-principal" para estilizar
     el encabezado de la pagina. -->
-    <header>
-        <!-- Desarrollamos el contenido del menú lateral. Abrimos una división con identificador 
-        "sidebar" que relacionará a una categoría única de estilos en otro archivo.  -->
-        <div id="sidebar" >
+    <header class="header-principal">
+        <div>
+            <h1 class="logo">
+                CODE/MC
+            </h1>
+        </div>
+        <nav class="nav-links">
             <ul>
-                <h1></h1>
                 <li><a href="#">Inicio</a></li>
-                <li><a href="#">Acerca de</a></li>
-                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Servicio</a></li>
+                <li><a href="#">Soluciones</a></li>
+                <li><a href="#">Nosotros</a></li>
                 <li><a href="#">Contacto</a></li>
             </ul>
-        </div>
-
-        <nav>
-            
-            <!-- Programamos las barras que activarán el desplegamiento del menú lateral, 
-                se ubican en el encabezado a la izquierda. Realizamos otra división con clase "menu-toggle". -->
-            <div class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <!-- Script que activa la animación de despliegue-->
-            <script src="main.js" charset="UTF-8"></script>
-            <!-- Colocamos título -->
-            <section>
-                <h1 class="logo">
-                    CODE MC
-                </h1>
-            </section>
-            <!-- Programamos el ícono de inicio de sesión/registro -->
-                <ul>
-                    <li class="opciones-superior"><i class="ri-account-box-line"></i><a href="#">
-                        Cuenta</a>
-                    </li>
-                </ul>
         </nav>
-    
+        <a href="#" class="btn-cuenta"> <button> <i class="ri-account-box-line"></i> </button> </a>
     </header>
+    <!-- Insertamos banner y lo estilizamos en css -->
+     <div class="banner">
+        <div class="capa">
 
+        </div>
+     </div>
+
+    <!-- Colocamos pie de página cmo buenos programadores q somos siseñor -->
     <footer>
         <p> Todos los derechos reservados &copy;</p>
     </footer>
 
-    <script src="{% static 'miapp_CODEMC/js/main.js'%}" charset="UTF-8"></script>
-    
 </body>
 
 </html>

@@ -1,46 +1,94 @@
-body {
-    min-height: 100%;
-    background: url(Imagenes/fondo_ropa.jpg) no-repeat center center fixed;
-    background-size: cover;
-      
+/*Importamos fuentes de letras*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*Restablecemos las configuraciones de margen, padding y box-sizing para mejor manejo*/
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Barlow';
 }
 
 /* Estilizamos el encabezado de la pagina. */
-header nav {
+.header-principal {
+    position: fixed;
     display: flex;
+    justify-content:space-between;
     align-items: center;
-    justify-content:space-around;
-    background-color: white;
+    background-color: rgb(220, 58, 58);
+    height: 70px;
+    width: 100%;
     padding: 10px 5%;
 }
 /* Estilizamos el logo */
-.logo {
-    text-align: center;
-    color: black;
+.header-principal .logo {
+    font-family: 'Times';
+    color: white;
     text-shadow: 1px 1px 4px rgb(255, 166, 0);
     font-size: 30px;
+    cursor: pointer;
+    transition: all 200ms linear;
 }
-/* Estilizamos el botón de cuenta*/
-.opciones-superior {
-    display:inline-block;
-    color: rgb(0, 0, 0);
+
+.header-principal .logo:hover{
+    transform: scale(1.15);
+}
+/* Estilizamos la barra de navegación */
+
+.header-principal .nav-links{
+    list-style: none;
+}
+
+.header-principal .nav-links ul li{
+    display: inline-block;
+    padding: 0 25px
+    ;
+}
+
+.header-principal .nav-links a{
+    font-size: 20px;
+    font-weight: 400;
     text-decoration: none;
-    font-weight: bold;
-    padding: 6px;
-}
-.opciones-superior a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    margin-left: 3px;
-}
-.opciones-superior:hover {
-    font-size: 25px;
+    color: white;
+    transition: all 200ms ease;
     
-    color:rgb(148, 15, 15);
 }
-.opciones-superior a:hover {
-    color: rgb(156, 5, 5);
+
+.header-principal .nav-links a:hover{
+    color: rgb(255, 166, 0);
+    font-weight: 600;
+    transform: scale(1.05);
 }
+
+
+
+/* Estilizamos el botón de cuenta*/
+
+.header-principal .btn-cuenta button{
+    text-decoration: none;
+    color: black;
+    font-size: 35px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 2px 15px;
+    transition: all 200ms linear;
+}
+
+.header-principal .btn-cuenta button:hover{
+    color: rgb(230, 161, 0);
+}
+
+/* Estilizamos el banner y sus elementos */
+
+.banner{
+    height: 300px;
+    width: 100%;
+    background-image: url("{% static 'imagenes/banner.jpg'%}") ;
+}
+
+
+
 /* Estilizamos el pie de página */
 footer {
     background-color: black;
