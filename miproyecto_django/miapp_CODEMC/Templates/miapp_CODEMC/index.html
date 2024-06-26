@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
+{% extends 'miapp_CODEMC/header_footer.html'%}
 {% load static %}
 <html lang="es">
-
+{% block head %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,37 +11,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/style-pagina.css' %}">
 </head>
+{% endblock %}
 <body>
     <!-- Establecemos un header relacionado con la clase "header-principal" para estilizar
     el encabezado de la pagina. -->
-    <header class="header-principal">
-        <div>
-            <h1 class="logo">
-                CODE/MC
-            </h1>
-        </div>
-        <nav class="nav-links">
-            <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Servicio</a></li>
-                <li><a href="#">Soluciones</a></li>
-                <li><a href="#">Nosotros</a></li>
-                <li><a href="#">Contacto</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="btn-cuenta"> <button> <i class="ri-account-box-line"></i> </button> </a>
-    </header>
+    
+    {% block content %}
     <!-- Insertamos banner y lo estilizamos en css -->
      <div class="banner">
         <div class="capa">
 
         </div>
      </div>
-
-    <!-- Colocamos pie de página cmo buenos programadores q somos siseñor -->
-    <footer>
-        <p> Todos los derechos reservados &copy;</p>
-    </footer>
+    <!-- Sección introductoria-->
+    <section>
+        <h2>Texto de prueba siseñor </h2>
+    </section>
+    {% endblock %}
 
 </body>
 
