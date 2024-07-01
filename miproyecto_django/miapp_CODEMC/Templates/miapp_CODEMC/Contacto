@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta name="viewport" content="whit-devise-whit, initial scale=1.0">
+    <title>CODE MC</title>
+    <link rel="stylesheet" name="text" href="CONTACTO.html">
+<style>
+body{
+    margin: 50px 50px;
+    padding:  0;
+    font-family: 'Courier New', Courier, monospace;
+    background-image: url(https://phantom-telva.unidadeditorial.es/47807c61ee2d16064162f0d06e35619e/crop/0x137/1998x1258/resize/1200/f/jpg/assets/multimedia/imagenes/2020/11/11/16050829163655.jpg);
+}
+.box{
+    margin: 5px;
+    border: 10px;
+    padding: 0%;
+    color: #4e1b00;
+}
+.Contact .content{
+    color: rgb(0, 0, 0);
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.contactForm{
+    width:40%;
+    padding: 40px;
+}
+</style>
+</head>
+<body>
+    <section class="Contact">
+        <div class="content">
+            <H1>CONTACTO</H1>
+
+            <h1><p>Si tienes alguna duda sobre nosotros, podes comunicarte a estos contactos.</p></h1>
+        
+        </div>
+        <div class="container">
+            <div class="ContactInfo">
+                <div class="box">
+                <div class="icon"></div>
+                <div class="text">
+                    <h2>DIRECCION</h2>
+                    <p>Ipet n°57 Comod. Mart. Rivad. 4455. <br>Esquina 25 de Mayo, Roma.</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="icon"></div>
+                <div class="text">
+                    <h2>EMAIL</h2>
+                    <p>code.mc@gmail.com</p>
+                </div>
+                <div class="box">
+                    <div class="icon"></div>
+                    <div class="text">
+                        <h2>TELEFONO</h2>
+                        <p>351-1111111</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contactForm"></div>
+                <form>
+                    <br><h2>Enviar Mensaje</h2>
+                    <div class="inpetBox">
+                        <input type="text" name="" required="required">
+                        <span>Nombre Completo</span>
+                    </div>
+                    <div class="inpetBox">
+                        <input type="text" name="text" required="required">
+                        <span>Email</span>
+                    </div>
+                    <div class="inpetBox">
+                        <textarea readonly="required"></textarea>
+                        <span>Escriba su Mensaje...</span>
+                    </div>
+                    <div class="inpetBox">
+                        <input type="submit" name="" value="ENVIAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
