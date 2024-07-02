@@ -5,3 +5,6 @@ from django.db import connection
 def index(request):
     ctx = {}
     return render(request,'miapp_CODEMC/index.html',ctx)
+
+def login_sesion(request):
+    return render(request,'miapp_CODEMC/Inicio_sesion.html')
