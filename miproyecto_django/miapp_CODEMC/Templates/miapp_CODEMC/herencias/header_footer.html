@@ -18,7 +18,7 @@
             <li><a href="#">Contacto</a></li>
         </ul>
     </nav>
-    <a href="#" class="btn-inicio"> <button> <i class="ri-account-box-line"></i> </button> </a>
+    <a href="#" class="btn-inicio" onclick="rederigir_login()"> <button> <i class="ri-account-box-line"></i> </button> </a>
 </header>
 
     {% block content %}
@@ -29,6 +29,11 @@
     <p>Todos los derechos reservados. &copy;</p>
 </footer>
 <!-- Introducimos scripts -->
-<script type= "text/JavaScript"src="{% static 'miapp_CODEMC/js/animacion-nav.js'%}" charset="UTF-8"></script>>
+<script type= "text/JavaScript"src="{% static 'miapp_CODEMC/js/animacion-nav.js'%}" charset="UTF-8"></script>
+<script>
+    function rederigir_login(){
+        window.location.href="login";
+    }
+</script>
 
 </script>
