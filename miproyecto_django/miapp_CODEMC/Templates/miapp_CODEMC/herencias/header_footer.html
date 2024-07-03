@@ -13,9 +13,9 @@
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#servicio">Servicio</a></li>
             <li><a href="#soluciones">Soluciones</a></li>
-            <li><a href="#">Planes</a></li>
+            <li><a href='{% url "planes" %}'>Planes</a></li>
             <li><a href="#">Nosotros</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a href='{% url "contacto" %}'>Contacto</a></li>
         </ul>
     </nav>
     <a href="#" class="btn-inicio" onclick="rederigir_login()"> <button> <i class="ri-account-box-line"></i> </button> </a>
@@ -34,6 +34,7 @@
     function rederigir_login(){
         window.location.href="login";
     }
+
 </script>
 
 </script>

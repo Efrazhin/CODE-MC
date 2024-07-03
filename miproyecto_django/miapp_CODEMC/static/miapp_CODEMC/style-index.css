@@ -95,6 +95,7 @@
     transition: all 200ms linear;
 }
 
+
 .header-principal .btn-inicio button:hover{
     color: rgb(230, 161, 0);
     border-color: rgb(230, 161, 0);

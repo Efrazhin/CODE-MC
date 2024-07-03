@@ -18,6 +18,6 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path("CODEMC/", include("miapp_CODEMC.url")),
+    path("", include("miapp_CODEMC.url")),
     
 ]
