@@ -19,38 +19,9 @@ def listado_productos(request):
     cursor = connection.cursor()
     query = "SELECT id_prod, nom_prod FROM `productos` ORDER BY id_prod, nom_prod"
     cursor.execute(query)
-
-    html = """
-        <html>
-        <head>
-            <title>Lista de cursos</title>
-        </head>
-        <body>
-            <table style="border: 1px solid">
-                <thead>
-                    <tr>
-                        <th>Id_producto</th>
-                        <th>Nombre_producto</th>
-                    </tr>
-                </thead>
-                <tbody>
-    """
-   
-    # Obtener los resultados
-    for (id_prod, nom_prod) in cursor.fetchall():
-        html += f"""
-            <tr>
-                <td>{id_prod}</td>
-                <td>{nom_prod}</td>
-            </tr>
-        """
+    products=cursor.fetchall()
+    ctx={"prods":products}
     
-    html += """
-                </tbody>
-                       </table>
-                </body>
-          </html>
-    """
+    connection.close()  # Cerrar la conexion
     
-    cursor.close()  # Cerrar el cursor
-    return HttpResponse(html)
+    return render(request,'miapp_CODEMC/prueba_fetchall.html',ctx)

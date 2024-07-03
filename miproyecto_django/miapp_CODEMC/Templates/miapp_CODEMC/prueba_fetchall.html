@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla d productos</title>
+</head>
+<body>
+    <table style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>Id_producto</th>
+                <th>Nombre_producto</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for id, nombre in prods %}    
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ nombre }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
