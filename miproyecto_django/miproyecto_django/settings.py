@@ -76,17 +76,12 @@ WSGI_APPLICATION = 'miproyecto_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-
-    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ALMACENAMIENTO STOCK',
+        'NAME': 'almacenamiento_stock',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306'
-        }
     }
 }
 
