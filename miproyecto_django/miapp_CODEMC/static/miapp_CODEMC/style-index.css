@@ -20,7 +20,7 @@
     align-items:center;
     height: 60px;
     width: 100%;
-    padding: 10px 5%;
+    padding: 0.5% 5%;
     transition: all 0.35s linear;
     z-index: 20;
 }
@@ -29,13 +29,15 @@
     font-family: 'Times';
     color: white;
     text-shadow: 1px 1px 4px rgb(255, 166, 0);
+    text-decoration: none;
+    font-weight: bold;
     font-size: 30px;
-    cursor: pointer;
+    padding: 0.5% 15px;
     transition: all 200ms linear;
 }
 
 .header-principal .logo:hover{
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 /* Estilizamos la barra de navegación */
 
@@ -45,8 +47,7 @@
 
 .header-principal .nav-links ul li{
     display: inline-block;
-    padding: 0px 25px;
-    ;
+    padding: 0.5% 25px;
 }
 
 .header-principal .nav-links a{
@@ -55,7 +56,7 @@
     font-weight: 400;
     text-decoration: none;
     color: white;
-    transition: all 200ms ease;
+    transition: all 100ms linear;
     
 }
 
@@ -64,37 +65,50 @@
     font-weight: 600;
     transform: scale(1.05);
 }
-/* Relación a función en un script para la animación */
+/* Relación a función en un script para la animación de desplazamiento; los cambios tras su ejecución */
+
 .header-principal.abajo{
     background-color: rgb(37, 70, 160);
     height: 75px;
-    padding: 5px 5%;
 }
 
+.header-principal.abajo .btn-inicio button{
+    background-color: white;
+    color: black;
 
+}
 
 /* Estilizamos el botón de cuenta*/
 
 .header-principal .btn-inicio button{
     text-decoration: none;
-    color: black;
-    font-size: 35px;
-    border: none;
+    color: white;
+    font-size: 30px;
+    font-weight: 100;
+    border-color: white;
+    border-style: solid;
     border-radius: 20px;
+    border-width: 3px;
+    background: none;
     cursor: pointer;
-    padding: 2px 15px;
+    padding: 0.5% 15px;
     transition: all 200ms linear;
 }
 
 .header-principal .btn-inicio button:hover{
     color: rgb(230, 161, 0);
+    border-color: rgb(230, 161, 0);
+}
+
+.ri-account-box-line{
+    transition: all 200ms linear;
 }
 
 /* Estilizamos el banner y sus elementos */
 
 .banner{
     position: relative;
-    height: 110vh;
+    height: 100vh;
     width: 100%;
     background-image: url('/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg');
     background-attachment: fixed;
@@ -108,7 +122,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-bottom: -5px;
+    margin-bottom: -10px;
     
 }
 
@@ -117,89 +131,204 @@
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
-    width: 100vw;
-    
+    width: 100%;
     background: rgba(0,0,0,0.65);
 }
 
 .banner .capa .banner-caja-1, .banner-caja-2 {
     color: blanchedalmond;
+    margin: 0 60px;
     
 }
 
 .banner .capa .banner-caja-1{
     flex-basis: 45%;
     text-align: center;
+    border-color: #FFA600;
 }
 
 .banner .capa .banner-caja-2{
     flex-basis: 65%;
-    margin-right: 40px;
     text-align: center;
 }
-/* Frase introductoria al contenido y su contenedor */
+
+.banner .capa .banner-caja-1 h1{
+    font-size: 50px;
+    text-align: center;
+    padding-top: 10px;
+    letter-spacing: 6px;
+    border-style: solid;
+    border-bottom: none;
+    border-color: #FFA600;
+}
+
+.banner .capa .banner-caja-1 h1 span{
+    font-size: 35px;
+    letter-spacing: 6px;
+
+}
+
+.banner .capa .banner-caja-1 p{
+    font-size: 22px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    padding: 10px 0px;
+    margin: 10px 0;
+    border-style: solid;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: #FFA600;
+
+}
+
+.banner .capa .banner-caja-1 .btn-registro button{
+    border-style: solid;
+    border-width: 3px;
+    border-color: blanchedalmond;
+    border-radius: 20px;
+    color: blanchedalmond;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    background: none;
+    padding: 10px 15px;
+    margin: 10px 0;
+    
+}
+
+.banner .capa .banner-caja-2 h2{
+    font-size: 35px;
+    letter-spacing: 3px;
+    padding: 20px 0;
+}
+
+.banner .capa .banner-caja-2 p{
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    padding: 10px 0;
+}
+
+/* Contenedores con frases */
 
 .cont-frase{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 220px;
-    width: 100vw;
-    background-color: rgb(37, 70, 160);
+    height: 45vh;
+    width: 99vw;
+    background-image: url('/static/miapp_CODEMC/imagenes/oficina-desorganizada-banner.jpg');
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
     
+}
+
+.cont-frase .capa-cont-frase{
+    display: flex;
+    position: relative;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(37, 70, 160,0.8);
 }
 
 .frase-stilo{
-    
     width: 100%;
-    height: 150px;
     text-align: center;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 200;
-    color: rgb(255, 255, 255);
-    padding: 50px;
+    color: blanchedalmond;
+    padding: 50px 0;
 }
-/* Apartado de servicios */
+
+.corte-arriba{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-width: 50px 99vw 0 0;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.cont-frase .corte-abajo{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 50px 99vw;
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent;
+}
+
+/* Estilo para subtítulos (h2) */
 
 .sub-titles {
     text-align: center;
     font-size: 50px;
     font-weight: bold;
-    padding: 20px 0px;
+    padding: 10px 0px;
+    margin-top: 20px;
 }
 
 .sub-titles span {
-    font-size: 25px;
-    text-indent: 0px;
+    font-size: 26px;
     letter-spacing: 6px;
+    border-style: solid;
+    border-width: 2px 0 0 0;
+    border-color: #FFA600;
+    padding: 7px 0;
 
 }
+
+.ancla {
+    scroll-margin-top: 50px;
+}
+
+/* Apartado de servicios y algunas estilizaciones para el apartado de soluciones */
 
 .services, .solutions, .solut-especs{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100vw;
+    width: 100%;
 
 }
 
-.services .cont-serv {
+.services .cont-servs {
     display: flex;
     justify-content: space-evenly;
     align-items: center;  
-    
+    width: 100%;
+    margin: 40px 0;
 }
 
 .services .service-caja1, .service-caja2{
-    margin: 40px 0;
+    flex-basis: 45%;
 }
+
+.services .service-caja1, .imagenes{
+    margin: 0 30px;
+}
+
+.imagenes{
+    object-fit: cover;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #FFA600;
+    border-width: 1px;
+    flex-basis: 65%;
+
+}
+
 
 .services .service-caja1 .fa-li, .service-caja2 .fa-li{
     margin: 40px 0;
-    min-width: 75vw;
-    max-width: 100vw;
+    min-width: 50vw;
+    max-width: 70vw;
     text-align: left;
-    font-size: 20px;
+    font-size: 26px;
     
 }
 
@@ -209,8 +338,9 @@
 }
 
 .services h3{
-    font-size: 28px;
+    font-size: 35px;
     font-weight: bold;
+    text-indent: 0;
 }
 
 .services .service-caja1, .service-caja2,
@@ -219,27 +349,30 @@
     padding: 30px 0;
 }
 
-/* Apartado de especificaciones */
+/* Apartado de especificaciones (aunque hay más estilizaciones para este apartado que coinciden con las de otros apartados
+y que por lo tanto se encuentran por arriba de este comentario)*/
     
 .material-symbols-outlined
 {
     color: #FFA600;
     padding-right: 10px;
     font-weight: bold;
+    font-size: 35px;
 }
 
 .solut-especs dd{
-    font-size: 20px;
+    font-size: 26px;
     max-width: 60vw;
-    letter-spacing: 2px;
-    margin-left: 60px;
-    margin-bottom: 40px;
+    letter-spacing: 1px;
+    margin-left: 28px;
+    margin-bottom: 50px;
+    line-height: 40px;
 
     
 }
 
 .solut-especs dt{
-    font-size: 28px;
+    font-size: 35px;
     font-weight: bold;
     
 }
