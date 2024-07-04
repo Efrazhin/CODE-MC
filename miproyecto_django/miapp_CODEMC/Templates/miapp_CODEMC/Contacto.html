@@ -1,13 +1,19 @@
 
 <!DOCTYPE html>
-<html lang="en">
+{% extends 'miapp_CODEMC/herencias/header_footer.html' %}
+{% load static %}
+<html lang="es">
+{% block head %}
 <head> 
     <meta name="viewport" content="whit-devise-whit, initial scale=1.0">
     <title>CODE MC</title>
-    <link rel="stylesheet" name="text" href="../../static/miapp_CODEMC/style-contacto.css">
+    <link rel="stylesheet" name="text" href="{% static 'miapp_CODEMC/style-contacto.css'%}">
+    <link rel="stylesheet" name="text" href="{% static 'miapp_CODEMC/style-headerfooter.css'%}">
 
 </head>
+{% endblock %}
 <body>
+    {% block content %}
     <section class="Contact">
         <div class="content">
             <H1>CONTACTO</H1>
@@ -60,5 +66,6 @@
             </div>
         </div>
     </section>
+    {% endblock %}
 </body>
 </html>

@@ -20,8 +20,12 @@ def listado_productos(request):
     query = "SELECT id_prod, nom_prod FROM `productos` ORDER BY id_prod, nom_prod"
     cursor.execute(query)
     products=cursor.fetchall()
-    ctx={"prods":products}
+
     
+
+    ctx={"prods":products
+         }
+
     connection.close()  # Cerrar la conexion
     
     return render(request,'miapp_CODEMC/prueba_fetchall.html',ctx)
