@@ -283,17 +283,4 @@ y que por lo tanto se encuentran por arriba de este comentario)*/
     
 }
 
-/* Estilizamos el pie de página */
-footer {
-
-    background-color: black;
-    color: white;
-    height: 60px;
-    position: static;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-}
 /* -------------------- fin del bloque -------------------- */

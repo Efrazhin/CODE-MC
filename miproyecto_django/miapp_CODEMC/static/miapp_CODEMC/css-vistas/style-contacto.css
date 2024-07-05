@@ -26,18 +26,21 @@ body{
     color: rgb(6, 10, 9);
     margin: 80px;
     padding: 10px 15px;
-    justify-content: center;
+    text-align: center;
+    border-style: solid;
+    border-color: #FFA600;
+    border-width: 1px;
     
 }
 .content h1{
     color: rgba(0, 0, 0, 0.779);
     font-family: 'Barlow';
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-bottom: 0%;
+    font-size: 40px;
+    text-align: center;
 }
-.content h2{
-    padding-left: 10px;
+.content p{
+    font-size: 30px;
+    margin: 10px 0px;
 }
 .box{
     color: rgb(0, 0, 0);

@@ -4,13 +4,12 @@
 <!-- Encabezado-->
 <header class="header-principal">
     <div>
-        <a class="logo" href="#inicio">
+        <a class="logo" href="{% url 'index' %}">
             CODE/MC
         </a>
     </div>
     <nav class="nav-links">
         <ul>
-            <li><a href="#inicio">Inicio</a></li>
             <li><a href="#servicio">Servicio</a></li>
             <li><a href="#soluciones">Soluciones</a></li>
             <li><a href='{% url "planes" %}'>Planes</a></li>
