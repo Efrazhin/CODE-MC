@@ -4,67 +4,53 @@
 {% load static %}
 <html lang="es">
 {% block head %}
-<head> 
-    <meta name="viewport" content="whit-devise-whit, initial scale=1.0">
     <title>CODE MC</title>
     <link rel="stylesheet" name="text" href="{% static 'miapp_CODEMC/css-vistas/style-contacto.css'%}">
-    <link rel="stylesheet" name="text" href="{% static 'miapp_CODEMC/css-herencias/style-headerfooter.css'%}">
-
-</head>
 {% endblock %}
+{% block content %}
 <body>
-    {% block content %}
-    <section class="Contact">
+    <div class="capa">
         <div class="content">
             <H1>CONTACTO</H1>
-            <p>Si tenés alguna duda sobre nosotros, podes comunicarte a estos contactos.</p>
+            <p>Si tenés alguna duda sobre la página o querés consultar, <br><span id="h1-span">¡no dudes en buscarnos!</span></p>
         
         </div>
-        <div class="container">
-            <div class="ContactInfo">
-                <div class="box">
-                <div class="icon"></div>
-                <div class="text">
-                    <h2>DIRECCION</h2>
-                    <p>Ipet n°57 Comod. Mart. Rivad. 4455. <br>Esquina 25 de Mayo, Roma.</p>
-                </div>
+        <div class="contactos">
+            <div class="caja">
+                <h2>DIRECCIÓN</h2>
+                <p>Ipet n°57 Comod. Mart. Rivad. 4455. <br>Esquina 25 de Mayo, Roma.</p>
             </div>
-            <div class="box">
-                <div class="icon"></div>
-                <div class="text">
-                    <h2>EMAIL</h2>
-                    <p>code.mc@gmail.com</p>
-                </div>
-                <div class="box">
-                    <div class="icon"></div>
-                    <div class="text">
-                        <h2>TELEFONO</h2>
-                        <p>351-1111111</p>
-                    </div>
-                </div>
+            <div class="caja">
+                <h2>EMAIL</h2>
+                <p>code.mc@gmail.com</p>
             </div>
-            <div class="contactForm"></div>
-                <form>
-                    <br><h2>Enviar Mensaje</h2>
-                    <div class="inpetBox">
-                        <input type="text" name="" required="required">
-                        <span>Nombre Completo</span>
-                    </div>
-                    <div class="inpetBox">
-                        <input type="text" name="text" required="required">
-                        <span>Email</span>
-                    </div>
-                    <div class="inpetBox">
-                        <textarea readonly="required"></textarea>
-                        <span>Escriba su Mensaje...</span>
-                    </div>
-                    <div class="inpetBox">
-                        <input type="submit" name="" value="ENVIAR">
-                    </div>
-                </form>
+            <div class="caja">
+                <h2>TELÉFONO</h2>
+                <p>351-1111111</p>
             </div>
         </div>
-    </section>
-    {% endblock %}
+        <div class="contact-form">
+            <h2>ENVIAR MENSAJE</h2>
+            <form>
+                <div class="inpetBox">
+                    <input type="text" name="" required="required">
+                    <span>Nombre Completo</span>
+                </div>
+                <div class="inpetBox">
+                    <input type="text" name="text" required="required">
+                    <span>Email</span>
+                </div>
+                <div class="inpetBox">
+                    <textarea readonly="required"></textarea>
+                    <span>Escriba su Mensaje...</span>
+                </div>
+                <div class="inpetBox">
+                    <input type="submit" name="" value="ENVIAR">
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </body>
+{% endblock %}
 </html>

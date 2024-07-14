@@ -8,14 +8,14 @@
     margin: 0;
     padding: 0;
     font-family: 'Barlow';
+    
 }
-
 /* Estilizamos el banner y sus elementos */
 
 .banner{
     position: relative;
     height: 100vh;
-    width: 100%;
+    width: 99vw;
     background-image: url('/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg');
     background-attachment: fixed;
     background-position: center center;
@@ -28,7 +28,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-bottom: -10px;
+    margin-bottom: -3vmin;
     
 }
 
@@ -36,85 +36,92 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 99vw;
     background: rgba(0,0,0,0.65);
 }
 
 .banner .capa .banner-caja-1, .banner-caja-2 {
     color: blanchedalmond;
-    margin: 0 60px;
+    margin: 5vh 5vw;
     
 }
 
 .banner .capa .banner-caja-1{
-    flex-basis: 45%;
     text-align: center;
     border-color: #FFA600;
+
 }
 
 .banner .capa .banner-caja-2{
-    flex-basis: 65%;
     text-align: center;
 }
 
 .banner .capa .banner-caja-1 h1{
-    font-size: 50px;
+    font-size: 8vmin;
     text-align: center;
-    padding-top: 10px;
+    padding: 1.5vmin;
+    padding-bottom: 0;
     letter-spacing: 6px;
     border-style: solid;
     border-bottom: none;
     border-color: #FFA600;
+    border-width: 0.5vmin;
 }
 
 .banner .capa .banner-caja-1 h1 span{
-    font-size: 35px;
+    font-size: 8vmin;
     letter-spacing: 6px;
 
 }
 
 .banner .capa .banner-caja-1 p{
-    font-size: 22px;
+    font-size: 4vmin;
     letter-spacing: 3px;
     font-weight: 300;
-    padding: 10px 0px;
-    margin: 10px 0;
+    padding: 1.5vmin;
     border-style: solid;
     border-top: none;
     border-right: none;
     border-left: none;
     border-color: #FFA600;
+    border-width: 0.5vmin;
 
-}
-
-.banner .capa .banner-caja-1 .btn-registro button{
-    border-style: solid;
-    border-width: 3px;
-    border-color: blanchedalmond;
-    border-radius: 20px;
-    color: blanchedalmond;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 400;
-    cursor: pointer;
-    background: none;
-    padding: 10px 15px;
-    margin: 10px 0;
-    
 }
 
 .banner .capa .banner-caja-2 h2{
-    font-size: 35px;
+    font-size: 5vmin;
     letter-spacing: 3px;
-    padding: 20px 0;
+    padding: 1.5vmin 0;
 }
 
 .banner .capa .banner-caja-2 p{
-    font-size: 22px;
+    font-size: 4vmin;
     letter-spacing: 1px;
     font-weight: 400;
-    padding: 10px 0;
+    padding: 1.5vmin 0;
+
+}
+
+.banner .capa .banner-caja-2 .btn-registro button{
+    font-size: 4vmin;
+    font-weight: 400;
+    color: blanchedalmond;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 0.5vmin;
+    border-color: blanchedalmond;
+    border-radius: 2vmin;
+    background: none;
+    padding: 1.5vmin 2vmin;
+    margin: 2vmin 0;
+    transition: all 200ms linear;
+    cursor: pointer;
+}
+
+.banner .capa .banner-caja-2 .btn-registro button:hover{
+    color: #FFA600;
+    border-color: #FFA600;
 }
 
 /* Contenedores con frases */
@@ -136,25 +143,25 @@
     position: relative;
     justify-content: space-evenly;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    height: 45vh;
+    width: 99vw;
     background-color: rgba(37, 70, 160,0.8);
 }
 
 .frase-stilo{
     width: 100%;
     text-align: center;
-    font-size: 35px;
+    font-size: 7vmin;
     font-weight: 200;
     color: blanchedalmond;
-    padding: 50px 0;
+    padding: 5vmin 2vmin;
 }
 
 .corte-arriba{
     position: absolute;
     top: 0;
     left: 0;
-    border-width: 50px 99vw 0 0;
+    border-width: 7vh 99vw 0 0;
     border-style: solid;
     border-color: #ffffff transparent transparent transparent;
 }
@@ -163,7 +170,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    border-width: 0 0 50px 99vw;
+    border-width: 0 0 7vh 99vw;
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
 }
@@ -172,24 +179,25 @@
 
 .sub-titles {
     text-align: center;
-    font-size: 50px;
+    font-size: 8vmin;
     font-weight: bold;
-    padding: 10px 0px;
-    margin-top: 20px;
+    padding: 1vmin 0;
+    margin: 4vmin auto;
+    max-width: 80%;
 }
 
 .sub-titles span {
-    font-size: 26px;
+    font-size: 5vmin;
     letter-spacing: 6px;
     border-style: solid;
     border-width: 2px 0 0 0;
     border-color: #FFA600;
-    padding: 7px 0;
+    padding: 1vmin 0;
 
 }
 
 .ancla {
-    scroll-margin-top: 50px;
+    scroll-margin-top: 8.5vh;
 }
 
 /* Apartado de servicios y algunas estilizaciones para el apartado de soluciones */
@@ -197,90 +205,113 @@
 .services, .solutions, .solut-especs{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    width: 99vw;
 
 }
 
 .services .cont-servs {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;  
-    width: 100%;
-    margin: 40px 0;
+    align-items: flex-start;  
+    width: 99vw;
+    margin: 6vmin 0;
 }
 
 .services .service-caja1, .service-caja2{
-    flex-basis: 45%;
+    margin: 0 3vw;
+    max-width: 80vw;
 }
 
-.services .service-caja1, .imagenes{
-    margin: 0 30px;
+.service-caja2{
+    order: 1
 }
 
 .imagenes{
     object-fit: cover;
-    border-radius: 10px;
+    width: 30w;
+    height: 35vw;
+    border-radius: 1vmin;
     border-style: solid;
     border-color: #FFA600;
-    border-width: 1px;
-    flex-basis: 65%;
+    border-width: 0.1vmin;
+    margin: 0 3vw;
+    order: 0;
+    max-width: 80vw
+}
 
+.services .service-caja1 .fa-ul li, .service-caja2 .fa-ul li{
+    margin: 5vmin 0;
+    max-width: 80vw;
+    text-align: left;
+    font-size: 5vmin;
+    list-style-image: url(https://fontawesome.com/icons/check?f=classic&s=solid&sz=lg&pc=%23ffa600);
 }
 
 
-.services .service-caja1 .fa-li, .service-caja2 .fa-li{
-    margin: 40px 0;
-    min-width: 50vw;
-    max-width: 70vw;
-    text-align: left;
-    font-size: 26px;
+
+.services h3{
+    font-size: 6vmin;
+    font-weight: bold;
     
 }
 
-.fa-solid.fa-check.fa-2x1{
-    padding-right: 20px;
-    list-style-position: outside;
-}
-
-.services h3{
-    font-size: 35px;
-    font-weight: bold;
-    text-indent: 0;
-}
-
-.services .service-caja1, .service-caja2,
-.solut-especs {
-    margin-left: 50px;
-    padding: 30px 0;
-}
-
-/* Apartado de especificaciones (aunque hay más estilizaciones para este apartado que coinciden con las de otros apartados
-y que por lo tanto se encuentran por arriba de este comentario)*/
+/* Apartado de especificaciones */
     
 .material-symbols-outlined
 {
     color: #FFA600;
-    padding-right: 10px;
+    margin-right: 2vmin;
     font-weight: bold;
-    font-size: 35px;
+    font-size: 5vmin;
+    padding: 0.7vmin;
+    border-style: solid;
+    border-color: #FFA600;
+    border-width: 0.5vmin;
+}
+
+.solut-especs {
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 7vmin 0;
 }
 
 .solut-especs dd{
-    font-size: 26px;
-    max-width: 60vw;
-    letter-spacing: 1px;
-    margin-left: 28px;
-    margin-bottom: 50px;
-    line-height: 40px;
-
+    font-size: 4.5vmin;
+    max-width: 80vw;
+    letter-spacing: 0.2vmin;
+    line-height: 6vmin;
+    padding: 1vmin 0;
+    margin-bottom: 10vmin;
     
 }
 
 .solut-especs dt{
-    font-size: 35px;
+    font-size: 6vmin;
     font-weight: bold;
+    max-width: 80vw;
     
+}
+
+/* Determinamos media queries para ayudar a la pág. a volverse responsive. */
+
+@media screen AND (max-width:1000px){
+    .banner .capa{
+        flex-direction: column;
+        justify-content: center;
+
+    }
+
+    .services .cont-servs{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .imagenes{
+        width: 90vw;
+        height: 50vh;
+        margin: 3vh 0;
+    }
+
 }
 
 /* -------------------- fin del bloque -------------------- */

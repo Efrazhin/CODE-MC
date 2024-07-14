@@ -3,17 +3,11 @@
 {% load static %}
 <html lang="es">
 {% block head %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CODE MC - Inicio</title>
     <!-- Aca enlazamos archivos/páginas relacionad@s al desarrollo.-->
     <script src="https://kit.fontawesome.com/15fe61e240.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-index.css' %}">
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-headerfooter.css' %}">
-</head>
 {% endblock %}
 <body>
     <!-- Establecemos un header relacionado con la clase "header-principal" para estilizar
@@ -28,12 +22,13 @@
             <div class="banner-caja-1">
                 <h1>ELECTRONIC<br><span><em>STOCK</em></span></h1>
                 <p>GESTIÓN ONLINE DE STOCK E INVENTARIO</p>
-                <a href=# class="btn-registro"><button>EMPIEZA YA</button></a>
+                
             </div>
         
             <div class="banner-caja-2">
                 <h2>SIMPLIFICA TUS TAREAS ADMINISTRATIVAS...</h2>
                 <p>¡con nuestro sistema diseñado para optimizar tus procesos y mejorar la eficiencia de tu negocio!</p>
+                <a href="#" class="btn-registro"><button>EMPIEZA YA</button></a>
             </div>
 
         </div>
@@ -56,9 +51,8 @@
     <div class="cont-frase">
         <div class="capa-cont-frase">
             <div class="corte-arriba"></div>
-            <p class="frase-stilo">Tienes toda la gestión en un solo lugar, a un solo paso, con acceso en cualquier instante.</p>>
+            <p class="frase-stilo">Tienes toda la gestión en un solo lugar, a un solo paso. <br>Acceso en cualquier instante.</p>
             <div class="corte-abajo"></div>
-            
         </div>
         
     </div>
@@ -74,9 +68,9 @@
             <div class="service-caja1">
                 <h3> TEN CONTROL DE TUS ALMACENES EN TODO MOMENTO </h3>
                 <ul class="fa-ul"> 
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Visualiza tus productos, filtralos, organízalos en categorías y asígnales las propiedades que necesites en tiempo real, tanto en tu stock como en tu inventario.</li>
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Recibe notificaciones cuando estés corto de stock, o cuando tienes demasiado.</li>
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Registra a tus empleados, sus horarios y salarios.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Visualiza tus productos, filtralos, organízalos en categorías y asígnales las propiedades que necesites en tiempo real, tanto en tu stock como en tu inventario.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Recibe notificaciones cuando estés corto de stock, o cuando tienes demasiado.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Registra a tus empleados, sus horarios y salarios.</li>
                 </ul>
             </div>
             
@@ -97,20 +91,23 @@
         </div>
         
         <div class="cont-servs">
-            <div>
-                <img class="imagenes" src="/static/miapp_CODEMC/imagenes/gente-compus.jpg" alt="Personas trabajando en una computadora, probablemente utilizando nuestro programa.">
-            </div>
+            
 
             <div class="service-caja2">
                 
                 <h3> MANTÉN UN SEGUIMIENTO DE TUS PLANES FINANCIEROS </h3>
                 <ul class="fa-ul"> 
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Controla gastos en proovedores, ganancias, y totalidades de precio, de stock y de inventario.</li>
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Confecciona y accede a tu propio libro contable.</li>
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Ten acceso a distintos gráficos y estadísticas.</li>
-                    <li class="fa-li"> <i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i>Confecciona y revisa presupuestos, en insumos y ventas.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Controla gastos en proovedores, ganancias, y totalidades de precio, de stock y de inventario.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Confecciona y accede a tu propio libro contable.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Ten acceso a distintos gráficos y estadísticas.</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-2x1" style="color: #ffa600;"></i></span>Confecciona y revisa presupuestos, en insumos y ventas.</li>
                 </ul>
             </div>
+
+            <div>
+                <img class="imagenes" src="/static/miapp_CODEMC/imagenes/gente-compus.jpg" alt="Personas trabajando en una computadora, probablemente utilizando nuestro programa.">
+            </div>
+            
         </div>
     </section>
     
@@ -120,21 +117,41 @@
     <section class="solutions">
         <div>
             <dl class="solut-especs">
-                <dt><i class="material-symbols-outlined">
-                    group</i>GESTIÓN DE PROOVEDORES</dt>
-                    <dd>Ten registrados a todos tus proovedores; su información, contacto, listas de precios, y guarda tus relaciones comerciales.</dd>
-                <dt><i class="material-symbols-outlined">
+                <div>
+                    <dt><i class="material-symbols-outlined">
+                        group</i>GESTIÓN DE PROOVEDORES</dt>
+                    <dd>Ten registrados a todos tus proovedores; su información, contacto, listas de precios, 
+                        y guarda tus relaciones comerciales.</dd>
+                </div>
+                <div>
+                    <dt><i class="material-symbols-outlined">
                     inventory_2</i>GESTIÓN DE ALMACENES</dt>
-                    <dd>Accede a un registro electrónico de todos tus almacenes con su respectiva información: empleados, productos y categorías... haz tantas modificaciones cuantas necesites. </dd>
-                <dt><i class="material-symbols-outlined">
-                    inventory</i>CONTROL DE STOCK E INVENTARIO</dt>
-                    <dd>Lleva un control detallado de cada uno de tus productos, filtra en grupos, utiliza nuestro buscador, verifica las disponibilidades en tu inventario y en tu stock, y actualiza lo que desees; todo en tiempo real. Aplica descuentos y promociones</dd>
-                <dt><i class="material-symbols-outlined">
-                    point_of_sale</i>ELABORA PRESUPUESTOS</dt>
-                    <dd>Confecciona de forma fácil y completa, presupuestos de ventas para tus clientes, y presupuestos de compra para tus proovedores, en el formato que desees. Mantén un registro en un libro contable electrónico de presupuestos aprobados, pendientes y/o rechazados.</dd>
-                <dt><i class="material-symbols-outlined">
-                    query_stats</i>VISUALIZA GRÁFICOS Y ESTADÍSTICAS</dt>
-                    <dd>Ten acceso a gráficos y distintas variables estadísticas de tu negocio. Visualiza los días, semanas, meses o años con mejores ventas, los días y horarios de la semana con mayor frecuencia de la clientela, y los productos más y menos vendidos. Realiza planificaciones en base a datos reales.</dd>
+                    <dd>Accede a un registro electrónico de todos tus almacenes con su respectiva información: 
+                        empleados, productos y categorías... haz tantas modificaciones cuantas necesites. </dd>
+                </div>
+                <div>
+                    <dt><i class="material-symbols-outlined">
+                        inventory</i>CONTROL DE STOCK E INVENTARIO</dt>
+                    <dd>Lleva un control detallado de cada uno de tus productos, filtra en grupos, utiliza 
+                        nuestro buscador, verifica las disponibilidades en tu inventario y en tu stock, 
+                        y actualiza lo que desees; todo en tiempo real. Aplica descuentos y promociones</dd>
+                </div>
+                <div>
+                    <dt><i class="material-symbols-outlined">
+                        point_of_sale</i>ELABORA PRESUPUESTOS</dt>
+                    <dd>Confecciona de forma fácil y completa, presupuestos de ventas para tus clientes, 
+                        y presupuestos de compra para tus proovedores, en el formato que desees. 
+                        Mantén un registro en un libro contable electrónico de presupuestos 
+                        aprobados, pendientes y/o rechazados.</dd>
+                </div>
+                <div>
+                    <dt><i class="material-symbols-outlined">
+                        query_stats</i>VISUALIZA GRÁFICOS Y ESTADÍSTICAS</dt>
+                    <dd>Ten acceso a gráficos y distintas variables estadísticas de tu negocio. 
+                        Visualiza los días, semanas, meses o años con mejores ventas, los días y horarios de 
+                        la semana con mayor frecuencia de la clientela, y los productos más y menos vendidos. 
+                        Realiza planificaciones en base a datos reales.</dd>
+                </div>
             </dl>
         </div>
     </section>

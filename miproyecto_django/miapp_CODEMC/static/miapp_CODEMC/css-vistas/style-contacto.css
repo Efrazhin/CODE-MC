@@ -10,22 +10,17 @@
 }
 
 body{
-    margin: 10px;
-    background-image: url(https://i0.wp.com/journal.twelveoone.com/wp-content/uploads/2023/03/2-1.png?resize=1024%2C1024&ssl=1) ;
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.2)), url('/static/miapp_CODEMC/imagenes/fondo-pags-secund.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    padding: 0px 5px;
+}
 
-}
-.Contact{
-    color: rgb(27, 5, 0); 
-    padding: 0px;
-}
-.Contact .content{
-    color: rgb(6, 10, 9);
-    margin: 80px;
-    padding: 10px 15px;
+
+.content{
+    color: blanchedalmond;
+    margin: 15vmin 15vw;
+    padding: 4vmin 7vmin;
     text-align: center;
     border-style: solid;
     border-color: #FFA600;
@@ -33,20 +28,44 @@ body{
     
 }
 .content h1{
-    color: rgba(0, 0, 0, 0.779);
-    font-family: 'Barlow';
-    font-size: 40px;
+    font-size: 7vmin;
+    letter-spacing: 1vmin;
     text-align: center;
-}
-.content p{
-    font-size: 30px;
-    margin: 10px 0px;
-}
-.box{
-    color: rgb(0, 0, 0);
-    padding-left: 20px;
+    padding: 2vmin 0;
 }
 
-.text{
-    color: rgb(2, 0, 29);
+.content #h1-span{
+    text-decoration: underline;
+    text-decoration-thickness: 0.3vmin;
+}
+
+.content p{
+    font-size: 5vmin;
+}
+
+.contactos{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 10vmin 2vmin;
+}
+
+.caja{
+    color: blanchedalmond;
+    padding: 3vmin 5vmin;
+    min-width: 10vmin;
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10vmin 0;
+    
+}
+
+.contact-form h2{
+    color: blanchedalmond;
+    margin: 5vmin;
 }
