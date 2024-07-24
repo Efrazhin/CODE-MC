@@ -215,11 +215,12 @@
     align-items: flex-start;  
     width: 99vw;
     margin: 6vmin 0;
+    max-width: 80vw;
 }
 
 .services .service-caja1, .service-caja2{
     margin: 0 3vw;
-    max-width: 80vw;
+    
 }
 
 .service-caja2{
@@ -236,12 +237,10 @@
     border-width: 0.1vmin;
     margin: 0 3vw;
     order: 0;
-    max-width: 80vw
 }
 
 .services .service-caja1 .fa-ul li, .service-caja2 .fa-ul li{
     margin: 5vmin 0;
-    max-width: 80vw;
     text-align: left;
     font-size: 5vmin;
     list-style-image: url(https://fontawesome.com/icons/check?f=classic&s=solid&sz=lg&pc=%23ffa600);
@@ -294,7 +293,7 @@
 
 /* Determinamos media queries para ayudar a la pág. a volverse responsive. */
 
-@media screen AND (max-width:1000px){
+@media screen AND (max-width:1050px){
     .banner .capa{
         flex-direction: column;
         justify-content: center;

@@ -133,7 +133,7 @@ footer .nav-links-footer a:hover{
     transition: all 200ms linear;
 }
 
-@media screen AND (max-width:1000px){
+@media screen AND (max-width:1050px){
     .header-principal .nav-links{
         display: none;
     }
