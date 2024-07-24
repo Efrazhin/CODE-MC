@@ -1,10 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.db import connection
-from django.urls import reverse
 from . import forms
-
-
 # Create your views here.
 def index(request):
     ctx = {}
@@ -24,6 +21,9 @@ def listado_productos(request):
     query = "SELECT id_prod, nom_prod FROM `productos` ORDER BY id_prod, nom_prod"
     cursor.execute(query)
     products=cursor.fetchall()
+
+    
+
     ctx={"prods":products
          }
 
@@ -35,14 +35,14 @@ def nuevo_curso(request):
     if request.method == "POST":
         form = forms.FormularioCurso(request.POST)
         if form.is_valid():
+            nombre_curso = form.cleaned_data["nombre"]
+            inscriptos = form.cleaned_data["inscriptos"]
             cursor = connection.cursor()
-            query = "INSERT INTO cursos VALUES(null, ?, ?)", (form.cleaned_data["nombre"], form.cleaned_data["inscriptos"])
-            cursor.execute(query)
-            connection.commit()
-            connection.close()
-            return HttpResponse("Curso creadooooo")
+            query = "INSERT INTO cursos (nombre_curso, inscriptos) VALUES (%s, %s)"
+            cursor.execute(query, [nombre_curso, inscriptos])
+            cursor.close()
+            return HttpResponse("CURSO CREADO")
     else:
         form = forms.FormularioCurso()
-
-    ctx = {"form": form}
-    return render(request, "miapp_CODEMC/nuevo_curso.html", ctx)
+    context = {"form": form}
+    return render(request, "miapp_CODEMC/nuevo_curso.html", context)
