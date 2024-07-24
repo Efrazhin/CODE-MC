@@ -9,63 +9,92 @@
     font-family: 'Barlow';
 }
 
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.2)), url('/static/miapp_CODEMC/imagenes/fondo-pags-secund.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.head{
+    width: 80vw;
+    text-align: center;
+    padding: 4vmin 7vmin;
+    margin: 15vmin auto;
+    margin-bottom: 0;
+    border: 0.3vmin solid #FFA600;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.head h1{
+    color: blanchedalmond;
+    font-size: 6vmin;
+    text-align: center;
+    letter-spacing: 1vmin;
+    padding: 2vmin 0;
+}
+
+.head p{
+    color: blanchedalmond;
+    font-size: 4vmin;
+}
 
 .contenedor{
     display:flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     align-items: center;
+    margin: 10vmin 5vmin;
+}
+
+.contenedor .caja{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+    flex: 1 20vw;
+    text-align: center;
+    border-radius: 3vmin;
+    border: solid 1vmin transparent;
+    background-image:
+    linear-gradient(rgba(0, 0, 0,0.3),rgba(0, 0, 0, 0.1)),
+    linear-gradient(to right,rgba(255, 166, 0,0.7),rgb(189, 123, 0,0.2));
+    background-origin: border-box;
+    background-clip: content-box,border-box;
+    margin: 5vmin 5vmin;
+}
+
+.contenedor .caja h2{
+    color: blanchedalmond;
+    font-size: 4vmin;
+    margin: 1vmin auto;
 
 }
 
-.div-1{
-    width: 300px;
-    height: 400px;
-    background-color: aquamarine;
-    text-align: center;
-    border-radius: 20px;
-    border: solid 10px transparent;
-    background-image:
-    linear-gradient(#f36767,#ffffff),
-    linear-gradient(to right,rgb(255, 0, 0),#000);
-    background-origin: border-box;
-    background-clip: content-box,border-box;
-}
-
-.div-2{
-    width: 300px;
-    height: 400px;
-    margin-left: 100px;
-    background-color: brown;
-    text-align: center;
-    border-radius: 20px;
-    border: solid 10px transparent;
-    background-image:
-    linear-gradient(#f36767,#ffffff),
-    linear-gradient(to right,rgb(255, 0, 0),#000);
-    background-origin: border-box;
-    background-clip: content-box,border-box;
-}
-
-.div-3{
-    width: 300px;
-    height: 400px;
-    margin-left: 100px;
-    text-align: center;
-    border-radius: 20px;
-    border: solid 10px transparent;
-    background-image:
-    linear-gradient(#f36767,#ffffff),
-    linear-gradient(to right,rgb(255, 0, 0),#000);
-    background-origin: border-box;
-    background-clip: content-box,border-box;
+.contenedor .caja p{
+    color: blanchedalmond;
+    font-size: 4vmin;
     
 }
-.head{
-    text-align: center;
-    padding: 35px;
+
+.contenedor .caja ul{
+    list-style: none;
+    margin: 4vmin;
+
 }
 
-body{
-    background-color: aliceblue;
-    
+.contenedor .caja ul li{
+    color: blanchedalmond;
+    font-size: 3vmin;
+    padding: 2vmin auto;
+    margin: 2vmin auto;
+}
+
+.contenedor .caja .btn{
+    color: blanchedalmond;
+    text-decoration: none;
+    font-size: 3vmin;
+    font-weight: 600;
+    margin: 2vmin auto;
+
 }

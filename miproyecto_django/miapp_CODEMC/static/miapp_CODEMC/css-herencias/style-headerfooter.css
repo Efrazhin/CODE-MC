@@ -7,7 +7,7 @@
     display: flex;
     justify-content:space-between;
     align-items:center;
-    height: 13vmin;
+    height: 10vmin;
     width: 99vw;
     padding: 0.5% 5%;
     transition: all 0.35s linear;
@@ -20,7 +20,7 @@
     text-shadow: 0.2vmin 0.2vmin 0.5vmin rgb(255, 166, 0);
     text-decoration: none;
     font-weight: bold;
-    font-size: 6vmin;
+    font-size: 5vmin;
     padding: 0.5% 1.5vmin;
     transition: all 200ms linear;
 }
@@ -54,7 +54,7 @@
 
 .header-principal.abajo{
     background-color: rgb(37, 70, 160);
-    height: 11vmin;
+    height: 12vmin;
 }
 
 .header-principal.abajo .btn-inicio button{
@@ -68,7 +68,7 @@
 .header-principal .btn-inicio button{
     text-decoration: none;
     color: blanchedalmond;
-    font-size: 6vmin;
+    font-size: 5vmin;
     font-weight: 100;
     border-color: blanchedalmond;
     border-style: solid;

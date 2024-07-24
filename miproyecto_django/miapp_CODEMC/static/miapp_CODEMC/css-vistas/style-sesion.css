@@ -22,7 +22,7 @@ body::before{
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg") #000;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg");
     background-position: center;
     background-size: cover;
 
@@ -32,11 +32,12 @@ body::before{
     width: 460px;
     border-radius: 12px;
     padding: 30px;
-    background-color: beige;
+    color: blanchedalmond;
+    background-color: rgba(0,0,0,0.2);
     text-align: center;
-    border: 1px solid rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(9px);
+    border: 1px solid rgb(255, 166, 0);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     transition: height .2s ease;
     transform: scale(1);
     overflow: hidden;
@@ -117,15 +118,15 @@ form cc{
     font-size: 20px;
 }
 
-h2{
+h1{
     font-size: 2rem;
     margin-bottom: 20px;
-    color: black;
+    color: blanchedalmond;
 }
 
 .input-field{
     position: relative;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid blanchedalmond;
     margin: 18px 20px;
 }
 
@@ -137,7 +138,7 @@ h2{
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    color: #000;
+    color: blanchedalmond;
     font-size: 16px;
     pointer-events: none;
     transition: 0.15s ease;
@@ -150,6 +151,7 @@ h2{
     border: none;
     outline: none;
     font-size: 16px;
+    color: blanchedalmond;
 }
 
 .input-field input:focus~label,
@@ -164,11 +166,12 @@ h2{
     align-items: center;
     justify-content: space-between;
     margin: 25px 0 35px 0;
-    color: black;
+    color: blanchedalmond;
 }
 
 #remember{
-    accent-color: #fff;
+    accent-color: blanchedalmond;
+    border-style: none;
 }
 
 .forget label{
@@ -181,7 +184,7 @@ h2{
 }
 
 .contenedor a{
-    color: black;
+    color: blanchedalmond;
     text-decoration: none;
 }
 
@@ -190,7 +193,7 @@ h2{
 }
 
 button{
-    background: #fff;
+    background: blanchedalmond;
     color: #000;
     font-weight: 600;
     border: none;
@@ -203,19 +206,19 @@ button{
 }
 
 button:hover{
-    color: rgb(37, 70, 160);
-    border-color: #060606;
-    background: rgba(255, 255, 255, 0.15);
+    color: rgb(255, 166, 0);
+    border: 0.3vmin solid rgb(255, 166, 0);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .register{
     text-align: center;
     margin-top: 30px;
-    color: #000;
+    color: blanchedalmond;
 }
 
 .login{
     text-align: center;
     margin-top: 30px;
-    color: #000;
+    color: blanchedalmond;
 }
