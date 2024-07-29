@@ -46,3 +46,19 @@ def nuevo_curso(request):
         form = forms.FormularioCurso()
     context = {"form": form}
     return render(request, "miapp_CODEMC/nuevo_curso.html", context)
+
+def inicio_usuario(request):
+    if request.method == 'POST':
+        form = forms.FormularioLogin(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["gmail"]
+            contraseña = form.cleaned_data["contraseña"]
+            cursor = connection.cursor()
+            query = "INSERT INTO usuarios (email, contraseña) VALUES (%s, %s)"
+            cursor.execute(query, [email, contraseña])
+            cursor.close()
+            return HttpResponse("CURSO CREADO")
+    else:
+        form = forms.FormularioLogin()
+    ctx = {"form":form}
+    return render(request, "miapp_CODEMC/inicio_login.html", ctx)

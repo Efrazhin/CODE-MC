@@ -1,7 +1,5 @@
-/*Importamos fuentes de letras*/
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/*Restablecemos las configuraciones de margen, padding y box-sizing para mejor manejo*/
 *{
     box-sizing: border-box;
     margin: 0;
@@ -28,6 +26,12 @@ body::before{
 
 }
 
+h1{
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: blanchedalmond;
+}
+
 .contenedor{
     width: 460px;
     border-radius: 12px;
@@ -44,40 +48,11 @@ body::before{
     
 }
 
-.contenedor .form-box-register{
-    top: 0%;
-}
-
-.contenedor .form-box-register{
-    position: absolute;
-    transition: none;
-    transform: translateX(470px);
-}
-
-.contenedor.activate .form-box-register{
-    position: relative;
-}
-
-
-.contenedor.activate .form-box-login {
-    position: absolute;
-    transition: none;
-    transform: translateX(-400px);
-}
-
 .contenedor .form-box-login{
     transition: transform .18s ease;
     transform: translateX(0);
 }
 
-.contenedor.activate .form-box-register{
-    transition: transform .18s ease;
-    transform: translateX(-0);
-}
-
-.contenedor.activate{
-    height: 550px;
-}
 .cerrar-ventana{
     position: absolute;
     top: 0;
@@ -89,8 +64,6 @@ body::before{
 
 }
 
-
-
 form{
     display: flex;
     flex-direction: column;
@@ -101,37 +74,11 @@ form e,c{
     top: 20%;
     left: 90%;
     font-size: 20px;
-    
 }
 
-form cp{
-    position: absolute;
-    top: 20%;
-    left: 98%;
-    font-size: 20px;
+.box-form{
+    background-color: blanchedalmond;
 }
-
-form cc{
-    position: absolute;
-    top: 20%;
-    left:88%;
-    font-size: 20px;
-}
-
-h1{
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: blanchedalmond;
-}
-
-.input-field{
-    position: relative;
-    border-bottom: 2px solid blanchedalmond;
-    margin: 18px 20px;
-}
-
-
-
 
 .input-field label{
     position: absolute;
@@ -144,22 +91,26 @@ h1{
     transition: 0.15s ease;
 }
 
+.input-field{
+    position: relative;
+    border-bottom: 2px solid blanchedalmond;
+    margin: 18px 20px;
+}
+
+form label{
+    color: blanchedalmond;
+}
+
 .input-field input{
     width: 100%;
     height: 40px;
     background: transparent;
     border: none;
     outline: none;
-    font-size: 16px;
-    color: rgb(231, 143, 12);
+    font-size: 20px;
+    color: blanchedalmond;
 }
 
-.input-field input:focus~label,
-.input-field input:valid~label{
-    font-size: 0.8rem;
-    top: 10px;
-    transform: translateY(-120%);
-}
 
 .forget{
     display: flex;
@@ -217,8 +168,49 @@ button:hover{
     color: blanchedalmond;
 }
 
-.login{
-    text-align: center;
-    margin-top: 30px;
-    color: blanchedalmond;
+
+form div {
+    margin-bottom: 15px;
+}
+
+
+.box-form::placeholder {
+    color: blanchedalmond; 
+
+}
+
+
+.box-form {
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    border-radius: 4px;
+}
+
+
+
+
+/* Estilos del placeholder */
+.box-form::placeholder {
+    color: blanchedalmond; /* Color del placeholder */
+    font-size: 16px; /* Tamaño del texto del placeholder */
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+
+/* Estilo para el input con el placeholder movido hacia arriba */
+.box-form:focus {
+    padding-top: 20px; /* Espacio para el placeholder animado hacia arriba */
+}
+
+.box-form:focus::placeholder {
+    top: -90px; /* Mueve el placeholder hacia arriba */
+    left: 10px; /* Ajusta la posición horizontal si es necesario */
+    font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
+
 }
