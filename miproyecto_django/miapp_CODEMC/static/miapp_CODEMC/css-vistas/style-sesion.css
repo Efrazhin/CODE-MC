@@ -222,3 +222,50 @@ button:hover{
     margin-top: 30px;
     color: blanchedalmond;
 }
+
+form div {
+    margin-bottom: 15px;
+}
+
+
+.box-form::placeholder {
+    color: blanchedalmond; 
+
+}
+
+
+.box-form {
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    border-radius: 4px;
+}
+
+
+
+
+/* Estilos del placeholder */
+.box-form::placeholder {
+    color: blanchedalmond; /* Color del placeholder */
+    font-size: 16px; /* Tamaño del texto del placeholder */
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+
+/* Estilo para el input con el placeholder movido hacia arriba */
+.box-form:focus {
+    padding-top: 20px; /* Espacio para el placeholder animado hacia arriba */
+}
+
+.box-form:focus::placeholder {
+    top: -90px; /* Mueve el placeholder hacia arriba */
+    left: 10px; /* Ajusta la posición horizontal si es necesario */
+    font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
+
+}
+

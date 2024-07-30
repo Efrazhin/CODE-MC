@@ -1,216 +1,197 @@
+/* Importa la fuente 'Barlow' desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Barlow';
-}
-/*Acomodamos el body para mejor manejo*/
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    
-
-}
-body::before{
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg");
-    background-position: center;
-    background-size: cover;
-
+/* Aplica estilos globales a todos los elementos */
+* {
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho y alto del elemento */
+    margin: 0; /* Elimina el margen por defecto */
+    padding: 0; /* Elimina el padding por defecto */
+    font-family: 'Barlow'; /* Establece la fuente 'Barlow' como fuente principal */
 }
 
-h1{
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: blanchedalmond;
+/* Estilo para el body */
+body {
+    display: flex; /* Utiliza el modelo Flexbox para centrar el contenido */
+    justify-content: center; /* Alinea el contenido horizontalmente al centro */
+    align-items: center; /* Alinea el contenido verticalmente al centro */
+    min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura de la ventana */
 }
 
-.contenedor{
-    width: 460px;
-    border-radius: 12px;
-    padding: 30px;
-    color: blanchedalmond;
-    background-color: rgba(0,0,0,0.2);
-    text-align: center;
-    border: 1px solid rgb(255, 166, 0);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: height .2s ease;
-    transform: scale(1);
-    overflow: hidden;
-    
+/* Estilo para el fondo del body, con una imagen de fondo y un gradiente */
+body::before {
+    content: ""; /* Necesario para que el pseudo-elemento sea visible */
+    position: absolute; /* Posiciona el fondo en relación al body */
+    width: 100%; /* Ancho del fondo igual al del body */
+    height: 100%; /* Altura del fondo igual al del body */
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg"); /* Gradiente y imagen de fondo */
+    background-position: center; /* Centra la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
 }
 
-.contenedor .form-box-login{
-    transition: transform .18s ease;
-    transform: translateX(0);
+/* Estilo para el título principal */
+h1 {
+    font-size: 2rem; /* Tamaño de fuente del título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    color: blanchedalmond; /* Color del texto */
 }
 
-.cerrar-ventana{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    height: 35px;
-    font-size: 30px;
-    cursor: pointer;
-
+/* Estilo para el contenedor del formulario */
+.contenedor {
+    width: 460px; /* Ancho del contenedor */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 30px; /* Espacio interno del contenedor */
+    color: blanchedalmond; /* Color del texto */
+    background-color: rgba(0,0,0,0.2); /* Fondo semitransparente */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    border: 1px solid rgb(255, 166, 0); /* Borde del contenedor */
+    backdrop-filter: blur(8px); /* Aplica un desenfoque al fondo detrás del contenedor */
+    -webkit-backdrop-filter: blur(8px); /* Compatibilidad con navegadores WebKit */
+    transition: height .2s ease; /* Transición suave para cambios de altura */
+    transform: scale(1); /* Escala inicial del contenedor */
+    overflow: hidden; /* Elimina el desbordamiento */
 }
 
-form{
-    display: flex;
-    flex-direction: column;
+/* Estilo para el botón de cerrar ventana */
+.cerrar-ventana {
+    position: absolute; /* Posiciona el botón de manera absoluta dentro del contenedor */
+    top: 0; /* Espacio desde la parte superior del contenedor */
+    right: 0; /* Espacio desde el lado derecho del contenedor */
+    width: 20px; /* Ancho del botón */
+    height: 35px; /* Altura del botón */
+    font-size: 30px; /* Tamaño de la fuente del icono */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
-form e,c{
-    position: absolute;
-    top: 20%;
-    left: 90%;
-    font-size: 20px;
+/* Estilo para el formulario */
+form {
+    display: flex; /* Utiliza el modelo Flexbox para el diseño del formulario */
+    flex-direction: column; /* Organiza los elementos del formulario en una columna */
 }
 
-.box-form{
-    background-color: blanchedalmond;
+/* Estilo para las etiquetas dentro de los campos de entrada */
+.input-field label {
+    position: absolute; /* Posiciona la etiqueta de manera absoluta dentro del campo */
+    top: 50%; /* Centra verticalmente la etiqueta */
+    left: 0; /* Posición desde el borde izquierdo del campo */
+    transform: translateY(-50%); /* Ajusta la etiqueta para que esté verticalmente centrada */
+    color: blanchedalmond; /* Color de la etiqueta */
+    font-size: 16px; /* Tamaño de la fuente de la etiqueta */
+    pointer-events: none; /* Desactiva los eventos del puntero sobre la etiqueta */
+    transition: 0.15s ease; /* Transición suave para los cambios */
 }
 
-.input-field label{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    color: blanchedalmond;
-    font-size: 16px;
-    pointer-events: none;
-    transition: 0.15s ease;
-}
-
-.input-field{
-    position: relative;
-    border-bottom: 2px solid blanchedalmond;
-    margin: 18px 20px;
-}
-
-form label{
-    color: blanchedalmond;
-}
-
-.input-field input{
-    width: 100%;
-    height: 40px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 20px;
-    color: blanchedalmond;
+/* Estilo para los campos de entrada */
+.input-field {
+    position: relative; /* Posiciona los elementos internos en relación al campo */
+    border-bottom: 2px solid blanchedalmond; /* Borde inferior del campo de entrada */
+    margin: 18px 20px; /* Espacio alrededor de los campos de entrada */
 }
 
 
-.forget{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 25px 0 35px 0;
-    color: blanchedalmond;
+/* Estilo para los inputs dentro de los campos */
+.input-field input {
+    width: 100%; /* Ancho completo del campo de entrada */
+    height: 40px; /* Altura del campo de entrada */
+    background: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    outline: none; /* Sin contorno por defecto */
+    font-size: 20px; /* Tamaño de la fuente */
+    color: blanchedalmond; /* Color del texto */
 }
 
-#remember{
-    accent-color: blanchedalmond;
-    border-style: none;
+/* Estilo para la sección de olvido de contraseña o términos */
+.forget {
+    display: flex; /* Utiliza el modelo Flexbox para alinear elementos */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    justify-content: space-between; /* Alinea el contenido al inicio del contenedor */
+    margin: 25px 0 35px 0; /* Espaciado superior e inferior para separar de otros elementos */
+    color: blanchedalmond; /* Color del texto */
 }
 
-.forget label{
-    display: flex;
-    align-items: center;
+/* Estilo para el checkbox en la sección de olvido de contraseña o términos */
+#remember {
+    accent-color: blanchedalmond; /* Color del checkbox */
+    border-style: none; /* Sin borde */
 }
 
-.forget label p{
-    margin-left: 8px;
+/* Estilo para las etiquetas en la sección de olvido de contraseña o términos */
+.forget label {
+    display: flex; /* Utiliza el modelo Flexbox para alinear elementos */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
 }
 
-.contenedor a{
-    color: blanchedalmond;
-    text-decoration: none;
+/* Estilo para el texto dentro de las etiquetas en la sección de olvido de contraseña o términos */
+.forget label p {
+    margin-left: 8px; /* Espacio a la izquierda del texto */
 }
 
-.contenedor a:hover{
-    text-decoration: underline;
+/* Estilo para los enlaces dentro del contenedor */
+.contenedor a {
+    color: blanchedalmond; /* Color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */
 }
 
-button{
-    background: blanchedalmond;
-    color: #000;
-    font-weight: 600;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 16px;
-    border: 2px solid transparent;
-    transition: 0.3s ease;
-    cursor: pointer;
+/* Estilo para los enlaces dentro del contenedor cuando se pasa el cursor sobre ellos */
+.contenedor a:hover {
+    text-decoration: underline; /* Subraya el enlace al pasar el cursor */
 }
 
-button:hover{
-    color: rgb(255, 166, 0);
-    border: 0.3vmin solid rgb(255, 166, 0);
-    background: rgba(0, 0, 0, 0.2);
+/* Estilo para los botones */
+button {
+    background: blanchedalmond; /* Color de fondo del botón */
+    color: #000; /* Color del texto del botón */
+    font-weight: 600; /* Peso de la fuente del botón */
+    border: none; /* Sin borde */
+    padding: 12px 20px; /* Espacio interno del botón */
+    border-radius: 12px; /* Bordes redondeados del botón */
+    font-size: 16px; /* Tamaño de la fuente del botón */
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    transition: 0.3s ease; /* Transición suave para cambios de estilo */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
-.register{
-    text-align: center;
-    margin-top: 30px;
-    color: blanchedalmond;
-}
-
-
-form div {
-    margin-bottom: 15px;
+/* Estilo para el botón al pasar el cursor sobre él */
+button:hover {
+    color: rgb(255, 166, 0); /* Color del texto al pasar el cursor */
+    border: 0.3vmin solid rgb(255, 166, 0); /* Borde de color al pasar el cursor */
+    background: rgba(0, 0, 0, 0.2); /* Fondo semitransparente al pasar el cursor */
 }
 
 
+
+/* Estilo para el placeholder dentro de los campos de entrada */
 .box-form::placeholder {
-    color: blanchedalmond; 
-
+    color: blanchedalmond; /* Color del placeholder */
 }
 
-
+/* Estilo para los campos de entrada con fondo */
 .box-form {
-    font-size: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    position: relative;
-    border-radius: 4px;
+    font-size: 20px; /* Tamaño de la fuente */
+    padding: 10px; /* Espacio interno del campo */
+    border: 1px solid #ddd; /* Borde del campo */
+    position: relative; /* Posiciona el campo en relación a su contenedor */
+    border-radius: 4px; /* Bordes redondeados del campo */
 }
 
-
-
-
-/* Estilos del placeholder */
+/* Estilo para el placeholder dentro de los campos de entrada */
 .box-form::placeholder {
     color: blanchedalmond; /* Color del placeholder */
     font-size: 16px; /* Tamaño del texto del placeholder */
     transition: all 0.3s ease; /* Transición suave para todos los cambios */
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
+    position: absolute; /* Posiciona el placeholder de manera absoluta dentro del campo */
+    top: 50%; /* Posición desde la parte superior */
+    left: 10px; /* Posición desde el borde izquierdo */
+    transform: translateY(-50%); /* Ajusta la posición vertical del placeholder */
 }
 
-
-/* Estilo para el input con el placeholder movido hacia arriba */
+/* Estilo para el placeholder cuando el campo está en foco */
 .box-form:focus {
     padding-top: 20px; /* Espacio para el placeholder animado hacia arriba */
 }
 
+/* Estilo para el placeholder cuando el campo está en foco */
 .box-form:focus::placeholder {
     top: -90px; /* Mueve el placeholder hacia arriba */
     left: 10px; /* Ajusta la posición horizontal si es necesario */
     font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
-
 }
