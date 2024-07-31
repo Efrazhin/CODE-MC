@@ -1,0 +1,108 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Contenedores generales */
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Encabezado */
+header {
+    background: linear-gradient(90deg, #ff8a00, #da1b60);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3rem;
+}
+
+/* Secciones */
+section {
+    background: #fff;
+    margin: 20px 0;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+    border-bottom: 3px solid #ff8a00;
+    padding-bottom: 10px;
+    font-size: 2rem;
+}
+
+section p {
+    margin: 20px 0;
+    line-height: 1.8;
+}
+
+/* Estilos de equipo */
+.team ul {
+    list-style: none;
+    padding: 0;
+}
+
+.team ul li {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Estilos de testimonios */
+.testimonials p {
+    font-style: italic;
+    background-color: #f1f1f1;
+    border-left: 5px solid #ff8a00;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+/* Botón de llamada a la acción */
+.cta-button {
+    display: inline-block;
+    background: #da1b60;
+    color: #fff;
+    padding: 15px 25px;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #ff8a00;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    background: #333;
+    color: #fff;
+    padding: 30px 0;
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+/* Enlaces */
+a {
+    color: #da1b60;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
