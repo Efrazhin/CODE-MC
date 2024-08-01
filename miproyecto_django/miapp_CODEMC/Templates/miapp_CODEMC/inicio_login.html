@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %} <!-- Carga el sistema de plantillas de Django para manejar archivos estáticos -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Importa la fuente 'Poppins' desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Importa los iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Importa la hoja de estilos específica para esta vista -->
+    <link rel="stylesheet" href="{%static 'miapp_CODEMC/css-vistas/style-login.css'%}">
+    <title>Inicio de sesión</title>
+</head>
+<body>
+    <!-- Contenedor principal de la página -->
+    <div class="contenedor">
+        <!-- Caja que contiene el formulario de inicio de sesión -->
+        <div class="form-box-login">
+            <!-- Formulario de inicio de sesión -->
+            <form method="post">
+                <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
+                {% csrf_token %}
+
+                <!-- Botón para cerrar el formulario -->
+                <span class="cerrar-ventana" onclick="rederigir_principal()">
+                    <i class="fa-solid fa-rectangle-xmark"></i>
+                </span>
+
+                <h1>Inicio de sesión</h1>
+
+                <!-- Campo para el correo electrónico -->
+                <div class="input-field">
+                    <e><i class="fa-solid fa-envelope"></i></e>
+                    <!-- Campo de entrada para el correo electrónico generado por Django -->
+                    {{ form.gmail }}
+                </div>
+
+                <!-- Campo para la contraseña -->
+                <div class="input-field">
+                    <c><i class="fa-solid fa-lock"></i></c>
+                    <!-- Campo de entrada para la contraseña generado por Django -->
+                    {{ form.contraseña }}
+                </div>
+
+                <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
+                <div class="forget">
+                    <label for="remember">
+                        <!-- Checkbox para recordar el usuario -->
+                        <input type="checkbox" id="remember">
+                        <!-- Texto asociado al checkbox -->
+                        <p>Recordarme</p>
+                    </label>
+                    <!-- Enlace para recuperar la contraseña -->
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <!-- Botón para enviar el formulario -->
+                <button type="submit">Iniciar sesión</button>
+
+                <!-- Sección para registro de nuevo usuario -->
+                <div class="register">
+                    <p>¿No tenés una cuenta? <a href='{% url "Inicio_registro" %}' class="register-link">¡Crea una!</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Importa el archivo JavaScript para funcionalidades del login -->
+    <script src="{% static 'miapp_CODEMC/js/java_scr_login.js'%}"></script>
+    <script>
+        /* Función para redirigir al usuario a la página principal */
+        function rederigir_principal(){
+            window.location.href="/"; /* Redirige al inicio */
+        }
+    </script>
+    
+</body>
+</html>
