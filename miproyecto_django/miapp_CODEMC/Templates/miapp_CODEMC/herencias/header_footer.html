@@ -19,11 +19,10 @@
             <li><a href="#servicio">Servicio</a></li>
             <li><a href="#soluciones">Soluciones</a></li>
             <li><a href='{% url "planes" %}'>Planes</a></li>
-            <li><a href="#">Nosotros</a></li>
             <li><a href='{% url "contacto" %}'>Contacto</a></li>
         </ul>
     </nav>
-    <a href="#" class="btn-inicio" onclick="rederigir_login()"> <button> <i class="ri-account-box-line"></i> </button> </a>
+    <a href='{% url "login"%}' class="btn-inicio" > <button> <i class="ri-account-box-line"></i> </button> </a>
 </header>
 
     {% block content %}
@@ -48,7 +47,7 @@
 <script type= "text/JavaScript"src="{% static 'miapp_CODEMC/js/animacion-nav.js'%}" charset="UTF-8"></script>
 <script>
     function rederigir_login(){
-        window.location.href="login";
+        window.location.href="Login";
     }
 
 </script>
