@@ -74,22 +74,22 @@ form {
 }
 
 /* Estilo para los campos de entrada */
-.input-field {
-    position: relative; /* Posiciona los elementos internos en relación al campo */
-    border-bottom: 2px solid blanchedalmond; /* Borde inferior de los campos de entrada */
-    margin: 18px 20px; /* Espacio alrededor de los campos de entrada */
-}
-
-/* Estilo para las etiquetas dentro de los campos de entrada */
-.input-field label {
+.input-field .box-form label {
     position: absolute; /* Posiciona la etiqueta de manera absoluta dentro del campo */
     top: 50%; /* Centra verticalmente la etiqueta */
-    left: 0px; /* Posición desde el borde izquierdo del campo */
+    left: 0; /* Posición desde el borde izquierdo del campo */
     transform: translateY(-50%); /* Ajusta la etiqueta para que esté verticalmente centrada */
     color: blanchedalmond; /* Color de la etiqueta */
-    font-size: 20px; /* Tamaño de la fuente de la etiqueta */
-    pointer-events: none; /* Desactiva los eventos del puntero sobre la etiqueta */
+    font-size: 16px; /* Tamaño de la fuente de la etiqueta */
+    
     transition: 0.15s ease; /* Transición suave para los cambios */
+}
+
+/* Estilo para los campos de entrada */
+.input-field .box-form {
+    position: relative; /* Posiciona los elementos internos en relación al campo */
+    border-bottom: 2px solid blanchedalmond; /* Borde inferior del campo de entrada */
+    margin: 18px 5px; /* Espacio alrededor de los campos de entrada */
 }
 
 /* Estilo para iconos colocados en campos específicos */

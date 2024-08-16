@@ -38,24 +38,13 @@
                 <!-- Campo para ingresar el correo electrónico -->
                 <div class="input-field">
                     <e class="fa-solid fa-envelope"></e>
-                    <!-- Campo de entrada para el correo electrónico del formulario -->
-                    {{ form.gmail }}
-                </div>
-
-                <!-- Campo para ingresar la contraseña -->
-                <div class="input-field">
                     <c class="fa-solid fa-lock"></c>    
-                    <!-- Campo de entrada para la contraseña del formulario -->
-                    {{ form.contraseña }}
-                </div>
-
-                <!-- Campo para confirmar la contraseña -->
-                <div class="input-field">
                     <ic class="fa-solid fa-lock"></ic>
                     <ii class="fa-solid fa-check"></ii>
-                    <!-- Campo de entrada para la confirmación de la contraseña del formulario -->
-                    {{ form.validar_contraseña }}
+                    <!-- Campo de entrada para el correo electrónico del formulario -->
+                    {{ form.as_table }}
                 </div>
+
 
                 <!-- Sección para los términos y condiciones -->
                 <div class="forget">

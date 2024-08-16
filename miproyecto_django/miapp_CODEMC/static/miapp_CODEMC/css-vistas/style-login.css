@@ -54,8 +54,8 @@ h1 {
 /* Estilo para el botón de cerrar ventana */
 .cerrar-ventana {
     position: absolute; /* Posiciona el botón de manera absoluta dentro del contenedor */
-    top: 0; /* Espacio desde la parte superior del contenedor */
-    right: 0; /* Espacio desde el lado derecho del contenedor */
+    top: 30px; /* Espacio desde la parte superior del contenedor */
+    right: 30px; /* Espacio desde el lado derecho del contenedor */
     width: 20px; /* Ancho del botón */
     height: 35px; /* Altura del botón */
     font-size: 30px; /* Tamaño de la fuente del icono */
@@ -69,22 +69,22 @@ form {
 }
 
 /* Estilo para las etiquetas dentro de los campos de entrada */
-.input-field label {
+.input-field .box-form label {
     position: absolute; /* Posiciona la etiqueta de manera absoluta dentro del campo */
     top: 50%; /* Centra verticalmente la etiqueta */
     left: 0; /* Posición desde el borde izquierdo del campo */
     transform: translateY(-50%); /* Ajusta la etiqueta para que esté verticalmente centrada */
     color: blanchedalmond; /* Color de la etiqueta */
     font-size: 16px; /* Tamaño de la fuente de la etiqueta */
-    pointer-events: none; /* Desactiva los eventos del puntero sobre la etiqueta */
+    
     transition: 0.15s ease; /* Transición suave para los cambios */
 }
 
 /* Estilo para los campos de entrada */
-.input-field {
+.input-field .box-form {
     position: relative; /* Posiciona los elementos internos en relación al campo */
     border-bottom: 2px solid blanchedalmond; /* Borde inferior del campo de entrada */
-    margin: 18px 20px; /* Espacio alrededor de los campos de entrada */
+    margin: 18px 5px; /* Espacio alrededor de los campos de entrada */
 }
 
 
@@ -97,6 +97,19 @@ form {
     outline: none; /* Sin contorno por defecto */
     font-size: 20px; /* Tamaño de la fuente */
     color: blanchedalmond; /* Color del texto */
+}
+
+e{
+    position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
+    top: 22%; /* Posición desde la parte superior */
+    left: 90%; /* Posición desde el borde izquierdo */
+    font-size: 20px; /* Tamaño de los iconos */
+}
+c{
+    position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
+    top: 38%; /* Posición desde la parte superior */
+    left: 90%; /* Posición desde el borde izquierdo */
+    font-size: 20px; /* Tamaño de los iconos */
 }
 
 /* Estilo para la sección de olvido de contraseña o términos */
@@ -170,7 +183,6 @@ button:hover {
     padding: 10px; /* Espacio interno del campo */
     border: 1px solid #ddd; /* Borde del campo */
     position: relative; /* Posiciona el campo en relación a su contenedor */
-    border-radius: 4px; /* Bordes redondeados del campo */
 }
 
 /* Estilo para el placeholder dentro de los campos de entrada */
@@ -195,3 +207,4 @@ button:hover {
     left: 10px; /* Ajusta la posición horizontal si es necesario */
     font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
 }
+ 
