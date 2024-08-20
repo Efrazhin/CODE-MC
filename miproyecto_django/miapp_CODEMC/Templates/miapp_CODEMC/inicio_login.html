@@ -14,49 +14,54 @@
 </head>
 <body>
     <!-- Contenedor principal de la página -->
-    <div class="contenedor">
-        <!-- Caja que contiene el formulario de inicio de sesión -->
-        <div class="form-box-login">
-            <!-- Botón para cerrar el formulario -->
-            <span class="cerrar-ventana" onclick="rederigir_principal()">
-                <i class="fa-solid fa-rectangle-xmark"></i>
-            </span>
+    <div class="flex">
+        <div class="contenedor">
+            <!-- Caja que contiene el formulario de inicio de sesión -->
+            <div class="form-box-login">
+                <!-- Botón para cerrar el formulario -->
+                <span class="cerrar-ventana" onclick="rederigir_principal()">
+                    <i class="fa-solid fa-rectangle-xmark"></i>
+                </span>
 
-            <h1>Inicio de sesión</h1>
-            <!-- Formulario de inicio de sesión -->
-            <form method="post">
-                <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
-                {% csrf_token %}
-                <!-- Campo para el correo electrónico -->
-                <div class="input-field">
-                    <e><i class="fa-solid fa-envelope"></i></e>
-                    <c class="fa-solid fa-lock"></c>  
-                    <!-- Campo de entrada para el correo electrónico generado por Django -->
-                    {{ form.as_table }}
-                </div>
+                <h1>Inicio de sesión</h1>
+                <!-- Formulario de inicio de sesión -->
+                <form method="post">
+                    <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
+                    {% csrf_token %}
+                    <!-- Campo para el correo electrónico -->
+                    <div class="input-field">
+                        <e><i class="fa-solid fa-envelope"></i></e>
+                        <c class="fa-solid fa-lock"></c>  
+                        <!-- Campo de entrada para el correo electrónico generado por Django -->
+                        {{ form.as_table }}
+                    </div>
 
 
-                <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
-                <div class="forget">
-                    <label for="remember">
-                        <!-- Checkbox para recordar el usuario -->
-                        <input type="checkbox" id="remember">
-                        <!-- Texto asociado al checkbox -->
-                        <p>Recordarme</p>
-                    </label>
-                    <!-- Enlace para recuperar la contraseña -->
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                </div>
+                    <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
+                    <div class="forget">
+                        <label for="remember">
+                            <!-- Checkbox para recordar el usuario -->
+                            <input type="checkbox" id="remember">
+                            <!-- Texto asociado al checkbox -->
+                            <p>Recordarme</p>
+                        </label>
+                        <!-- Enlace para recuperar la contraseña -->
+                        <a href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
 
-                <!-- Botón para enviar el formulario -->
-                <button type="submit">Iniciar sesión</button>
+                    <!-- Botón para enviar el formulario -->
+                    <button type="submit">Iniciar sesión</button>
 
-                <!-- Sección para registro de nuevo usuario -->
-                <div class="register">
-                    <p>¿No tenés una cuenta? <a href='{% url "registro" %}' class="register-link">¡Crea una!</a></p>
-                </div>
+                    <!-- Sección para registro de nuevo usuario -->
+                    <div class="register">
+                        <p>¿No tenés una cuenta? <a href='{% url "registro" %}' class="register-link">¡Crea una!</a></p>
+                    </div>
 
-            </form>
+                </form>
+            </div>
+        </div>  
+        <div class="caja_img">
+            <img class="img" src="/static/miapp_CODEMC/imagenes/stock-organizado.jpg">
         </div>
     </div>
 

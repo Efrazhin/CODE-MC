@@ -104,6 +104,7 @@
 }
 
 .banner .capa .banner-caja-2 .btn-registro{
+    position: relative;
     font-size: 3vmin;
     font-weight: 400;
     color: blanchedalmond;
@@ -116,6 +117,7 @@
     padding: 1.5vmin 2vmin;
     margin: 4vmin 0;
     transition: all 200ms linear;
+    cursor: pointer;
 }
 
 .banner .capa .banner-caja-2 .btn-registro:hover{

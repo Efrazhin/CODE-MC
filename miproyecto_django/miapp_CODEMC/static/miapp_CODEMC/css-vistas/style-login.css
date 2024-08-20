@@ -23,10 +23,29 @@ body::before {
     position: absolute; /* Posiciona el fondo en relación al body */
     width: 100%; /* Ancho del fondo igual al del body */
     height: 100%; /* Altura del fondo igual al del body */
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg"); /* Gradiente y imagen de fondo */
+    /*background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg"); /* Gradiente y imagen de fondo */
     background-position: center; /* Centra la imagen de fondo */
     background-size: cover; /* Asegura que la imagen cubra todo el fondo */
 }
+
+.flex{
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.caja_img{
+    border-color: blue;
+    border-style: solid;
+    border-width: 7px;
+    width: 50vw;
+}
+
+.img{
+    object-fit: cover;
+}
+
 
 /* Estilo para el título principal */
 h1 {

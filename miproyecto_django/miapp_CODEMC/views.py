@@ -40,8 +40,7 @@ def inicio_usuario(request):
                     else:
                         return HttpResponse("Contraseña incorrecta")
                 else:
-                    return HttpResponse("Usuario no encontrado")
-           
+                    return HttpResponse("Usuario no encontrado")  
     else:
         form = forms.FormularioLogin()
     ctx = {"form":form}

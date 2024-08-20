@@ -11,9 +11,10 @@
 
 body{
     background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.2)), url('/static/miapp_CODEMC/imagenes/fondo-pags-secund.jpg');
-    background-size: cover;
+    
     background-repeat: no-repeat;
     background-position: center center;
+    background-attachment: fixed;
 }
 
 
