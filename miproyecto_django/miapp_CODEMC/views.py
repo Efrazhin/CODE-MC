@@ -11,42 +11,12 @@ def index(request):
     ctx = {}
     return render(request,'miapp_CODEMC/index.html',ctx)
 
-def login_sesion(request):
-    return render(request,'miapp_CODEMC/Inicio_sesion.html')
 
 def planes(request):
     return render(request,"miapp_CODEMC/Planes.html")
 
 def contacto(request):
     return render(request, "miapp_CODEMC/Contacto.html")
-
-def listado_productos(request):
-    cursor = connection.cursor()
-    query = "SELECT id_prod, nom_prod FROM `productos` ORDER BY id_prod, nom_prod"
-    cursor.execute(query)
-    products=cursor.fetchall()
-
-    ctx={"prods":products}
-
-    connection.close()  # Cerrar la conexion
-    
-    return render(request,'miapp_CODEMC/prueba_fetchall.html',ctx)
-
-def nuevo_curso(request):
-    if request.method == "POST":
-        form = forms.FormularioCurso(request.POST)
-        if form.is_valid():
-            nombre_curso = form.cleaned_data["nombre"]
-            inscriptos = form.cleaned_data["inscriptos"]
-            cursor = connection.cursor()
-            query = "INSERT INTO cursos (nombre_curso, inscriptos) VALUES (%s, %s)"
-            cursor.execute(query, [nombre_curso, inscriptos])
-            cursor.close()
-            return HttpResponse("CURSO CREADO")
-    else:
-        form = forms.FormularioCurso()
-    context = {"form": form}
-    return render(request, "miapp_CODEMC/nuevo_curso.html", context)
 
 def inicio_usuario(request):
     if request.method == 'POST':
@@ -70,20 +40,16 @@ def inicio_usuario(request):
                     else:
                         return HttpResponse("Contraseña incorrecta")
                 else:
-                    return HttpResponse("Usuario no encontrado")
-           
+                    return HttpResponse("Usuario no encontrado")  
     else:
         form = forms.FormularioLogin()
     ctx = {"form":form}
     return render(request, "miapp_CODEMC/Inicio_login.html",ctx)
 
 
-
-
-
 def inicio_registro(request):
     if request.method == 'POST':
-        form = forms.FormularioLogin(request.POST)
+        form = forms.FormularioRegistro(request.POST)
         if form.is_valid():
             email = form.cleaned_data["gmail"]
             contraseña = form.cleaned_data["contraseña"]
@@ -104,9 +70,9 @@ def inicio_registro(request):
             with connection.cursor() as cursor:
                 cursor.execute("INSERT INTO usuarios (email, contraseña) VALUES (%s, %s)", [email, hashed])
 
-            return redirect('Inicio_login')  # Redirige a la página de inicio de sesión o a otra página
+            return redirect('login')  # Redirige a la página de inicio de sesión o a otra página
     else:
-        form = forms.FormularioLogin()
+        form = forms.FormularioRegistro()
     ctx = {"form":form}
     return render(request, "miapp_CODEMC/inicio_registro.html", ctx)
 

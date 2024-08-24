@@ -54,7 +54,7 @@
 
 .header-principal.abajo{
     background-color: rgb(37, 70, 160);
-    height: 12vmin;
+    height: 11vmin;
 }
 
 .header-principal.abajo .btn-inicio button{
@@ -65,7 +65,7 @@
 
 /* Estilizamos el botón de cuenta*/
 
-.header-principal .btn-inicio button{
+.header-principal .btn-inicio i{
     text-decoration: none;
     color: blanchedalmond;
     font-size: 5vmin;
@@ -81,7 +81,7 @@
 }
 
 
-.header-principal .btn-inicio button:hover{
+.header-principal .btn-inicio i:hover{
     color: rgb(230, 161, 0);
     border-color: rgb(230, 161, 0);
 }

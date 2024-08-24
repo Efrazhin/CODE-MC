@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'miproyecto_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'almacenamiento_stock',
+        'NAME': 'GestionStock_DB',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

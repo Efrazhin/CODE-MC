@@ -7,8 +7,11 @@ class FormularioCurso(forms.Form):
     inscriptos = forms.IntegerField(label="Inscriptos")
 
 class FormularioLogin(forms.Form):
-    gmail = forms.EmailField(widget=forms.EmailInput(attrs={'class':'box-form','placeholder':'Ingrese su email'}))
-    contraseña= forms.CharField(widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Ingrese su contraseña'}))
-    validar_contraseña= forms.CharField(widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Confirme su contraseña'}))
-
+    gmail = forms.EmailField(label="",required=False,widget=forms.EmailInput(attrs={'class':'box-form','placeholder':'Ingrese su email'}))
+    contraseña= forms.CharField(label="",required=False,widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Ingrese su contraseña'}))
+   
+class FormularioRegistro(forms.Form):
+    gmail = forms.EmailField(label="",required=False,widget=forms.EmailInput(attrs={'class':'box-form','placeholder':'Ingrese su email'}))
+    contraseña= forms.CharField(label="",required=False,widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Ingrese su contraseña'}))
+    validar_contraseña= forms.CharField(label="",required=False,widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Confirme su contraseña'}))
 

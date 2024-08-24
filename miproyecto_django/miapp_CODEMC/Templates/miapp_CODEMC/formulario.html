@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>CODE MC</title>
+    
+    <script>
+        function enviarCorreo() {
+            // Obtener los valores de los campos
+            var nombre = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var mensaje = document.getElementById("message").value;
+
+            // Crear el enlace mailto
+            var link = "mailto:code.mc01@gmail.com"
+                     + "?cc=" + email
+                     + "&subject=" + encodeURIComponent("Mensaje de " + nombre)
+                     + "&body=" + encodeURIComponent(mensaje);
+
+            // Redirigir al enlace mailto
+            window.location.href = link;
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit="enviarCorreo(); return false;">
+        <label for="name">Nombre Completo</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Correo electrónico</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
