@@ -93,12 +93,20 @@ form {
 }
 
 /* Estilo para iconos colocados en campos específicos */
-e, c {
+e {
     position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
-    top: 20%; /* Posición desde la parte superior */
+    top: 18%; /* Posición desde la parte superior */
     left: 90%; /* Posición desde el borde izquierdo */
     font-size: 20px; /* Tamaño de los iconos */
 }
+
+c {
+    position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
+    top: 36%; /* Posición desde la parte superior */
+    left: 90%; /* Posición desde el borde izquierdo */
+    font-size: 20px; /* Tamaño de los iconos */
+}
+
 
 /* Estilo para el icono de verificación */
 ii {

@@ -15,6 +15,9 @@ body {
     justify-content: center; /* Alinea el contenido horizontalmente al centro */
     align-items: center; /* Alinea el contenido verticalmente al centro */
     min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura de la ventana */
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg");
+    background-position: center; /* Centra la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
 }
 
 /* Estilo para el fondo del body, con una imagen de fondo y un gradiente */
@@ -23,28 +26,28 @@ body::before {
     position: absolute; /* Posiciona el fondo en relación al body */
     width: 100%; /* Ancho del fondo igual al del body */
     height: 100%; /* Altura del fondo igual al del body */
-    /*background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/trabajo-en-equipo-banner.jpg"); /* Gradiente y imagen de fondo */
-    background-position: center; /* Centra la imagen de fondo */
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+     /* Gradiente y imagen de fondo */
 }
 
 .flex{
     display: flex;
-
-    width: 100vw;
-    height: 100vh;
+    width: 65vw;
+    height: 80vh;
 }
 
 .caja_img{
+    flex-basis: 50%;
     border-color: blue;
     border-style: solid;
     border-width: 7px;
-    width: 50vw;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/stock-organizado.jpg");
+    background-position: center; /* Centra la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
 }
 
+
 .img{
-    object-fit: cover;
-}
+    object-fit: cover;}
 
 
 /* Estilo para el título principal */
@@ -56,7 +59,8 @@ h1 {
 
 /* Estilo para el contenedor del formulario */
 .contenedor {
-    width: 460px; /* Ancho del contenedor */
+    flex-basis: 50%;
+    display: flex;
     border-radius: 12px; /* Bordes redondeados */
     padding: 30px; /* Espacio interno del contenedor */
     color: blanchedalmond; /* Color del texto */
