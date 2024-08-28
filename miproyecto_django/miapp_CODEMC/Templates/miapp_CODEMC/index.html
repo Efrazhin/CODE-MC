@@ -28,9 +28,9 @@
             <div class="banner-caja-2">
                 <h2>SIMPLIFICA TUS TAREAS ADMINISTRATIVAS...</h2>
                 <p>¡con nuestro sistema diseñado para optimizar tus procesos y mejorar la eficiencia de tu negocio!</p>
-                <a href='{% url "registro" %}' class="btn-registro">EMPIEZA YA</a>
+                
             </div>
-
+            
         </div>
         <!-- Agregamos etiquetas svg de ondas para hacer un efecto visual al banner -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -60,7 +60,7 @@
     
     <!-- Sección introductoria-->
     <a class="ancla" name="servicio"></a>
-    <h2 class="sub-titles"> EL SERVICIO QUE PUEDES APROVECHAR </h2>
+    <h2 class="sub-titles"> EL SERVICIO QUE PUEDES APROVECHAR: </h2>
 
     <section class="services">
 
@@ -146,7 +146,7 @@
                 </div>
                 <div>
                     <dt><i class="material-symbols-outlined">
-                        query_stats</i>VISUALIZA GRÁFICOS Y ESTADÍSTICAS</dt>
+                        query_stats</i>VISUALIZA ESTADÍSTICAS</dt>
                     <dd>Ten acceso a gráficos y distintas variables estadísticas de tu negocio. 
                         Visualiza los días, semanas, meses o años con mejores ventas, los días y horarios de 
                         la semana con mayor frecuencia de la clientela, y los productos más y menos vendidos. 
@@ -155,8 +155,10 @@
             </dl>
         </div>
     </section>
- 
-    
+    <div class=conv>
+        <h2 class='sub-titles'>¿TE CONVENCIMOS?</h2>
+        <a href='{% url "registro" %}' class="btn-registro">EMPIEZA YA</a>
+    </div>
     {% endblock %}
     
 </body>

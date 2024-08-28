@@ -1,7 +1,7 @@
 
 /* Estilizamos el encabezado de la pagina. */
 .header-principal {
-    position: fixed;
+    position: absolute;
     margin: 0;
     top: 0;
     display: flex;
@@ -10,7 +10,9 @@
     height: 10vmin;
     width: 99vw;
     padding: 0.5% 5%;
-    transition: all 0.35s linear;
+    transition: all 500ms linear;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-bottom: 0.2vmin solid blanchedalmond ;
     z-index: 20;
 }
 /* Estilizamos el logo */
@@ -53,7 +55,7 @@
 /* Relación a función en un script para la animación de desplazamiento; los cambios tras su ejecución */
 
 .header-principal.abajo{
-    background-color: rgb(37, 70, 160);
+    background-color: rgba(0, 0, 0,0.4);
     height: 11vmin;
 }
 

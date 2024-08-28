@@ -21,7 +21,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    z-index: -1;
+    z-index: 1;
 }
 
 .banner svg {
@@ -39,34 +39,28 @@
     height: 100vh;
     width: 99vw;
     background: rgba(0,0,0,0.65);
+    z-index: 2;
 }
 
 .banner .capa .banner-caja-1, .banner-caja-2 {
     color: blanchedalmond;
-    margin: 5vh 5vw;
+    margin: 0 5vw;
+    text-align: center;
     
 }
 
 .banner .capa .banner-caja-1{
-    text-align: center;
     border-color: #FFA600;
 
-}
-
-.banner .capa .banner-caja-2{
-    text-align: center;
 }
 
 .banner .capa .banner-caja-1 h1{
     font-size: 8vmin;
-    text-align: center;
     padding: 1.5vmin;
     padding-bottom: 0;
     letter-spacing: 6px;
-    border-style: solid;
+    border: 0.4vmin solid #FFA600;
     border-bottom: none;
-    border-color: #FFA600;
-    border-width: 0.5vmin;
 }
 
 .banner .capa .banner-caja-1 h1 span{
@@ -80,12 +74,10 @@
     letter-spacing: 3px;
     font-weight: 300;
     padding: 1.5vmin;
-    border-style: solid;
+    border: 0.5vmin solid #FFA600;
     border-top: none;
     border-right: none;
     border-left: none;
-    border-color: #FFA600;
-    border-width: 0.5vmin;
 
 }
 
@@ -100,29 +92,8 @@
     letter-spacing: 1px;
     font-weight: 400;
     padding: 1.5vmin 0;
+    margin-bottom: 4vmin;
 
-}
-
-.banner .capa .banner-caja-2 .btn-registro{
-    position: relative;
-    font-size: 3vmin;
-    font-weight: 400;
-    color: blanchedalmond;
-    text-decoration: none;
-    border-style: solid;
-    border-width: 0.5vmin;
-    border-color: blanchedalmond;
-    border-radius: 2vmin;
-    background: none;
-    padding: 1.5vmin 2vmin;
-    margin: 4vmin 0;
-    transition: all 200ms linear;
-    cursor: pointer;
-}
-
-.banner .capa .banner-caja-2 .btn-registro:hover{
-    color: #FFA600;
-    border-color: #FFA600;
 }
 
 /* Contenedores con frases */
@@ -201,22 +172,25 @@
     scroll-margin-top: 8.5vh;
 }
 
-/* Apartado de servicios y algunas estilizaciones para el apartado de soluciones */
+/* Apartado de servicios y algunas estilizaciones para otros apartados */
 
-.services, .solutions, .solut-especs{
+.services, .solutions, .solut-especs, .conv{
     display: flex;
     flex-direction: column;
     width: 99vw;
+    justify-content: center;
+    align-items: center;
 
 }
 
+
 .services .cont-servs {
     display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;  
+    justify-content: space-between;
+    align-items: center;  
     width: 99vw;
-    margin: 6vmin 0;
-    max-width: 80vw;
+    margin: 10vmin 0;
+    max-width: 85vw;
 }
 
 .services .service-caja1, .service-caja2{
@@ -230,8 +204,8 @@
 
 .imagenes{
     object-fit: cover;
-    width: 30w;
-    height: 35vw;
+    width: 35vw;
+    height: 80vh;
     border-radius: 1vmin;
     border-style: solid;
     border-color: #FFA600;
@@ -241,17 +215,18 @@
 }
 
 .services .service-caja1 .fa-ul li, .service-caja2 .fa-ul li{
-    margin: 5vmin 0;
+    margin: 4vmin 0;
     text-align: left;
-    font-size: 5vmin;
+    font-size: 4vmin;
     list-style-image: url(https://fontawesome.com/icons/check?f=classic&s=solid&sz=lg&pc=%23ffa600);
 }
 
 
 
 .services h3{
-    font-size: 6vmin;
+    font-size: 5vmin;
     font-weight: bold;
+    text-align: center;
     
 }
 
@@ -270,15 +245,15 @@
 }
 
 .solut-especs {
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 7vmin 0;
+    max-width: 80vw;
+    
+    
+    
 }
 
 .solut-especs dd{
-    font-size: 4.5vmin;
-    max-width: 80vw;
-    letter-spacing: 0.2vmin;
+    font-size: 4vmin;
+    letter-spacing: 0.1vmin;
     line-height: 6vmin;
     padding: 1vmin 0;
     margin-bottom: 10vmin;
@@ -286,11 +261,36 @@
 }
 
 .solut-especs dt{
-    font-size: 6vmin;
+    font-size: 5vmin;
     font-weight: bold;
-    max-width: 80vw;
     
 }
+
+/* Apartado final */
+
+.conv{
+    margin: 10vmin 0;
+}
+
+.btn-registro{
+    font-size: 4vmin;
+    font-weight: 400;
+    color: blanchedalmond;
+    text-decoration: none;
+    border: 0.5vmin solid blanchedalmond;
+    border-radius: 2vmin;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1.5vmin 4vmin;
+    margin-bottom: 4vmin;
+    transition: all 200ms linear;
+    z-index: 200;
+}
+
+.btn-registro:hover{
+    color: #FFA600;
+    border-color: #FFA600;
+}
+
 
 /* Determinamos media queries para ayudar a la pág. a volverse responsive. */
 
@@ -307,11 +307,8 @@
     }
 
     .imagenes{
-        width: 90vw;
-        height: 50vh;
-        margin: 3vh 0;
-    }
-
+        width: 80vw;
+        margin: 10vmin}
 }
 
 /* -------------------- fin del bloque -------------------- */
