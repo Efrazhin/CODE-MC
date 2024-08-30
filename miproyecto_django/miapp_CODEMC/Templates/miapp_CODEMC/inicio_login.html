@@ -15,18 +15,17 @@
 <body>
     <!-- Contenedor principal de la página -->
     <div class="flex">
+        
         <div class="contenedor">
+            <!-- Botón para cerrar el formulario -->
             <span class="cerrar-ventana" onclick="rederigir_principal()">
                 <i class="fa-solid fa-rectangle-xmark"></i>
             </span>
             <h1>Inicio de sesión</h1>
-            
             <!-- Caja que contiene el formulario de inicio de sesión -->
             <div class="form-box-login">
-                <!-- Botón para cerrar el formulario -->
-                
                 <!-- Formulario de inicio de sesión -->
-                <form method="post">
+                <form method="post" class="form_flex">
                     <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
                     {% csrf_token %}
                     <!-- Campo para el correo electrónico -->
