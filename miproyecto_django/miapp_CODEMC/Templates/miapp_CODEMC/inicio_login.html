@@ -17,11 +17,14 @@
     <div class="flex">
         
         <div class="contenedor">
+            <div>
+                <h1>Inicio de sesión</h1>
+            </div>
             <!-- Botón para cerrar el formulario -->
             <span class="cerrar-ventana" onclick="rederigir_principal()">
                 <i class="fa-solid fa-rectangle-xmark"></i>
             </span>
-            <h1>Inicio de sesión</h1>
+            
             <!-- Caja que contiene el formulario de inicio de sesión -->
             <div class="form-box-login">
                 <!-- Formulario de inicio de sesión -->
@@ -29,13 +32,16 @@
                     <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
                     {% csrf_token %}
                     <!-- Campo para el correo electrónico -->
-                    <div class="input-field">
-                        <e><i class="fa-solid fa-envelope"></i></e>
-                        <c class="fa-solid fa-lock"></c>  
+                
+                    <div class="input-field" >
                         <!-- Campo de entrada para el correo electrónico generado por Django -->
-                        {{ form.as_table }}
+                        {{ form.gmail }}
+                        <e><i class="fa-solid fa-envelope"></i></e>
                     </div>
-
+                    <div class="input-field"> 
+                        {{ form.contraseña}}
+                        <c class="fa-solid fa-lock"></c> 
+                    </div>
 
                     <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
                     <div class="forget">
@@ -76,3 +82,4 @@
     
 </body>
 </html>
+
