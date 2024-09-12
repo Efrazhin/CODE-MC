@@ -38,9 +38,7 @@ body::before {
 
 .caja_img{
     flex-basis: 50%;
-    border-color: blue;
-    border-style: solid;
-    border-width: 7px;
+    border: 1px solid rgb(255, 166, 0);
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url("/static/miapp_CODEMC/imagenes/stock-organizado.jpg");
     background-position: center; /* Centra la imagen de fondo */
     background-size: cover; /* Asegura que la imagen cubra todo el fondo */
@@ -64,9 +62,9 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-radius: 12px; /* Bordes redondeados */
-    padding: 30px; /* Espacio interno del contenedor */
+    padding: 50px; /* Espacio interno del contenedor */;
     color: blanchedalmond; /* Color del texto */
     background-color: rgba(0,0,0,0.2); /* Fondo semitransparente */
     text-align: center; /* Centra el texto dentro del contenedor */
@@ -78,9 +76,6 @@ h1 {
     overflow: hidden; /* Elimina el desbordamiento */
 }
 
-.form_flex{
-
-}
 
 /* Estilo para el botón de cerrar ventana */
 .cerrar-ventana {
@@ -97,17 +92,26 @@ h1 {
 form {
     display: flex; /* Utiliza el modelo Flexbox para el diseño del formulario */
     flex-direction: column; /* Organiza los elementos del formulario en una columna */
+    width: 100%;
+
+}
+.form_flex form{
+    flex-basis: 100%;
+    flex-grow: 2;
+}
+.input-field{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* Estilo para las etiquetas dentro de los campos de entrada */
 .input-field .box-form label {
     position: absolute; /* Posiciona la etiqueta de manera absoluta dentro del campo */
-    top: 50%; /* Centra verticalmente la etiqueta */
-    left: 0; /* Posición desde el borde izquierdo del campo */
     transform: translateY(-50%); /* Ajusta la etiqueta para que esté verticalmente centrada */
     color: blanchedalmond; /* Color de la etiqueta */
     font-size: 16px; /* Tamaño de la fuente de la etiqueta */
-    
     transition: 0.15s ease; /* Transición suave para los cambios */
 }
 
@@ -115,7 +119,10 @@ form {
 .input-field .box-form {
     position: relative; /* Posiciona los elementos internos en relación al campo */
     border-bottom: 2px solid blanchedalmond; /* Borde inferior del campo de entrada */
-    margin: 18px 5px; /* Espacio alrededor de los campos de entrada */
+    margin: 20px 100px; /* Espacio alrededor de los campos de entrada */
+    
+    
+    
 }
 
 
@@ -130,16 +137,13 @@ form {
     color: blanchedalmond; /* Color del texto */
 }
 
-e{
+.input-field .box-form > e{
     position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
-    top: 22%; /* Posición desde la parte superior */
-    left: 90%; /* Posición desde el borde izquierdo */
     font-size: 20px; /* Tamaño de los iconos */
 }
-c{
+
+.input-field .box-form > c{
     position: absolute; /* Posiciona los iconos de manera absoluta dentro del campo */
-    top: 38%; /* Posición desde la parte superior */
-    left: 90%; /* Posición desde el borde izquierdo */
     font-size: 20px; /* Tamaño de los iconos */
 }
 
