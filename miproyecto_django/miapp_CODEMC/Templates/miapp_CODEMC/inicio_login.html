@@ -42,6 +42,13 @@
                         {{ form.contraseña}}
                         <c class="fa-solid fa-lock"></c> 
                     </div>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
 
                     <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
                     <div class="forget">
@@ -70,6 +77,8 @@
             
         </div>
     </div>
+
+
 
     <!-- Importa el archivo JavaScript para funcionalidades del login -->
     <script src="{% static 'miapp_CODEMC/js/java_scr_login.js'%}"></script>
