@@ -107,13 +107,7 @@ form {
 }
 
 /* Estilo para las etiquetas dentro de los campos de entrada */
-.input-field .box-form label {
-    position: absolute; /* Posiciona la etiqueta de manera absoluta dentro del campo */
-    transform: translateY(-50%); /* Ajusta la etiqueta para que esté verticalmente centrada */
-    color: blanchedalmond; /* Color de la etiqueta */
-    font-size: 16px; /* Tamaño de la fuente de la etiqueta */
-    transition: 0.15s ease; /* Transición suave para los cambios */
-}
+
 
 /* Estilo para los campos de entrada */
 .input-field .box-form {
@@ -121,10 +115,38 @@ form {
     border-bottom: 2px solid blanchedalmond; /* Borde inferior del campo de entrada */
     margin: 20px 100px; /* Espacio alrededor de los campos de entrada */
     
-    
-    
 }
 
+/* Estilo para los campos de entrada con fondo */
+-.input-field .box-form {
+    font-size: 20px; /* Tamaño de la fuente */
+    padding: 10px; /* Espacio interno del campo */
+    border: 1px solid #ddd; /* Borde del campo */
+    position: relative; /* Posiciona el campo en relación a su contenedor */
+}
+
+/* Estilo para el placeholder dentro de los campos de entrada */
+.box-form::placeholder {
+    color: blanchedalmond; /* Color del placeholder */
+    font-size: 1rem; /* Tamaño del texto del placeholder */
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+    position: absolute; /* Posiciona el placeholder de manera absoluta dentro del campo */
+    top: 50%; /* Posición desde la parte superior */
+    left: 10px; /* Posición desde el borde izquierdo */
+    transform: translateY(-50%); /* Ajusta la posición vertical del placeholder */
+}
+
+/* Estilo para el placeholder cuando el campo está en foco */
+.box-form:focus {
+    padding-top: 20px; /* Espacio para el placeholder animado hacia arriba */
+}
+
+/* Estilo para el placeholder cuando el campo está en foco */
+.box-form:focus::placeholder {
+    top: -5px; /* Mueve el placeholder hacia arriba */
+    left: 10px; /* Ajusta la posición horizontal si es necesario */
+    font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
+}
 
 /* Estilo para los inputs dentro de los campos */
 .input-field input {
@@ -207,39 +229,4 @@ button:hover {
 
 
 
-/* Estilo para el placeholder dentro de los campos de entrada */
-.box-form::placeholder {
-    color: blanchedalmond; /* Color del placeholder */
-}
-
-/* Estilo para los campos de entrada con fondo */
-.box-form {
-    font-size: 20px; /* Tamaño de la fuente */
-    padding: 10px; /* Espacio interno del campo */
-    border: 1px solid #ddd; /* Borde del campo */
-    position: relative; /* Posiciona el campo en relación a su contenedor */
-}
-
-/* Estilo para el placeholder dentro de los campos de entrada */
-.box-form::placeholder {
-    color: blanchedalmond; /* Color del placeholder */
-    font-size: 16px; /* Tamaño del texto del placeholder */
-    transition: all 0.3s ease; /* Transición suave para todos los cambios */
-    position: absolute; /* Posiciona el placeholder de manera absoluta dentro del campo */
-    top: 50%; /* Posición desde la parte superior */
-    left: 10px; /* Posición desde el borde izquierdo */
-    transform: translateY(-50%); /* Ajusta la posición vertical del placeholder */
-}
-
-/* Estilo para el placeholder cuando el campo está en foco */
-.box-form:focus {
-    padding-top: 20px; /* Espacio para el placeholder animado hacia arriba */
-}
-
-/* Estilo para el placeholder cuando el campo está en foco */
-.box-form:focus::placeholder {
-    top: -90px; /* Mueve el placeholder hacia arriba */
-    left: 10px; /* Ajusta la posición horizontal si es necesario */
-    font-size: 12px; /* Tamaño del texto del placeholder cuando está en foco */
-}
  
