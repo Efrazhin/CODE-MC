@@ -10,7 +10,7 @@
     height: 10vmin;
     width: 99vw;
     padding: 0.5% 5%;
-    transition: all 500ms linear;
+    transition: all 400ms ease;
     background-color: rgba(0, 0, 0, 0.5);
     border-bottom: 0.2vmin solid blanchedalmond ;
     z-index: 20;
