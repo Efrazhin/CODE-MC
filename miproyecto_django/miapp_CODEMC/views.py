@@ -61,7 +61,8 @@ def inicio_registro(request):
             contraseña = form.cleaned_data["contraseña"]
             validar_contraseña = form.cleaned_data["validar_contraseña"]
             if contraseña != validar_contraseña:
-                return HttpResponse("Las contraseñas no coinciden.")
+                messages.error(request, "Las contraseñas no coinciden.")
+                return render(request, "miapp_CODEMC/inicio_registro.html", {"form": form})
 
             # Validar si el email ya está registrado
             with connection.cursor() as cursor:
@@ -69,15 +70,18 @@ def inicio_registro(request):
                 email_count = cursor.fetchone()[0]
 
             if email_count > 0:
-                return HttpResponse("Este correo electrónico ya está registrado.")
+                messages.error(request, "Este correo electrónico ya está registrado.")
+                return render(request, "miapp_CODEMC/inicio_registro.html", {"form": form})
 
             # Insertar el nuevo usuario en la base de datos con la contraseña en texto plano
             with connection.cursor() as cursor:
                 cursor.execute("INSERT INTO usuarios (email, contraseña) VALUES (%s, %s)", [email, contraseña])
+            messages.success(request, "Registro exitoso. Puedes iniciar sesión.")
+            return redirect("login")  # Cambia esto al nombre de la vista donde redirigirás
 
-            return redirect('login')  # Redirige a la página de inicio de sesión o a otra página
     else:
         form = forms.FormularioRegistro()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/inicio_registro.html", ctx)
+
 
