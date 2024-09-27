@@ -43,8 +43,14 @@
                     <ii class="fa-solid fa-check"></ii>
                     <!-- Campo de entrada para el correo electrónico del formulario -->
                     {{ form.as_table }}
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 </div>
-
 
                 <!-- Sección para los términos y condiciones -->
                 <div class="forget">
