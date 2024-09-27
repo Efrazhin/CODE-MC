@@ -1,7 +1,7 @@
 from django.db import models
 
 class Clientes(models.Model):
-    dni_cliente = models.AutoField('DNI Cliente', primary_key=True)
+    dni_cliente = models.CharField('DNI Cliente', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     calle = models.CharField('Calle', max_length=100)
@@ -19,7 +19,7 @@ class Paises(models.Model):
     nombre = models.CharField('Nombre', max_length=100)  
 
 class Proveedores(models.Model):
-    dni_proveedor = models.AutoField('DNI Proveedor', primary_key=True)
+    dni_proveedor = models.CharField('DNI Proveedor', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     telefono = models.BigIntegerField('Teléfono')
@@ -38,7 +38,7 @@ class Cargos(models.Model):
     nombre = models.CharField('Nombre', max_length=100)    
 
 class Empleados(models.Model):
-    dni_empleado = models.AutoField('DNI Empleado', primary_key=True)
+    dni_empleado = models.CharField('DNI Empleado', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     contraseña = models.CharField('Contraseña', max_length=100)
@@ -48,29 +48,34 @@ class Empleados(models.Model):
     nro_calle = models.IntegerField('Número de Calle')
     fecha_nacimiento = models.DateField('Fecha de Nacimiento')
     fecha_admision = models.DateField('Fecha de Admisión')
-    cargo = models.ForeignKey(Cargos, on_delete=models.CASCADE, verbose_name='Cargo')
+    cargo = models.ForeignKey(Cargos, on_delete=models.SET_NULL, null=True, verbose_name='Cargo')
     
 class Usuario(models.Model):
     id_user = models.AutoField('ID Usuario', primary_key=True)
     alias = models.CharField('Alias', max_length=100)
+    is_superuser = models.BooleanField()
     # config = models.ForeignKey('Configuracion', on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleados, on_delete=models.CASCADE, verbose_name='Empleado')
 
+class Empresas(models.Model):
+    cuit = models.CharField('CUIT/Razón social', max_length=50)
+    nombre = models.CharField('Nombre', max_length=50)
+
+
 class Almacenes(models.Model):
-    id_almacen = models.AutoField('ID Almacén', primary_key=True)
+    id_almacen = models.IntegerField('ID Almacén', primary_key=True)
     telefono = models.BigIntegerField('Teléfono')
     provincia = models.ForeignKey(Provincias, on_delete=models.CASCADE, verbose_name='Provincia')
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
-    
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
     unidad_medida = models.CharField('Unidad de Medida', max_length=50)
 
 class Sucursales(models.Model):
-    id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
+    id_sucursal = models.IntegerField('ID Sucursal', primary_key=True)
     telefono = models.BigIntegerField('Teléfono')
-    provincia = models.ForeignKey('Provincia', on_delete=models.CASCADE, verbose_name='Provincia')
+    provincia = models.ForeignKey(Provincias, on_delete=models.CASCADE, verbose_name='Provincia')
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')

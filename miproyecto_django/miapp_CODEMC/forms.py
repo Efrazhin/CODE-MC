@@ -1,5 +1,5 @@
 from django import forms
-
+from .models import *
 
 
 class FormularioCurso(forms.Form):
@@ -15,3 +15,6 @@ class FormularioRegistro(forms.Form):
     contraseña= forms.CharField(label="",required=False,widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Ingrese su contraseña'}))
     validar_contraseña= forms.CharField(label="",required=False,widget=forms.PasswordInput(attrs={'class':'box-form','placeholder':'Confirme su contraseña'}))
 
+class FormCliente(forms.Form):
+    model = Clientes
+    fields = []
