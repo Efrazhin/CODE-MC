@@ -34,10 +34,11 @@ input[type="text"], input[type="email"], textarea {
 }
 
 /*Diseño del boton de Enviar*/
+
 input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #e39e0be3;
+    background-color: #eb8c08e3;
     color: rgb(0, 0, 0);
     border: none;
     border-radius: 4px;
@@ -46,6 +47,9 @@ input[type="submit"] {
     font-size: 16px;
 }
 
+
+/*fondo de color del boton al precionarlo*/
+
 input[type="submit"]:hover {
-    background-color: #df8f06;
+    background-color: #df9007;
 }
