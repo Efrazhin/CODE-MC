@@ -118,7 +118,7 @@ form {
 }
 
 /* Estilo para los campos de entrada con fondo */
--.input-field .box-form {
+.input-field .box-form {
     font-size: 20px; /* Tamaño de la fuente */
     padding: 10px; /* Espacio interno del campo */
     border: 1px solid #ddd; /* Borde del campo */

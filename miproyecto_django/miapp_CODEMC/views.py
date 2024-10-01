@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db import connection
 from django.contrib import messages
 
-from . import forms
+from .forms import *
 
 # Create your views here.
 def index(request):
@@ -55,32 +55,12 @@ def inicio_usuario(request):
 
 def inicio_registro(request):
     if request.method == 'POST':
-        form = forms.FormularioRegistro(request.POST)
+        form = forms.FormularioRegistroEmpresa(request.POST)
         if form.is_valid():
-            email = form.cleaned_data["gmail"]
-            contraseña = form.cleaned_data["contraseña"]
-            validar_contraseña = form.cleaned_data["validar_contraseña"]
-            if contraseña != validar_contraseña:
-                messages.error(request, "Las contraseñas no coinciden.")
-                return render(request, "miapp_CODEMC/inicio_registro.html", {"form": form})
-
-            # Validar si el email ya está registrado
-            with connection.cursor() as cursor:
-                cursor.execute("SELECT COUNT(*) FROM usuarios WHERE email = %s", [email])
-                email_count = cursor.fetchone()[0]
-
-            if email_count > 0:
-                messages.error(request, "Este correo electrónico ya está registrado.")
-                return render(request, "miapp_CODEMC/inicio_registro.html", {"form": form})
-
-            # Insertar el nuevo usuario en la base de datos con la contraseña en texto plano
-            with connection.cursor() as cursor:
-                cursor.execute("INSERT INTO usuarios (email, contraseña) VALUES (%s, %s)", [email, contraseña])
-            messages.success(request, "Registro exitoso. Puedes iniciar sesión.")
-            return redirect("login")  # Cambia esto al nombre de la vista donde redirigirás
-
+            form.save()
+            return HttpResponse("Codigo de mierda")
     else:
-        form = forms.FormularioRegistro()
+        form = forms.FormularioRegistroEmpresa()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/inicio_registro.html", ctx)
 

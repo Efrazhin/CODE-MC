@@ -1,7 +1,8 @@
 from django.db import models
 
+
 class Clientes(models.Model):
-    dni_cliente = models.CharField('DNI Cliente', primary_key=True)
+    dni_cliente = models.CharField('DNI Cliente', primary_key=True, max_length=120)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     calle = models.CharField('Calle', max_length=100)
@@ -19,7 +20,7 @@ class Paises(models.Model):
     nombre = models.CharField('Nombre', max_length=100)  
 
 class Proveedores(models.Model):
-    dni_proveedor = models.CharField('DNI Proveedor', primary_key=True)
+    dni_proveedor = models.CharField('DNI Proveedor', primary_key=True, max_length=120)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     telefono = models.BigIntegerField('Teléfono')
@@ -38,7 +39,7 @@ class Cargos(models.Model):
     nombre = models.CharField('Nombre', max_length=100)    
 
 class Empleados(models.Model):
-    dni_empleado = models.CharField('DNI Empleado', primary_key=True)
+    dni_empleado = models.CharField('DNI Empleado', primary_key=True, max_length=120)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     contraseña = models.CharField('Contraseña', max_length=100)
@@ -50,10 +51,10 @@ class Empleados(models.Model):
     fecha_admision = models.DateField('Fecha de Admisión')
     cargo = models.ForeignKey(Cargos, on_delete=models.SET_NULL, null=True, verbose_name='Cargo')
     
-class Usuario(models.Model):
+class Usuarios(models.Model):
     id_user = models.AutoField('ID Usuario', primary_key=True)
     alias = models.CharField('Alias', max_length=100)
-    is_superuser = models.BooleanField()
+    is_superuser = models.BooleanField(null=True)
     # config = models.ForeignKey('Configuracion', on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleados, on_delete=models.CASCADE, verbose_name='Empleado')
 
@@ -113,7 +114,6 @@ class Productos(models.Model):
     subcategoria = models.ForeignKey(Subcategorias, on_delete=models.CASCADE, verbose_name='Subcategorías')
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE, verbose_name='Categorías')
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE, verbose_name='Stock')
-
 
 
 # class Configuraciones(models.Model):

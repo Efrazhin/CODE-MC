@@ -42,7 +42,8 @@
                     <ic class="fa-solid fa-lock"></ic>
                     <ii class="fa-solid fa-check"></ii>
                     <!-- Campo de entrada para el correo electrónico del formulario -->
-                    {{ form.as_table }}
+                    {{ form.as_table}}
+
                     {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
