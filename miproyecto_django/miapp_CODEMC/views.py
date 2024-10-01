@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db import connection
 from django.contrib import messages
 
-from .forms import *
+from . forms import *
 
 # Create your views here.
 def index(request):
@@ -29,10 +29,8 @@ def inicio_usuario(request):
     if request.method == 'POST':
         form = forms.FormularioLogin(request.POST)
         if form.is_valid():
-            email = form.cleaned_data["gmail"]
-            contraseña = form.cleaned_data["contraseña"]
-            # Verifica si el usuario existe y la contraseña es correcta
-
+            form.save()
+            
             with connection.cursor() as cursor:
                 # Obtén la contraseña almacenada en texto plano
                 cursor.execute("SELECT contraseña FROM usuarios WHERE email = %s", [email])
@@ -52,6 +50,8 @@ def inicio_usuario(request):
         form = forms.FormularioLogin()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/Inicio_login.html", ctx)
+
+
 
 def inicio_registro(request):
     if request.method == 'POST':
