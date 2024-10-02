@@ -48,7 +48,7 @@ class Empleados(models.Model):
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
     fecha_nacimiento = models.DateField('Fecha de Nacimiento')
-    fecha_admision = models.DateField('Fecha de Admisión')
+    #fecha_admision = models.DateField('Fecha de Admisión', null=True)
     cargo = models.ForeignKey(Cargos, on_delete=models.SET_NULL, null=True, verbose_name='Cargo')
     
 class Usuarios(models.Model):
