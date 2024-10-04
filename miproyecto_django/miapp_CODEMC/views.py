@@ -23,6 +23,28 @@ def sucursales(request):
 
 def estadisticas(request):
     return render(request, "miapp_codemc/estadisticas.html")
+    
+def provedores(request):
+    return render(request, "miapp_codemc/provedores.html")
+
+def libros(request):
+    return render(request, "miapp_codemc/libros.html")
+    
+def empleados(request):
+    return render(request, "miapp_codemc/empleados.html")
+    
+def depositos(request):
+    return render(request, "miapp_codemc/depositos.html")
+    
+def configuracion(request):
+    return render(request, "miapp_codemc/configuracion.html")
+    
+def compras(request):
+    return render(request,"miapp_codemc/compras.html")
+    
+def clientes(request):
+    return render(request,"miapp_codemc/clientes")
+
 
 def inicio_usuario(request):
     if request.method == 'POST':
