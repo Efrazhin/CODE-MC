@@ -53,8 +53,17 @@ class Cargo(models.Model):
 class Empleado(AbstractUser):
     dni_empleado = models.CharField('DNI Empleado', primary_key=True, max_length=120)
     telefono = models.BigIntegerField('Teléfono')
+<<<<<<< HEAD
     cargo = models.ForeignKey(Cargo, on_delete=models.SET_NULL, null=True, verbose_name='Cargo')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+=======
+    email = models.EmailField('Email')
+    calle = models.CharField('Calle', max_length=100)
+    nro_calle = models.IntegerField('Número de Calle')
+    fecha_nacimiento = models.DateField('Fecha de Nacimiento')
+    #fecha_admision = models.DateField('Fecha de Admisión', null=True)
+    cargo = models.ForeignKey(Cargos, on_delete=models.SET_NULL, null=True, verbose_name='Cargo')
+>>>>>>> d550f812ebf599a6867d9a26b9d411f0a8c574fa
     
 
 class Almacen(models.Model):

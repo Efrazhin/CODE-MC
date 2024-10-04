@@ -35,11 +35,12 @@
                 
                     <div class="input-field" >
                         <!-- Campo de entrada para el correo electrónico generado por Django -->
-                        {{ form.gmail }}
+                        {{ form.email }}
+                        {{ form.contraseña}}
                         <e><i class="fa-solid fa-envelope"></i></e>
                     </div>
                     <div class="input-field"> 
-                        {{ form.contraseña}}
+
                         <c class="fa-solid fa-lock"></c> 
                     </div>
                     {% if messages %}

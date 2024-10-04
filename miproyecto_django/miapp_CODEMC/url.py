@@ -6,5 +6,6 @@ urlpatterns=[
     path("Planes",views.planes,name="planes"),
     path("Contacto",views.contacto,name="contacto"),
     path("Inicio_login",views.inicio_usuario,name="login"),
+    path("Inicio_registro_empresa", views.inicio_registro_empresa, name="registro_empresa"),
     path("Inicio_registro", views.inicio_registro, name="registro")
 ]

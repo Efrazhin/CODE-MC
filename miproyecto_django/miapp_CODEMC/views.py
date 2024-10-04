@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.db import connection
 from django.contrib import messages
 
-from . forms import *
+from . import forms
 
 # Create your views here.
 def index(request):
@@ -30,37 +29,31 @@ def inicio_usuario(request):
         form = forms.FormularioLogin(request.POST)
         if form.is_valid():
             form.save()
-            
-            with connection.cursor() as cursor:
-                # Obtén la contraseña almacenada en texto plano
-                cursor.execute("SELECT contraseña FROM usuarios WHERE email = %s", [email])
-                cursor = cursor.fetchone()
-
-                if cursor:
-                    stored_password = cursor[0]
-
-                    # Verifica la contraseña en texto plano
-                    if contraseña == stored_password:
-                        return redirect("inicio gestion")
-                    else:
-                        messages.error(request, "Contraseña incorrecta. Inténtalo de nuevo.")
-                else:
-                    messages.error(request, "Usuario no encontrado.")
-    else:
         form = forms.FormularioLogin()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/Inicio_login.html", ctx)
 
 
 
-def inicio_registro(request):
+def inicio_registro_empresa(request):
     if request.method == 'POST':
         form = forms.FormularioRegistroEmpresa(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Codigo de mierda")
+            return redirect('registro')
     else:
         form = forms.FormularioRegistroEmpresa()
+    ctx = {"form": form}
+    return render(request, "miapp_CODEMC/inicio_registro_empresa.html", ctx)
+
+def inicio_registro(request):
+    if request.method == 'POST':
+        form = forms.FormularioRegistro(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Codigo de mierda")
+    else:
+        form = forms.FormularioRegistro()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/inicio_registro.html", ctx)
 
