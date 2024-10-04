@@ -4,20 +4,20 @@ from .models import *
 
 class FormularioLogin(ModelForm):
     class Meta:
-        model = Empleados
-        fields = ('email','contraseña')
+        model = Empleado
+        fields = ("dni_empleado", "password")
    
 class FormularioRegistroEmpresa(ModelForm):
     class Meta:
-        model = Empresas
-        fields = ['cuit', 'nombre'] 
+        model = Empresa
+        fields = ('cuit', 'nombre') 
 
 class FormularioRegistro(ModelForm):
     class Meta:
-        model= Empleados
-        fields = ['dni_empleado','nombre','apellido','contraseña','telefono','email','calle','nro_calle','fecha_nacimiento']
+        model = Empleado
+        fields = ('dni_empleado','username','first_name','last_name','email','telefono','password')
 
 class FormCliente(ModelForm):
     class Meta:
-        model = Clientes
+        model = Cliente
         fields = []
