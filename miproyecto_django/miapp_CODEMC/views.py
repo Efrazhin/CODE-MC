@@ -7,76 +7,78 @@ from . import forms
 # Create your views here.
 def index(request):
     ctx = {}
-    return render(request, 'miapp_CODEMC/index.html', ctx)
+    return render(request, 'miapp_CODEMC/service/index.html', ctx)
 
 def planes(request):
-    return render(request, "miapp_CODEMC/Planes.html")
+    return render(request, "miapp_CODEMC/service/Planes.html")
 
 def contacto(request):
-    return render(request, "miapp_CODEMC/Contacto.html")
+    return render(request, "miapp_CODEMC/service/Contacto.html")
 
 def inicio_gestion(request):
-    return render(request, "miapp_codemc/inicio_gestion.html")
+    return render(request, "miapp_CODEMC/inicio_gestion.html")
 
 def sucursales(request):
-    return render(request, "miapp_codemc/sucursales.html")
+    return render(request, "miapp_CODEMC/sucursales.html")
 
 def estadisticas(request):
-    return render(request, "miapp_codemc/estadisticas.html")
+    return render(request, "miapp_CODEMC/estadisticas.html")
     
 def provedores(request):
-    return render(request, "miapp_codemc/provedores.html")
+    return render(request, "miapp_CODEMC/provedores.html")
 
 def libros(request):
-    return render(request, "miapp_codemc/libros.html")
+    return render(request, "miapp_CODEMC/libros.html")
     
 def empleados(request):
-    return render(request, "miapp_codemc/empleados.html")
+    return render(request, "miapp_CODEMC/empleados.html")
     
 def depositos(request):
-    return render(request, "miapp_codemc/depositos.html")
+    return render(request, "miapp_CODEMC/depositos.html")
     
 def configuracion(request):
-    return render(request, "miapp_codemc/configuracion.html")
+    return render(request, "miapp_CODEMC/configuracion.html")
     
 def compras(request):
-    return render(request,"miapp_codemc/compras.html")
+    return render(request,"miapp_CODEMC/compras.html")
     
 def clientes(request):
-    return render(request,"miapp_codemc/clientes")
+    return render(request,"miapp_CODEMC/clientes.html")
 
+def ventas(request):
+    return render(request,"miapp_CODEMC/ventas.html")
 
-def inicio_usuario(request):
+def user_login(request):
     if request.method == 'POST':
-        form = forms.FormularioLogin(request.POST)
+        form = forms.FormLogin(request.POST)
         if form.is_valid():
-            form.save()
-        form = forms.FormularioLogin()
+            pass
+    else:
+        form = forms.FormLogin()
     ctx = {"form": form}
-    return render(request, "miapp_CODEMC/Inicio_login.html", ctx)
+    return render(request, "miapp_CODEMC/login/user-login.html", ctx)
 
 
-
-def inicio_registro_empresa(request):
+def company_registration(request):
     if request.method == 'POST':
-        form = forms.FormularioRegistroEmpresa(request.POST)
+        form = forms.FormRegistroEmpresa(request.POST)
         if form.is_valid():
             form.save()
             return redirect('registro')
     else:
-        form = forms.FormularioRegistroEmpresa()
+        form = forms.FormRegistroEmpleado()
     ctx = {"form": form}
-    return render(request, "miapp_CODEMC/inicio_registro_empresa.html", ctx)
+    return render(request, "miapp_CODEMC/registrations/company-register.html", ctx)
 
-def inicio_registro(request):
+def user_registration(request):
     if request.method == 'POST':
-        form = forms.FormularioRegistro(request.POST)
+        form = forms.FormRegistroEmpleado(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponse("Codigo de mierda")
     else:
-        form = forms.FormularioRegistro()
+        form = forms.FormRegistroEmpleado()
     ctx = {"form": form}
-    return render(request, "miapp_CODEMC/inicio_registro.html", ctx)
+    return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
 
 
