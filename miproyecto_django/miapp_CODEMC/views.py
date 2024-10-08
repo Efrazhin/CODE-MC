@@ -51,18 +51,10 @@ def ventas(request):
     return render(request,"miapp_CODEMC/ventas.html")
 
 def user_login(request):
-<<<<<<< HEAD
-    if request.method == 'POST':
-        form = forms.FormLogin(request.POST)
-        if form.is_valid():
-            return redirect('home')
-=======
-    
     if request.method == 'GET':
         ctx = {'form' : AuthenticationForm}
         return render (request, "miapp_CODEMC/login/user-login.html, ctx")
     
->>>>>>> fda03cc7fcd6813b40848158018ccb2e51d9f2fa
     else:
         user = authenticate(
             request, username=request.POST['username'], password=request.POST['password']
@@ -98,5 +90,3 @@ def user_registration(request):
         form = forms.FormRegistroEmpleado()
     ctx = {"form": form}
     return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
-
-
