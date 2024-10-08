@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 
 from . import forms
 
@@ -16,7 +18,7 @@ def contacto(request):
     return render(request, "miapp_CODEMC/service/Contacto.html")
 
 def inicio_gestion(request):
-    return render(request, "miapp_CODEMC/inicio_gestion.html")
+    return render(request, "miapp_CODEMC/home.html")
 
 def sucursales(request):
     return render(request, "miapp_CODEMC/sucursales.html")
@@ -49,14 +51,30 @@ def ventas(request):
     return render(request,"miapp_CODEMC/ventas.html")
 
 def user_login(request):
+<<<<<<< HEAD
     if request.method == 'POST':
         form = forms.FormLogin(request.POST)
         if form.is_valid():
             return redirect('home')
+=======
+    
+    if request.method == 'GET':
+        ctx = {'form' : AuthenticationForm}
+        return render (request, "miapp_CODEMC/login/user-login.html, ctx")
+    
+>>>>>>> fda03cc7fcd6813b40848158018ccb2e51d9f2fa
     else:
-        form = forms.FormLogin()
-    ctx = {"form": form}
-    return render(request, "miapp_CODEMC/login/user-login.html", ctx)
+        user = authenticate(
+            request, username=request.POST['username'], password=request.POST['password']
+        )
+        if user is None:
+            ctx = {'form' : AuthenticationForm, 'error' : 'Usuario o contraseña incorrectos'}
+            return render(request,"miapp_CODEMC/login/user-login.html",ctx)
+        else:
+            return redirect('home')
+            
+    ctx = {'form' : AuthenticationForm}       
+    return render (request, "miapp_CODEMC/login/user-login.html", ctx)
 
 
 def company_registration(request):
@@ -75,7 +93,7 @@ def user_registration(request):
         form = forms.FormRegistroEmpleado(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Codigo de mierda")
+            return redirect('home')
     else:
         form = forms.FormRegistroEmpleado()
     ctx = {"form": form}
