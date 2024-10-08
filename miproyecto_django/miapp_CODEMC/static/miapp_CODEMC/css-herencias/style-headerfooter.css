@@ -62,7 +62,7 @@
 .header-principal.abajo .btn-inicio button{
     background-color: blanchedalmond;
     color: black;
-
+    text-decoration: none;
 }
 
 /* Estilizamos el botón de cuenta*/
@@ -90,6 +90,7 @@
 
 .ri-account-box-line{
     transition: all 200ms linear;
+    text-decoration: none;
 }
 
 

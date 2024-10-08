@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 class FormLogin(ModelForm):
     class Meta:
         model = Empleado
-        fields = ('dni_empleado', 'password')
+        fields = ('username', 'password')
    
 class FormRegistroEmpresa(ModelForm):
     class Meta:
@@ -14,9 +14,9 @@ class FormRegistroEmpresa(ModelForm):
         fields = ('cuit', 'nombre') 
 
 class FormRegistroEmpleado(UserCreationForm):
-    # class Meta:
-    #     model = Empleado
-    #     fields = ('dni_empleado','username','first_name','last_name','email','telefono','password','password')
+    class Meta:
+        model = Empleado
+        fields = ('username','first_name','last_name','dni_empleado','email','telefono')
     pass
 class FormCliente(ModelForm):
     class Meta:
