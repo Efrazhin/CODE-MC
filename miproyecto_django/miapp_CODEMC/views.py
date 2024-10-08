@@ -52,7 +52,7 @@ def user_login(request):
     if request.method == 'POST':
         form = forms.FormLogin(request.POST)
         if form.is_valid():
-            pass
+            return redirect('home')
     else:
         form = forms.FormLogin()
     ctx = {"form": form}
