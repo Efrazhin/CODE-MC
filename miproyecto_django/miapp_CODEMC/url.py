@@ -6,6 +6,7 @@ urlpatterns=[
     path("pricing-tiers/",views.planes,name="planes"),
     path("contact/",views.contacto,name="contacto"),
     path("login/",views.user_login,name="login"),
+    path("logout/",views.logout,name="logout"),
     path("company-registration/", views.company_registration, name="registro_empresa"),
     path("user-registration/", views.user_registration, name="registro"),
     path("home/",views.inicio_gestion,name="home"),

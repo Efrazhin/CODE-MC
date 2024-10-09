@@ -51,23 +51,24 @@ def ventas(request):
     return render(request,"miapp_CODEMC/ventas.html")
 
 def user_login(request):
+    form = AuthenticationForm()
     if request.method == 'GET':
-        ctx = {'form' : AuthenticationForm}
-        return render (request, "miapp_CODEMC/login/user-login.html, ctx")
+        ctx = {'form' : form}
+        return render(request, "miapp_CODEMC/signin/user-login.html", ctx)
     
     else:
         user = authenticate(
-            request, username=request.POST['username'], password=request.POST['password']
-        )
+            request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            ctx = {'form' : AuthenticationForm, 'error' : 'Usuario o contraseña incorrectos'}
-            return render(request,"miapp_CODEMC/login/user-login.html",ctx)
+            ctx = {'form' : form, 'error' : 'Usuario o contraseña incorrectos'}
+            return render(request, "miapp_CODEMC/signin/user-login.html", ctx)
         else:
+            login(request, user)
             return redirect('home')
-            
-    ctx = {'form' : AuthenticationForm}       
-    return render (request, "miapp_CODEMC/login/user-login.html", ctx)
-
+                 
+def user_signout(request):
+    print(logout(request))
+    return redirect('index')
 
 def company_registration(request):
     if request.method == 'POST':
@@ -84,7 +85,8 @@ def user_registration(request):
     if request.method == 'POST':
         form = forms.FormRegistroEmpleado(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('home')
     else:
         form = forms.FormRegistroEmpleado()
