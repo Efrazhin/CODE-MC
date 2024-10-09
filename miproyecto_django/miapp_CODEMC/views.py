@@ -67,7 +67,10 @@ def user_login(request):
             return redirect('home')
                  
 def user_signout(request):
-    print(logout(request))
+    try:
+        logout(request)
+    except:
+        pass
     return redirect('index')
 
 def company_registration(request):
