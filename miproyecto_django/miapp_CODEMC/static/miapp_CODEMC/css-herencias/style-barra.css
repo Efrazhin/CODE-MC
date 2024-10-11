@@ -148,24 +148,6 @@ body.dark .sidebar header .toggle {
     margin-top: 40px;
 }
         
-.sidebar li.search-box {
-    border-radius: 6px;
-    background-color: var(--primary-color-light);
-    cursor: pointer;
-    transition: var(--tran-05);
-}
-.sidebar li.search-box input {
-    height: 100%;
-    width: 100%;
-    outline: none;
-    border: none;
-    background-color: var(--primary-color-light);
-    color: var(--text-color);
-    border-radius: 6px;
-    font-size: 17px;
-    font-weight: 500;
-    transition: var (--tran-05);
- }
 .sidebar li a {
     list-style: none;
     height: 100%;
@@ -276,4 +258,67 @@ body.dark .switch::before{
 }
 body.dark .home .text{
     color: var(--text-color);
+}
+.menu-links {
+    max-height: 500px; /* Define una altura máxima */
+    overflow-y: auto;  /* Habilita el scroll vertical si el contenido excede la altura */
+    overflow-x: hidden;
+    scrollbar-width: thin;  /* Para navegadores que lo soportan, ajusta el ancho de la barra */
+}
+
+.menu-links::-webkit-scrollbar {
+    width: 6px;  /* Ancho de la barra en navegadores que usan WebKit */
+}
+
+.menu-links::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);  /* Color de la barra */
+    border-radius: 10px;  /* Bordes redondeados */
+}
+
+.menu-links::-webkit-scrollbar-track {
+    background-color: var(--sidebar-color); /* Color de fondo de la barra */
+}
+/* Estilo de la barra de búsqueda similar a las listas */
+.search-box {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color-light);
+    padding: 0 10px;
+    border-radius: 6px;
+    transition: var(--tran-05);
+    overflow: hidden;
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--text-color);
+    width: 100%;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.search-box .icon {
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+/* Ocultar la barra de búsqueda cuando la barra lateral está cerrada */
+.sidebar.close .search-box {
+    opacity: 0;
+    height: 0; /* Para que no ocupe espacio */
+    padding: 0;
+    visibility: hidden;
+    transition: var(--tran-05);
+}
+
+/* Estilo de la barra de búsqueda cuando el menú está abierto */
+.sidebar .search-box {
+    opacity: 1;
+    height: 50px;
+    visibility: visible;
+    padding: 0 10px;
+    transition: var(--tran-05);
 }
