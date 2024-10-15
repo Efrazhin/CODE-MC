@@ -66,6 +66,7 @@ def user_login(request):
             login(request, user)
             return redirect('home')
                  
+
 def user_signout(request):
     try:
         logout(request)
@@ -88,7 +89,11 @@ def user_registration(request):
     if request.method == 'POST':
         form = forms.FormRegistroEmpleado(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            if 'user-register' in request.path:
+                pass
+                #continuar en casa
+
             login(request, user)
             return redirect('home')
     else:

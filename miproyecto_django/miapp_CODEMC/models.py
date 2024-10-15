@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     ]
     role = models.CharField('Rol', max_length=10, choices=ROLE_CHOICES, default=EMPLEADO)
 
-class BussinessManager(models.Model):
+class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
@@ -35,7 +35,7 @@ class BussinessManager(models.Model):
 
 class Empleado(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    jefe = models.ForeignKey(BussinessManager, on_delete=models.CASCADE, related_name='empleados')
+    jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleados')
 
     def __str__(self):
         return self.user.username 

@@ -13,15 +13,6 @@ class FormRegistroUser(UserCreationForm):
         model = User
         fields = ('username','first_name','last_name','email')
 
-class FormRegistroManager(UserCreationForm):
-    class Meta:
-        model = BussinessManager
-        fields = ('dni_manager','telefono')
-
-class FormRegistroEmpleado(ModelForm):
-    class Meta:
-        model = Empleado
-        fields = ('dni_empleado','telefono')
 
 class FormCliente(ModelForm):
     class Meta:
