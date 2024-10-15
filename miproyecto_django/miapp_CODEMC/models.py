@@ -1,14 +1,45 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 
 
 class Empresa(models.Model):
-    cuit = models.CharField('CUIT', max_length=50)
-    nombre = models.CharField('Razón social', max_length=50)
+    cuit = models.CharField('CUIT', max_length=50, primary_key=True, unique=True)
+    nombre = models.CharField('Razón social', max_length=100)
     telefono = models.CharField('Teléfono de contacto', max_length=50)
     email = models.EmailField('Email de contacto')
     descripcion = models.TextField('Descripción de actividades')
 
+    def __str__(self):
+        return self.nombre
+    
+class CustomUser(AbstractUser):
+    dni = models.CharField('DNI', max_length=120,unique=True)
+    telefono = models.CharField('Teléfono', max_length=120)
+    MANAGER = 'manager'
+    EMPLEADO = 'empleado'
+    ROLE_CHOICES = [
+        (MANAGER, 'Manager'),
+        (EMPLEADO, 'Empleado')
+    ]
+    role = models.CharField('Rol', max_length=10, choices=ROLE_CHOICES, default=EMPLEADO)
+
+class BussinessManager(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.empresa.nombre}"
+    
+#"related_name" se trata de un atributo que permite definir el nombre de la relación
+#inversa en una relación entre modelos.
+
+class Empleado(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    jefe = models.ForeignKey(BussinessManager, on_delete=models.CASCADE, related_name='empleados')
+
+    def __str__(self):
+        return self.user.username 
+    
 
 class Cliente(models.Model):
     dni_cliente = models.CharField('DNI', primary_key=True, max_length=120)
@@ -41,19 +72,13 @@ class Proveedor(models.Model):
     calle = models.CharField('Calle', max_length=100)
     ciudad = models.CharField('Ciudad', max_length=100)
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
-    pais = models.ForeignKey(Pais, on_delete=models.CASCADE, verbose_name='País')
+    pais = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True,verbose_name='País')
     descripcion = models.TextField('Descripción')
     web = models.URLField('Web', null=True, blank=True)
     comentarios = models.TextField('Observaciones', null=True, blank=True)
     nro_calle = models.IntegerField('Número de Calle')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
-
-class Empleado(AbstractUser):
-    dni_empleado = models.CharField('DNI', max_length=120)
-    telefono = models.CharField('Teléfono', max_length=50)
-
-    
 
 class Almacen(models.Model):
     id_almacen = models.IntegerField('ID Almacén', primary_key=True)
