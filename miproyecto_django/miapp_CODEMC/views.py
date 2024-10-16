@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-
+from .models import CustomUser, BusinessManager, Empleado
 from . import forms
 
 # Create your views here.
@@ -75,28 +76,55 @@ def user_signout(request):
     return redirect('index')
 
 def company_registration(request):
+    form = forms.FormRegistroEmpresa()
+    
     if request.method == 'POST':
-        form = forms.FormRegistroEmpresa(request.POST)
         if form.is_valid():
             form.save()
             return redirect('registro')
     else:
-        form = forms.FormRegistroEmpleado()
-    ctx = {"form": form}
+        form_empresa = forms.FormRegistroEmpresa()
+        form_user = forms.FormRegistroUser()
+    ctx = {"form_empresa": form_empresa,
+           "form_user": form_user}
     return render(request, "miapp_CODEMC/registrations/company-register.html", ctx)
 
 def user_registration(request):
     if request.method == 'POST':
-        form = forms.FormRegistroEmpleado(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            if 'user-register' in request.path:
-                pass
-                #continuar en casa
+        form_user = forms.FormRegistroUser(request.POST)
+        if request.resolver_match.url_name == 'registro-usuario':
+            form_empresa = forms.FormRegistroEmpresa(request.POST)
+            if form_user.is_valid() and form_empresa.is_valid():
+                user = form_user.save(commit=False)
+                user.role = CustomUser.MANAGER
+                user.save()
 
-            login(request, user)
-            return redirect('home')
+                empresa = form_empresa.save()
+                
+                BusinessManager.objects.create(user=user, empresa=empresa)
+                
+                login(request, user)
+                return redirect('home')
+        else:
+            if request.user.is_authenticated:
+                if form_user.is_valid():
+                    user = form_user.save()
+                    try:
+                        jefe = BusinessManager.objects.get(user=request.user)
+
+                        Empleado.objects.create(user=user, jefe=jefe)
+
+                        return redirect('home')
+                    except BusinessManager.DoesNotExist:
+                        return HttpResponse("Manager no existe")                
     else:
-        form = forms.FormRegistroEmpleado()
-    ctx = {"form": form}
+        
+        form_empresa = None
+        form_user = forms.FormRegistroUser()
+        if request.resolver_match.url_name == 'registro-usuario':
+            form_empresa = forms.FormRegistroEmpresa()
+
+    ctx = {"form_user": form_user}        
+    if form_empresa:
+        ctx["form_empresa"] = form_empresa
     return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
