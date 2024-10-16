@@ -24,8 +24,9 @@ class CustomUser(AbstractUser):
     role = models.CharField('Rol', max_length=10, default=EMPLEADO)
 
 class BusinessManager(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='jefes')
+    # Mover empresa a customuser?
 
     def __str__(self):
         return f"{self.user.username} - {self.empresa.nombre}"
@@ -34,8 +35,8 @@ class BusinessManager(models.Model):
 #inversa en una relación entre modelos.
 
 class Empleado(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleados')
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='empleado')
+    jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleado')
 
     def __str__(self):
         return self.user.username 

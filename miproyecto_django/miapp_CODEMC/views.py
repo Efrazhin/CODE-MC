@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -52,8 +53,8 @@ def ventas(request):
     return render(request,"miapp_CODEMC/ventas.html")
 
 def user_login(request):
-    form = AuthenticationForm()
     if request.method == 'GET':
+        form = AuthenticationForm()
         ctx = {'form' : form}
         return render(request, "miapp_CODEMC/signin/user-login.html", ctx)
     
@@ -65,6 +66,15 @@ def user_login(request):
             return render(request, "miapp_CODEMC/signin/user-login.html", ctx)
         else:
             login(request, user)
+            try:
+                if hasattr(request.user,'manager'):
+                    print(request.user.manager)
+                elif hasattr(request.user, 'empleado'):
+                    print(request.user.empleado)
+            except ObjectDoesNotExist:
+                messages.error(request,'El usuario no está asociado a ningún empleado o manager.')
+                
+
             return redirect('home')
                  
 
