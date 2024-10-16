@@ -17,11 +17,11 @@ class CustomUser(AbstractUser):
     telefono = models.CharField('Teléfono', max_length=120)
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
-    ROLE_CHOICES = [
-        (MANAGER, 'Manager'),
-        (EMPLEADO, 'Empleado')
-    ]
-    role = models.CharField('Rol', max_length=10, choices=ROLE_CHOICES, default=EMPLEADO)
+    # ROLE_CHOICES = [
+    #     (MANAGER, 'Manager'),
+    #     (EMPLEADO, 'Empleado')
+    # ]
+    role = models.CharField('Rol', max_length=10, default=EMPLEADO)
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

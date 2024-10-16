@@ -42,7 +42,12 @@
                     <ic class="fa-solid fa-lock"></ic>
                     <ii class="fa-solid fa-check"></ii>
                     <!-- Campo de entrada para el correo electrónico del formulario -->
-                    {{ form.as_table }}
+
+                    <h2> Datos de tu empresa </h2>
+                    {{ form_empresa.as_table }}
+
+                    <h2> Tus datos </h2>
+                    {{ form_user.as_table }}
 
 
                     {% if messages %}

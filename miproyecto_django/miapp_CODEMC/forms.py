@@ -6,12 +6,12 @@ from django.contrib.auth.forms import UserCreationForm
 class FormRegistroEmpresa(ModelForm):
     class Meta:
         model = Empresa
-        fields = ('cuit', 'nombre') 
+        fields = ('cuit', 'nombre', 'telefono','email','descripcion') 
 
 class FormRegistroUser(UserCreationForm):
     class Meta:
-        model = User
-        fields = ('username','first_name','last_name','email')
+        model = CustomUser
+        fields = ('username','first_name','last_name','email', 'dni','telefono')
 
 
 class FormCliente(ModelForm):
