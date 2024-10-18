@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .models import CustomUser, BusinessManager, Empleado
+from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria
 from . import forms
 
 # Create your views here.
@@ -52,6 +52,18 @@ def clientes(request):
 def ventas(request):
     return render(request,"miapp_CODEMC/ventas.html")
 
+def categorias_view(request):
+    # Obtenemos todas las categorías
+    categorias = Categoria.objects.all()
+    return render(request, 'miapp_CODEMC/categorias.html', {'categorias': categorias})
+
+def productos_por_subcategoria(request, subcategoria_id):
+    # Obtenemos la subcategoría seleccionada
+    subcategoria = get_object_or_404(Subcategoria, id=subcategoria_id)
+    # Obtenemos los productos asociados a la subcategoría
+    productos = Producto.objects.filter(subcategoria=subcategoria)
+    return render(request, 'productos.html', {'subcategoria': subcategoria, 'productos': productos})
+
 def user_login(request):
     if request.method == 'GET':
         form = AuthenticationForm()
@@ -62,6 +74,7 @@ def user_login(request):
         user = authenticate(
             request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
+            form = AuthenticationForm()
             ctx = {'form' : form, 'error' : 'Usuario o contraseña incorrectos'}
             return render(request, "miapp_CODEMC/signin/user-login.html", ctx)
         else:
