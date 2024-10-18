@@ -86,9 +86,10 @@ def user_signout(request):
     return redirect('index')
 
 def company_registration(request):
-    form = forms.FormRegistroEmpresa()
-    
+
+
     if request.method == 'POST':
+        form = forms.FormRegistroEmpresa(request.POST)
         if form.is_valid():
             form.save()
             return redirect('registro')
