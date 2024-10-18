@@ -40,8 +40,10 @@ h1 {
 /* Estilo para el contenedor del formulario */
 .contenedor {
     width: 460px; /* Ancho del contenedor */
+    height: 50%; /* Altura del contenedor */
+    max-height: 700px; /* Limita la altura máxima */
     border-radius: 12px; /* Bordes redondeados */
-    padding: 30px; /* Espacio interno del contenedor */
+    padding: 20px; /* Espacio interno del contenedor */
     color: blanchedalmond; /* Color del texto */
     background-color: rgba(0,0,0,0.2); /* Fondo semitransparente */
     text-align: center; /* Centra el texto dentro del contenedor */
@@ -52,6 +54,7 @@ h1 {
     transform: scale(1); /* Escala inicial del contenedor */
     overflow: hidden; /* Elimina el desbordamiento */
     position: relative; /* Permite el posicionamiento absoluto para elementos hijos */
+    overflow-y: auto; /* Agrega scroll si el contenido excede la altura */
 }
 
 /* Estilo para el botón de cerrar ventana */

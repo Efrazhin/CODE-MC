@@ -18,5 +18,6 @@ urlpatterns=[
     path("depositos/",views.depositos,name="depositos"),
     path("configuracion/",views.configuracion,name="configuracion"),
     path("compras/",views.compras,name="compras"),
-    path("clientes/",views.clientes,name="clientes")
+    path("clientes/",views.clientes,name="clientes"),
+    path("categorias/",views.categorias_view,name="categorias")
 ]
