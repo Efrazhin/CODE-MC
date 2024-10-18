@@ -35,7 +35,10 @@ def libros(request):
     return render(request, "miapp_CODEMC/libros.html")
     
 def empleados(request):
-    return render(request, "miapp_CODEMC/empleados.html")
+    return render(request, "miapp_CODEMC/empleado.html")
+
+def crear_empleado(request):
+    return render(request,"miapp_CODEMC/crear_empleado.html")
     
 def depositos(request):
     return render(request, "miapp_CODEMC/depositos.html")
@@ -58,14 +61,16 @@ def categorias_view(request):
     return render(request, 'miapp_CODEMC/categorias.html', {'categorias': categorias})
 def crear_categoria(request):
     if request.method == 'POST':
-        form = CategoriaForm(request.POST)
+        form = forms.CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = CategoriaForm()
+        form = forms.CategoriaForm()
     
     return render(request, 'miapp_CODEMC/crear_categoria.html', {'form': form})
+
+
 def productos_por_subcategoria(request, subcategoria_id):
     # Obtenemos la subcategoría seleccionada
     subcategoria = get_object_or_404(Subcategoria, id=subcategoria_id)
@@ -129,7 +134,7 @@ def user_registration(request):
             form_empresa = forms.FormRegistroEmpresa(request.POST)
             if form_user.is_valid() and form_empresa.is_valid():
                 user = form_user.save(commit=False)
-                user.role = CustomUser.MANAGER
+                user.rol = CustomUser.MANAGER
                 user.save()
 
                 empresa = form_empresa.save()

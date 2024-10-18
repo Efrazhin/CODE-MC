@@ -17,16 +17,12 @@ class CustomUser(AbstractUser):
     telefono = models.CharField('Teléfono', max_length=120)
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
-    # ROLE_CHOICES = [
-    #     (MANAGER, 'Manager'),
-    #     (EMPLEADO, 'Empleado')
-    # ]
-    role = models.CharField('Rol', max_length=10, default=EMPLEADO)
+    rol = models.CharField('Rol', max_length=10, default=EMPLEADO)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='usuario')
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='jefes')
-    # Mover empresa a customuser?
+    
 
     def __str__(self):
         return f"{self.user.username} - {self.empresa.nombre}"
