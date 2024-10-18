@@ -18,3 +18,13 @@ class FormCliente(ModelForm):
     class Meta:
         model = Cliente
         fields = []
+
+class CategoriaForm(ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre', 'descripcion', 'empresa']  # Excluye 'fecha_creacion' porque se genera automáticamente
+        labels = {
+            'nombre': 'Nombre',
+            'descripcion': 'Descripción',
+            'empresa': 'Empresa',
+        }
