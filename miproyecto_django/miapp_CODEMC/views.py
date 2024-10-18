@@ -56,7 +56,16 @@ def categorias_view(request):
     # Obtenemos todas las categorías
     categorias = Categoria.objects.all()
     return render(request, 'miapp_CODEMC/categorias.html', {'categorias': categorias})
-
+def crear_categoria(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CategoriaForm()
+    
+    return render(request, 'miapp_CODEMC/crear_categoria.html', {'form': form})
 def productos_por_subcategoria(request, subcategoria_id):
     # Obtenemos la subcategoría seleccionada
     subcategoria = get_object_or_404(Subcategoria, id=subcategoria_id)
