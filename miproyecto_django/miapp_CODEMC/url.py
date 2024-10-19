@@ -7,7 +7,6 @@ urlpatterns=[
     path("contact/",views.contacto,name="contacto"),
     path("login/",views.user_login,name="login"),
     path("logout/",views.user_signout,name="logout"),
-    path("company-registration/", views.company_registration, name="registro_empresa"),
     path("user-registration/", views.user_registration, name="registro-usuario"),
     path("home/",views.inicio_gestion,name="home"),
     path("estadisticas/",views.estadisticas,name="estadisticas"),

@@ -36,9 +36,6 @@ def libros(request):
     
 def empleados(request):
     return render(request, "miapp_CODEMC/principal/empleados.html")
-
-def crear_empleado(request):
-    return render(request,"miapp_CODEMC/crear_empleado.html")
     
 def depositos(request):
     return render(request, "miapp_CODEMC/principal/depositos.html")
@@ -112,22 +109,9 @@ def user_signout(request):
         pass
     return redirect('index')
 
-def company_registration(request):
-
-
-    if request.method == 'POST':
-        form = forms.FormRegistroEmpresa(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('registro')
-    else:
-        form_empresa = forms.FormRegistroEmpresa()
-        form_user = forms.FormRegistroUser()
-    ctx = {"form_empresa": form_empresa,
-           "form_user": form_user}
-    return render(request, "miapp_CODEMC/registrations/company-register.html", ctx)
 
 def user_registration(request):
+    # aplicar AJAX 
     if request.method == 'POST':
         form_user = forms.FormRegistroUser(request.POST)
         if request.resolver_match.url_name == 'registro-usuario':
@@ -154,15 +138,22 @@ def user_registration(request):
 
                         return redirect('home')
                     except BusinessManager.DoesNotExist:
-                        return HttpResponse("Manager no existe")                
+                        return HttpResponse("Manager no existe")   
+                else:
+                    return HttpResponse("Datos no válidos")
+            else:
+                return HttpResponse("El administrador no está logueado; falló registro de empleado")         
     else:
-        
         form_empresa = None
         form_user = forms.FormRegistroUser()
         if request.resolver_match.url_name == 'registro-usuario':
             form_empresa = forms.FormRegistroEmpresa()
-
+            
     ctx = {"form_user": form_user}        
     if form_empresa:
         ctx["form_empresa"] = form_empresa
-    return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
+        return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
+    
+
+    return render(request,"miapp_CODEMC/principal/crear_empleado.html", ctx)
+
