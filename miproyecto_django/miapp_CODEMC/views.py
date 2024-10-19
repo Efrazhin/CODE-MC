@@ -20,45 +20,45 @@ def contacto(request):
     return render(request, "miapp_CODEMC/service/Contacto.html")
 
 def inicio_gestion(request):
-    return render(request, "miapp_CODEMC/home.html")
+    return render(request, "miapp_CODEMC/principal/home.html")
 
 def sucursales(request):
-    return render(request, "miapp_CODEMC/sucursales.html")
+    return render(request, "miapp_CODEMC/principal/sucursales.html")
 
 def estadisticas(request):
-    return render(request, "miapp_CODEMC/estadisticas.html")
+    return render(request, "miapp_CODEMC/principal/estadisticas.html")
     
 def provedores(request):
-    return render(request, "miapp_CODEMC/provedores.html")
+    return render(request, "miapp_CODEMC/principal/provedores.html")
 
 def libros(request):
-    return render(request, "miapp_CODEMC/libros.html")
+    return render(request, "miapp_CODEMC/principal/libros.html")
     
 def empleados(request):
-    return render(request, "miapp_CODEMC/empleado.html")
+    return render(request, "miapp_CODEMC/principal/empleados.html")
 
 def crear_empleado(request):
     return render(request,"miapp_CODEMC/crear_empleado.html")
     
 def depositos(request):
-    return render(request, "miapp_CODEMC/depositos.html")
+    return render(request, "miapp_CODEMC/principal/depositos.html")
     
 def configuracion(request):
-    return render(request, "miapp_CODEMC/configuracion.html")
+    return render(request, "miapp_CODEMC/principal/configuracion.html")
     
 def compras(request):
-    return render(request,"miapp_CODEMC/compras.html")
+    return render(request,"miapp_CODEMC/principal/compras.html")
     
 def clientes(request):
-    return render(request,"miapp_CODEMC/clientes.html")
+    return render(request,"miapp_CODEMC/principal/clientes.html")
 
 def ventas(request):
-    return render(request,"miapp_CODEMC/ventas.html")
+    return render(request,"miapp_CODEMC/principal/ventas.html")
 
 def categorias_view(request):
     # Obtenemos todas las categorías
     categorias = Categoria.objects.all()
-    return render(request, 'miapp_CODEMC/categorias.html', {'categorias': categorias})
+    return render(request, 'miapp_CODEMC/principal/categorias.html', {'categorias': categorias})
 def crear_categoria(request):
     if request.method == 'POST':
         form = forms.CategoriaForm(request.POST)
@@ -68,7 +68,7 @@ def crear_categoria(request):
     else:
         form = forms.CategoriaForm()
     
-    return render(request, 'miapp_CODEMC/crear_categoria.html', {'form': form})
+    return render(request, 'miapp_CODEMC/principal/functions/crear_categoria.html', {'form': form})
 
 
 def productos_por_subcategoria(request, subcategoria_id):
