@@ -102,14 +102,12 @@ class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción', null=True, blank=True)
-    fecha_creacion = models.DateField('Fecha de Creación')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
 class Subcategoria(models.Model):
     id_subcategoria = models.AutoField('ID Subcategoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción', null=True, blank=True)
-    fecha_creacion = models.DateField('Fecha de Creación')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categoría')
    
 
