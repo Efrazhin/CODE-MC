@@ -1,0 +1,65 @@
+{% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
+{% load static %}
+{% block content1 %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacen</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-barra.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+{% endblock %}
+{% block content %}
+<body>
+    <h1>Crear Nuevo Almacen</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'home' %}">Volver a la lista de categorías</a>
+    <div class="container">
+        <h1>Almacenes Registrados</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Teléfono</th>
+                    <th>Provincia</th>
+                    <th>Ciudad</th>
+                    <th>Calle</th>
+                    <th>Número de Calle</th>
+                    <th>Tamaño</th>
+                    <th>Unidad de Medida</th>
+                    <th>Empresa</th>
+                    <th>Acciones</th> <!-- Añadir columna de acciones -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for almacen in almacenes %}
+                <tr>
+                    <td>{{ almacen.id_almacen }}</td>
+                    <td>{{ almacen.telefono }}</td>
+                    <td>{{ almacen.provincia.nombre }}</td>
+                    <td>{{ almacen.ciudad }}</td>
+                    <td>{{ almacen.calle }}</td>
+                    <td>{{ almacen.nro_calle }}</td>
+                    <td>{{ almacen.tamaño }}</td>
+                    <td>{{ almacen.unidad_medida }}</td>
+                    <td>{{ almacen.empresa }}</td>
+                    <td>
+                        <form action="{% url 'eliminar_almacen' almacen.id_almacen %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este almacén?');">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10">No hay almacenes registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</html>
+{% endblock %}
