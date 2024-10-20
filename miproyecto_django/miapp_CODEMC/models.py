@@ -88,7 +88,7 @@ class Almacen(models.Model):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
 class Sucursal(models.Model):
-    id_sucursal = models.IntegerField('ID Sucursal', primary_key=True)
+    id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
     telefono = models.CharField('Teléfono', max_length=50)
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     ciudad = models.CharField('Ciudad', max_length=100)
