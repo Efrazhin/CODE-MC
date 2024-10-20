@@ -81,7 +81,7 @@ def crear_almacen(request):
     else:
         form = forms.AlmacenForm()
     almacenes = Almacen.objects.all()
-    return render(request, 'miapp_CODEMC/principal/functions/crear_almacen.html', {'form': form, 'almacenes': almacenes})
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_almacen.html', {'form': form, 'almacenes': almacenes})
 def crear_sucursal(request):
     if request.method == 'POST':
         form = forms.SucursalForm(request.POST)
@@ -91,21 +91,21 @@ def crear_sucursal(request):
     else:
         form = forms.SucursalForm()
     sucursales = Sucursal.objects.all()
-    return render(request, 'miapp_CODEMC/principal/functions/crear_sucursal.html', {'form': form, 'sucursales': sucursales})
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_sucursal.html', {'form': form, 'sucursales': sucursales})
 
 def eliminar_almacen(request, id_almacen):
     almacen = get_object_or_404(Almacen, id_almacen=id_almacen)
     if request.method == 'POST':
         almacen.delete()
         return redirect('crear_almacen')  # Cambia a tu vista de lista de almacenes
-    return render(request, 'miapp_CODEMC/functions/eliminar_almacen.html', {'almacen': almacen})
+    return render(request, 'miapp_CODEMC/funciones/eliminar_almacen.html', {'almacen': almacen})
 
 def eliminar_sucursal(request, id_sucursal):
     sucursales = get_object_or_404(Sucursal, id_sucursal=id_sucursal)
     if request.method == 'POST':
         sucursales.delete()
         return redirect('crear_sucursal')  # Cambia a tu vista de lista de almacenes
-    return render(request, 'miapp_CODEMC/functions/eliminar_sucursal.html', {'sucursal': sucursal})
+    return render(request, 'miapp_CODEMC/funciones/eliminar_sucursal.html', {'sucursal': sucursal})
 
 
 def productos_por_subcategoria(request, subcategoria_id):
