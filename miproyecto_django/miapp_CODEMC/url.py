@@ -21,5 +21,9 @@ urlpatterns=[
     path("clientes/",views.clientes,name="clientes"),
     path("categorias/",views.categorias_view,name="categorias"),
     path('crear_categoria/', views.crear_categoria, name='crear_categoria'),
-    path("agregar_producto/",views.agregar_productos, name='agrear-producto')
+    path("agregar_producto/",views.agregar_productos, name='agrear-producto'),
+    path('crear_almacen/', views.crear_almacen, name='crear_almacen'),
+    path("crear_sucursal/",views.crear_sucursal, name="crear_sucursal"),
+    path('eliminar-almacen/<int:id_almacen>/', views.eliminar_almacen, name='eliminar_almacen'),
+    path('eliminar-sucursal/<int:id_sucursal>/', views.eliminar_sucursal, name='eliminar_sucursal')
 ]
