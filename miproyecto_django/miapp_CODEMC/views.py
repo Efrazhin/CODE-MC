@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria
+from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursales
 from . import forms
 
 # Create your views here.
