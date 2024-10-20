@@ -1,55 +1,59 @@
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% block head %}
-    {% endblock %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-headerfooter.css' %}">
-    
-    
-</head>
-<!-- Encabezado-->
-<header class="header-principal">
-    <a class="logo" href="{% url 'index' %}">
-        CODE/MC
-    </a>
-    <nav class="nav-links">
-        <ul>
-            <li><a href="#servicio">Servicio</a></li>
-            <li><a href="#soluciones">Soluciones</a></li>
-            <li><a href='{% url "planes" %}'>Planes</a></li>
-            <li><a href='{% url "contacto" %}'>Contacto</a></li>
-        </ul>
-    </nav>
-    <a href='{% url "login"%}' class="btn-inicio" > <i class="ri-account-box-line"></i> </a>
-</header>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block head %}
+        {% endblock %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+        <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-headerfooter.css' %}">
+        
+        
+    </head>
+    <!-- Encabezado-->
+    <body>
+        <header class="header-principal">
+            <a class="logo" href="{% url 'index' %}">
+                CODE/MC
+            </a>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#servicio">Servicio</a></li>
+                    <li><a href="#soluciones">Soluciones</a></li>
+                    <li><a href='{% url "planes" %}'>Planes</a></li>
+                    <li><a href='{% url "contacto" %}'>Contacto</a></li>
+                </ul>
+            </nav>
+            <a href='{% url "login"%}' class="btn-inicio" > <i class="ri-account-box-line"></i> </a>
+        </header>
 
-    {% block content %}
-    {% endblock %}
+            {% block content %}
+            {% endblock %}
 
-<!-- Pie de página-->
-<footer>
-    
-    <nav class="nav-links-footer">
-        <ul>
-            <li><a href="#servicio">Servicio</a></li>
-            <li><a href="#soluciones">Soluciones</a></li>
-            <li><a href='{% url "planes" %}'>Planes</a></li>
-            <li><a href="#">Nosotros</a></li>
-            <li><a href='{% url "contacto" %}'>Contacto</a></li>
-        </ul>
-    </nav>
-    <p>Todos los derechos reservados. &copy;</p>
-    
-</footer>
-<!-- Introducimos scripts -->
-<script type= "text/JavaScript"src="{% static 'miapp_CODEMC/js/animacion-nav.js'%}" charset="UTF-8"></script>
-<script>
-    function rederigir_login(){
-        window.location.href="Login";
-    }
+        <!-- Pie de página-->
+        <footer>
+            
+            <nav class="nav-links-footer">
+                <ul>
+                    <li><a href="#servicio">Servicio</a></li>
+                    <li><a href="#soluciones">Soluciones</a></li>
+                    <li><a href='{% url "planes" %}'>Planes</a></li>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href='{% url "contacto" %}'>Contacto</a></li>
+                </ul>
+            </nav>
+            <p>Todos los derechos reservados. &copy;</p>
+            
+        </footer>
+        <!-- Introducimos scripts -->
+        <script type= "text/JavaScript"src="{% static 'miapp_CODEMC/js/animacion-nav.js'%}" charset="UTF-8"></script>
+            <script>
+                function rederigir_login(){
+                    window.location.href="Login";
+                }
 
-</script>
-
-</script>
+            </script>
+        </script>
+    </body>
+        
+</html>

@@ -23,9 +23,8 @@ class CustomUser(AbstractUser):
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
     
-
     def __str__(self):
-        return f"{self.user.username} - {self.empresa.nombre}"
+        return f"{self.user.username} - {self.user.empresa.nombre}"
     
 #"related_name" se trata de un atributo que permite definir el nombre de la relación
 #inversa en una relación entre modelos.

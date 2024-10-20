@@ -1,0 +1,17 @@
+{% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
+{% load static %}
+{% block head %}
+    <title>Clientes</title>
+{% endblock %}
+<body>
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h2>Completa los datos de tu empleado:</h2>
+
+        {{ form_user.as_p }}    
+
+        <button type="submit">Registrar</button>
+    </form>
+{% endblock %}
+</body>

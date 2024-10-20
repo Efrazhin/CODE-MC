@@ -11,13 +11,13 @@ from . import forms
 # Create your views here.
 def index(request):
     ctx = {}
-    return render(request, 'miapp_CODEMC/service/index.html', ctx)
+    return render(request, 'miapp_CODEMC/presentacion/index.html', ctx)
 
 def planes(request):
-    return render(request, "miapp_CODEMC/service/Planes.html")
+    return render(request, "miapp_CODEMC/presentacion/Planes.html")
 
 def contacto(request):
-    return render(request, "miapp_CODEMC/service/Contacto.html")
+    return render(request, "miapp_CODEMC/presentacion/Contacto.html")
 
 def inicio_gestion(request):
     return render(request, "miapp_CODEMC/principal/home.html")
@@ -35,7 +35,13 @@ def libros(request):
     return render(request, "miapp_CODEMC/principal/libros.html")
     
 def empleados(request):
-    return render(request, "miapp_CODEMC/principal/empleados.html")
+
+    user_empresa = request.user.empresa
+    empleado = Empleado.objects.filter(user__empresa = user_empresa)
+
+    ctx = {"empleados" : empleado}
+
+    return render(request, "miapp_CODEMC/principal/empleados.html", ctx)
     
 def depositos(request):
     return render(request, "miapp_CODEMC/principal/depositos.html")
@@ -65,7 +71,7 @@ def crear_categoria(request):
     else:
         form = forms.CategoriaForm()
     
-    return render(request, 'miapp_CODEMC/principal/functions/crear_categoria.html', {'form': form})
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'form': form})
 
 
 def productos_por_subcategoria(request, subcategoria_id):
@@ -115,30 +121,36 @@ def user_registration(request):
     if request.method == 'POST':
         form_user = forms.FormRegistroUser(request.POST)
         if request.resolver_match.url_name == 'registro-usuario':
+            
             form_empresa = forms.FormRegistroEmpresa(request.POST)
             if form_user.is_valid() and form_empresa.is_valid():
                 user = form_user.save(commit=False)
                 user.rol = CustomUser.MANAGER
+                
+                empresa = form_empresa.save()
+
+                user.empresa = empresa
+
                 user.save()
 
-                empresa = form_empresa.save()
-                
-                BusinessManager.objects.create(user=user, empresa=empresa)
+                BusinessManager.objects.create(user=user)
                 
                 login(request, user)
                 return redirect('home')
         else:
             if request.user.is_authenticated:
                 if form_user.is_valid():
+                    user = form_user.save(commit=False)
+                    user.empresa = request.user.empresa
                     user = form_user.save()
                     try:
                         jefe = BusinessManager.objects.get(user=request.user)
 
                         Empleado.objects.create(user=user, jefe=jefe)
 
-                        return redirect('home')
+                        return redirect('empleados')
                     except BusinessManager.DoesNotExist:
-                        return HttpResponse("Manager no existe")   
+                        return HttpResponse("Manager no existe.")   
                 else:
                     return HttpResponse("Datos no válidos")
             else:
@@ -155,5 +167,5 @@ def user_registration(request):
         return render(request, "miapp_CODEMC/registrations/user-register.html", ctx)
     
 
-    return render(request,"miapp_CODEMC/principal/crear_empleado.html", ctx)
+    return render(request,"miapp_CODEMC/principal/funciones/crear_empleado.html", ctx)
 
