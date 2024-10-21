@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria
+from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursales
 from . import forms
 
 # Create your views here.
@@ -68,11 +68,45 @@ def crear_categoria(request):
         form = forms.CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('crear_categoria')
     else:
         form = forms.CategoriaForm()
     
     return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'form': form})
+def crear_almacen(request):
+    if request.method == 'POST':
+        form = forms.AlmacenForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('crear_almacen')  # Cambia esto a la vista que deseas redirigir después de guardar
+    else:
+        form = forms.AlmacenForm()
+    almacenes = Almacen.objects.all()
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_almacen.html', {'form': form, 'almacenes': almacenes})
+def crear_sucursal(request):
+    if request.method == 'POST':
+        form = forms.SucursalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('crear_sucursal')  # Cambia esto a la vista que deseas redirigir después de guardar
+    else:
+        form = forms.SucursalForm()
+    sucursales = Sucursal.objects.all()
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_sucursal.html', {'form': form, 'sucursales': sucursales})
+
+def eliminar_almacen(request, id_almacen):
+    almacen = get_object_or_404(Almacen, id_almacen=id_almacen)
+    if request.method == 'POST':
+        almacen.delete()
+        return redirect('crear_almacen')  # Cambia a tu vista de lista de almacenes
+    return render(request, 'miapp_CODEMC/funciones/eliminar_almacen.html', {'almacen': almacen})
+
+def eliminar_sucursal(request, id_sucursal):
+    sucursales = get_object_or_404(Sucursal, id_sucursal=id_sucursal)
+    if request.method == 'POST':
+        sucursales.delete()
+        return redirect('crear_sucursal')  # Cambia a tu vista de lista de almacenes
+    return render(request, 'miapp_CODEMC/funciones/eliminar_sucursal.html', {'sucursal': sucursal})
 
 
 def productos_por_subcategoria(request, subcategoria_id):
@@ -81,6 +115,16 @@ def productos_por_subcategoria(request, subcategoria_id):
     # Obtenemos los productos asociados a la subcategoría
     productos = Producto.objects.filter(subcategoria=subcategoria)
     return render(request, 'productos.html', {'subcategoria': subcategoria, 'productos': productos})
+
+def agregar_productos(request):
+    if request.method == "POST":
+        form=forms.ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = forms.ProductoForm()
+    return render(request, 'miapp_CODEMC/principal/productos.html', {'form': form} )
 
 def user_login(request):
     if request.method == 'GET':
