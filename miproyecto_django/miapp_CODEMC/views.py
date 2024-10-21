@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursales
+from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursal
 from . import forms
 
 # Create your views here.
@@ -102,7 +102,7 @@ def eliminar_almacen(request, id_almacen):
     return render(request, 'miapp_CODEMC/funciones/eliminar_almacen.html', {'almacen': almacen})
 
 def eliminar_sucursal(request, id_sucursal):
-    sucursales = get_object_or_404(Sucursal, id_sucursal=id_sucursal)
+    sucursal = get_object_or_404(Sucursal, id_sucursal=id_sucursal)
     if request.method == 'POST':
         sucursales.delete()
         return redirect('crear_sucursal')  # Cambia a tu vista de lista de almacenes
