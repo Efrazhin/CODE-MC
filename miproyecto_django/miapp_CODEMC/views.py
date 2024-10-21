@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -33,9 +34,9 @@ def provedores(request):
 
 def libros(request):
     return render(request, "miapp_CODEMC/principal/libros.html")
-    
-def empleados(request):
 
+@permission_required('miapp_CODEMC.view_empleado', raise_exception=True)
+def empleados(request):
     user_empresa = request.user.empresa
     empleado = Empleado.objects.filter(user__empresa = user_empresa)
 
@@ -117,7 +118,7 @@ def user_signout(request):
 
 
 def user_registration(request):
-    # aplicar AJAX 
+    # IGNORAR - recordatorio: aplicar AJAX 
     if request.method == 'POST':
         form_user = forms.FormRegistroUser(request.POST)
         if request.resolver_match.url_name == 'registro-usuario':
@@ -125,8 +126,6 @@ def user_registration(request):
             form_empresa = forms.FormRegistroEmpresa(request.POST)
             if form_user.is_valid() and form_empresa.is_valid():
                 user = form_user.save(commit=False)
-                user.rol = CustomUser.MANAGER
-                
                 empresa = form_empresa.save()
 
                 user.empresa = empresa
@@ -142,6 +141,7 @@ def user_registration(request):
                 if form_user.is_valid():
                     user = form_user.save(commit=False)
                     user.empresa = request.user.empresa
+                    user.rol = CustomUser.EMPLEADO
                     user = form_user.save()
                     try:
                         jefe = BusinessManager.objects.get(user=request.user)

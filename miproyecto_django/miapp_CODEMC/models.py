@@ -17,8 +17,8 @@ class CustomUser(AbstractUser):
     telefono = models.CharField('Teléfono', max_length=120)
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
-    rol = models.CharField('Rol', max_length=10, default=EMPLEADO)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='usuario')
+    rol = models.CharField('Rol', max_length=10, default=MANAGER, null=True)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='usuario', null=True)
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
