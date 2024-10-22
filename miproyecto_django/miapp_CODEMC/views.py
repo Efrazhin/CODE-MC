@@ -104,7 +104,7 @@ def eliminar_almacen(request, id_almacen):
 def eliminar_sucursal(request, id_sucursal):
     sucursal = get_object_or_404(Sucursal, id_sucursal=id_sucursal)
     if request.method == 'POST':
-        sucursales.delete()
+        sucursal.delete()
         return redirect('crear_sucursal')  # Cambia a tu vista de lista de almacenes
     return render(request, 'miapp_CODEMC/funciones/eliminar_sucursal.html', {'sucursal': sucursal})
 
