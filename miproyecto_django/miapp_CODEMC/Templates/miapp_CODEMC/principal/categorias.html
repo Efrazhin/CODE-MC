@@ -4,49 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorías y Subcategorías</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-categorias.css '%}">
+    <title>Categorías, Subcategorías y Productos</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-categorias.css' %}">
 </head>
 <body>
-    <h1>Categorías</h1>
+    <h1>Categorías y Subcategorías</h1>
     <div class="category-container">
         {% for categoria in categorias %}
-            <div class="category-card" data-category-id="{{ categoria.id }}">
+            <div class="category-card">
                 <div class="category-title">{{ categoria.nombre }}</div>
                 <div class="subcategory-list">
                     {% for subcategoria in categoria.subcategoria_set.all %}
-                        <div class="subcategory-item" data-subcategory-id="{{ subcategoria.id }}">
-                            {{ subcategoria.nombre }}
-                            
-                            <!-- Aquí va la tabla de productos, que está oculta al principio -->
-                            <table class="product-table">
-                                <thead>
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th>Descripción</th>
-                                        <th>Precio</th>
-                                        <th>Tamaño</th>
-                                        <th>Fecha Vencimiento</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for producto in subcategoria.productos.all %}
-                                        <tr>
-                                            <td>{{ producto.nombre }}</td>
-                                            <td>{{ producto.descripcion }}</td>
-                                            <td>${{ producto.precio }}</td>
-                                            <td>{{ producto.tamaño }} {{ producto.unidad_medida }}</td>
-                                            <td>{{ producto.fecha_vencimiento }}</td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td colspan="5">No hay productos disponibles</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        <form action="{% url 'categorias' %}" method="GET">
+                            <input type="hidden" name="subcategoria_id" value="{{ subcategoria.id }}">
+                            <button type="submit" class="subcategory-item">{{ subcategoria.nombre }}</button>
+                        </form>
                     {% empty %}
                         <p>No hay subcategorías disponibles.</p>
                     {% endfor %}
@@ -55,6 +27,33 @@
         {% endfor %}
     </div>
 
+    <div id="productos-container">
+        {% if subcategoria_seleccionada %}
+            <h2>Productos de la Subcategoría: {{ subcategoria_seleccionada.nombre }}</h2>
+            {% if productos %}
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Tamaño</th>
+                    </tr>
+                    {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.descripcion }}</td>
+                            <td>{{ producto.precio }}</td>
+                            <td>{{ producto.tamaño }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No hay productos disponibles para esta subcategoría.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'miapp_CODEMC/js/categorias.js'%}"></script>
 </body>
 </html>
