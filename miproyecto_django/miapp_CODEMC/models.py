@@ -114,7 +114,7 @@ class Stock(models.Model):
     id_stock = models.AutoField('ID Stock', primary_key=True)
     cantidad = models.IntegerField('Cantidad')
 
-
+ 
 class Producto(models.Model):
     id_producto = models.AutoField('ID Producto', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)

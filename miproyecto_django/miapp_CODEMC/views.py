@@ -60,9 +60,26 @@ def ventas(request):
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
 def categorias_view(request):
-    # Obtenemos todas las categorías
-    categorias = Categoria.objects.all()
-    return render(request, 'miapp_CODEMC/principal/categorias.html', {'categorias': categorias})
+    categorias = Categoria.objects.prefetch_related('subcategoria_set').all()
+    productos = None
+    subcategoria_seleccionada = None
+
+    if 'subcategoria_id' in request.GET:
+        subcategoria_id = request.GET['subcategoria_id']
+        subcategoria_seleccionada = get_object_or_404(Subcategoria, id=subcategoria_id)
+        productos = Producto.objects.filter(subcategoria=subcategoria_seleccionada)
+
+    context = {
+        'categorias': categorias,
+        'productos': productos,
+        'subcategoria_seleccionada': subcategoria_seleccionada,
+    }
+    return render(request, 'miapp_CODEMC/principal/categorias.html', context)
+
+def productos_view(request):
+    productos = Producto.objects.all()  # Obtiene todos los productos
+    return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
+
 def crear_categoria(request):
     if request.method == 'POST':
         form = forms.CategoriaForm(request.POST)
@@ -109,12 +126,6 @@ def eliminar_sucursal(request, id_sucursal):
     return render(request, 'miapp_CODEMC/funciones/eliminar_sucursal.html', {'sucursal': sucursal})
 
 
-def productos_por_subcategoria(request, subcategoria_id):
-    # Obtenemos la subcategoría seleccionada
-    subcategoria = get_object_or_404(Subcategoria, id=subcategoria_id)
-    # Obtenemos los productos asociados a la subcategoría
-    productos = Producto.objects.filter(subcategoria=subcategoria)
-    return render(request, 'productos.html', {'subcategoria': subcategoria, 'productos': productos})
 
 def agregar_productos(request):
     if request.method == "POST":

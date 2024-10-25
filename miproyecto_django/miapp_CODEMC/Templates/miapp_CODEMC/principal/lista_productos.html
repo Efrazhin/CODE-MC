@@ -1,0 +1,39 @@
+{% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
+{% load static %}
+{% block head %}
+    <title>Lista de productos</title>
+{% endblock %}
+{% block content %}
+<body>
+    <h1>Lista de Productos</h1>
+
+    {% if productos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Tamaño</th>
+                    <th>Unidad de Medida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.tamaño }}</td>
+                        <td>{{ producto.unidad_medida }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay productos disponibles.</p>
+    {% endif %}
+
+    <a href="{% url 'categorias' %}">Volver a Categorías</a>
+</body>
+{% endblock %}

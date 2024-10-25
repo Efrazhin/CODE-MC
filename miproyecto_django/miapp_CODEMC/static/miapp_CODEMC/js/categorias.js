@@ -5,14 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hacemos clic en la categoría para mostrar/ocultar subcategorías
     categoryCards.forEach(card => {
         card.addEventListener('click', function() {
-            // Cerrar cualquier otra categoría activa antes de abrir la actual
-            categoryCards.forEach(otherCard => {
-                if (otherCard !== this) {
-                    otherCard.classList.remove('active');
-                }
-            });
-
-            // Alternar la clase 'active' en la categoría actual
             this.classList.toggle('active');
         });
     });
