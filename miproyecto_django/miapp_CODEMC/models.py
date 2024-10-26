@@ -122,7 +122,7 @@ class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción', null=True, blank=True)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='categorias')
 
     def __str__(self):
         return self.nombre
@@ -151,7 +151,24 @@ class Producto(models.Model):
     descripcion = models.TextField('Descripción')
     precio = models.DecimalField('Precio', max_digits=10, decimal_places=2)
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50, null=True, blank=True)
+
+    
+    MEDIDAS = [
+        ('Litros','L'),
+        ('Milílitros','ml'),
+        ('Centímetros cúbicos','cm³ - cc'),
+        ('Kilogramos','kg'),
+        ('Gramos','g'),
+        ('Centímetros cúbicos','cm³ - cc'),
+        ('Talla XS','Talla XS'),
+        ('Talla S','Talla S'),
+        ('Talla M','Talla M'),
+        ('Talla L','Talla L'),
+        ('Talla XL','Talla XL'),
+    ]
+
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, null=True)
+
     fecha_vencimiento = models.DateField('Fecha de vencimiento', null=True, blank=True)
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categorías')

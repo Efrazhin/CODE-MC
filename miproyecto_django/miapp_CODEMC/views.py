@@ -62,7 +62,7 @@ def ventas(request):
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
 def categorias_view(request):
-    categorias = Categoria.objects.prefetch_related('subcategoria_set').all()
+    categorias = Categoria.objects.prefetch_related('subcategoria_set').filter(empresa=request.user.empresa)
     productos = None
     subcategoria_seleccionada = None
 
@@ -88,10 +88,12 @@ def crear_categoria(request):
     if request.method == 'POST':
         categoria_form = forms.CategoriaForm(request.POST)
         if categoria_form.is_valid():
-            categoria_form.save()
+            categoria = categoria_form.save(commit=False)
+            categoria.empresa = request.user.empresa
+            categoria = categoria_form.save()
             return redirect('crear_categoria')
         elif 'crear_subcategoria' in request.POST:
-            subcategoria_form = forms.SubcategoriaForm(request.POST)
+            subcategoria_form = forms.SubcategoriaForm(request.POST, user=request.user)
             if subcategoria_form.is_valid():
                 subcategoria_form.save()
                 return redirect('crear_categoria')
@@ -99,7 +101,7 @@ def crear_categoria(request):
 
     else:
         categoria_form = forms.CategoriaForm()
-        subcategoria_form = forms.SubcategoriaForm()
+        subcategoria_form = forms.SubcategoriaForm(user=request.user)
     
     return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'categoria_form': categoria_form, 'subcategoria_form': subcategoria_form})
 

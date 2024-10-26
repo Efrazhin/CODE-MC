@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect
 
+
  
 class FormRegistroEmpresa(ModelForm):
     class Meta:
@@ -23,7 +24,7 @@ class FormCliente(ModelForm):
 class CategoriaForm(ModelForm):
     class Meta:
         model = Categoria
-        fields = ['nombre', 'descripcion', 'empresa']  # Excluye 'fecha_creacion' porque se genera automáticamente
+        fields = ['nombre', 'descripcion']  # Excluye 'fecha_creacion' porque se genera automáticamente
 
 
 # class ProvinciaForm(ModelForm):
@@ -64,7 +65,14 @@ class SubcategoriaForm(ModelForm):
     class Meta:
         model = Subcategoria
         fields = ['nombre', 'descripcion', 'categoria']
- 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user',None)
+        super(SubcategoriaForm, self).__init__(*args, **kwargs)
+
+        if user and user.empresa:
+            self.fields['categoria'].queryset = Categoria.objects.filter(empresa=user.empresa)
+
+
 class StockForm(ModelForm):
     class Meta:
         model = Stock
