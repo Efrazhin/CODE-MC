@@ -1,0 +1,92 @@
+/* Estilos generales */
+.titulo {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo del formulario */
+.formulario-filtros {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Estilo de la tabla */
+.table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+}
+
+/* Asegura que la última fila no tenga borde */
+table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilo del mensaje vacío */
+.mensaje-vacio {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Enlace a categorías */
+.enlace-categorias {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.enlace-categorias:hover {
+    color: #666;
+}
