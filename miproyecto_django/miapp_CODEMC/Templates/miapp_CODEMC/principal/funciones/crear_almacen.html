@@ -1,10 +1,8 @@
 {% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
 {% load static %}
-{% block content1 %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head %}
     <title>Almacen</title>
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-barra.css' %}">
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 {% endblock %}
 {% block content %}
@@ -15,9 +13,8 @@
         {{ form.as_p }}
         <button type="submit">Guardar</button>
     </form>
-    <a href="{% url 'crear_sucursal' %}">Volver a la lista de sucursales</a>
-    <div class="container">
-        <h1>Almacenes Registrados</h1>
+    <div class="table-container">
+        <h1 class="titulo">Almacenes Registrados</h1>
         <table>
             <thead>
                 <tr>
@@ -60,6 +57,6 @@
             </tbody>
         </table>
     </div>
-    
+    <a href="{% url 'categorias' %}" class="enlace-categorias">Volver a Categorías</a>
 </html>
 {% endblock %}
