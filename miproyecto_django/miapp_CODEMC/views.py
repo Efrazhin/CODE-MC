@@ -11,6 +11,8 @@ from . import forms
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        print(request.user)
     ctx = {}
     return render(request, 'miapp_CODEMC/presentacion/index.html', ctx)
 
@@ -85,21 +87,26 @@ def crear_categoria(request):
         form = forms.CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('crear_categoria')
+            return redirect('categorias')
     else:
         form = forms.CategoriaForm()
     
     return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'form': form})
+
 def crear_almacen(request):
     if request.method == 'POST':
         form = forms.AlmacenForm(request.POST)
         if form.is_valid():
-            form.save()
+            almacen = form.save(commit=False)
+            almacen.empresa = request.user.empresa
+            almacen = form.save()
+            print(almacen.empresa)
             return redirect('crear_almacen')  # Cambia esto a la vista que deseas redirigir después de guardar
     else:
         form = forms.AlmacenForm()
     almacenes = Almacen.objects.all()
     return render(request, 'miapp_CODEMC/principal/funciones/crear_almacen.html', {'form': form, 'almacenes': almacenes})
+
 def crear_sucursal(request):
     if request.method == 'POST':
         form = forms.SucursalForm(request.POST)

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+{% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
 {% load static %}
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head %}
     <title>Categorías, Subcategorías y Productos</title>
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-categorias.css' %}">
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <h1>Categorías y Subcategorías</h1>
     <div class="category-container">
         {% for categoria in categorias %}
@@ -53,7 +51,8 @@
         {% endif %}
     </div>
 
+    <a href='{% url "crear_categoria" %}'>Crear categoria<a/>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{% static 'miapp_CODEMC/js/categorias.js'%}"></script>
-</body>
-</html>
+    <script src='{% static "miapp_CODEMC/js/categorias.js"%}'></script>
+{% endblock %}

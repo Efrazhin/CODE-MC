@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'miapp_CODEMC.apps.MiappCodemcConfig'
+    'miapp_CODEMC.apps.MiappCodemcConfig',
+    'localflavor',
+    'django_countries',
 ]
 
 MIDDLEWARE = [

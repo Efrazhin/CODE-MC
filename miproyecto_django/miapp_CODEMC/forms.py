@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
+from localflavor.ar.forms import ARCUITField, ARDNIField, PROVINCE_CHOICES
 
  
 class FormRegistroEmpresa(ModelForm):

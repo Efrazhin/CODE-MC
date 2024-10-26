@@ -58,10 +58,12 @@
     background-color: rgba(0, 0, 0,0.4);
     height: 11vmin;
 }
+/* 
+.header-principal.abajo .btn-inicio {
+    text-decoration: none;
+} */
 
-.header-principal.abajo .btn-inicio button{
-    background-color: blanchedalmond;
-    color: black;
+a:-webkit-any-link {
     text-decoration: none;
 }
 
