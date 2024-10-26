@@ -28,7 +28,7 @@ urlpatterns=[
     path("categorias/",views.categorias_view,name="categorias"),
     path('categorias/crear_categoria/', views.crear_categoria, name='crear_categoria'),
 
-    path("products/add-product/",views.agregar_productos, name='agrear-producto'),
+    path("products/add-product/",views.agregar_productos, name='agregar-producto'),
     path("products/", views.productos_view, name='productos'),
     path('crear_almacen/', views.crear_almacen, name='crear_almacen'),
     path("crear_sucursal/",views.crear_sucursal, name="crear_sucursal"),

@@ -66,9 +66,10 @@ def categorias_view(request):
     productos = None
     subcategoria_seleccionada = None
 
-    if 'subcategoria_id' in request.GET:
-        subcategoria_id = request.GET['subcategoria_id']
-        subcategoria_seleccionada = get_object_or_404(Subcategoria, id=subcategoria_id)
+    # Verificamos que 'subcategoria_id' exista en GET y no esté vacío
+    subcategoria_id = request.GET.get('subcategoria_id')
+    if subcategoria_id:
+        subcategoria_seleccionada = get_object_or_404(Subcategoria, id_subcategoria=subcategoria_id)
         productos = Producto.objects.filter(subcategoria=subcategoria_seleccionada)
 
     context = {
@@ -78,20 +79,29 @@ def categorias_view(request):
     }
     return render(request, 'miapp_CODEMC/principal/categorias.html', context)
 
+
 def productos_view(request):
     productos = Producto.objects.all()  # Obtiene todos los productos
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
 def crear_categoria(request):
     if request.method == 'POST':
-        form = forms.CategoriaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('categorias')
+        categoria_form = forms.CategoriaForm(request.POST)
+        if categoria_form.is_valid():
+            categoria_form.save()
+            return redirect('crear_categoria')
+        elif 'crear_subcategoria' in request.POST:
+            subcategoria_form = forms.SubcategoriaForm(request.POST)
+            if subcategoria_form.is_valid():
+                subcategoria_form.save()
+                return redirect('crear_categorias')
+        
+
     else:
-        form = forms.CategoriaForm()
+        categoria_form = forms.CategoriaForm()
+        subcategoria_form = forms.SubcategoriaForm()
     
-    return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'form': form})
+    return render(request, 'miapp_CODEMC/principal/funciones/crear_categoria.html', {'categoria_form': categoria_form, 'subcategoria_form': subcategoria_form})
 
 def crear_almacen(request):
     if request.method == 'POST':
@@ -139,7 +149,7 @@ def agregar_productos(request):
         form=forms.ProductoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('agregar-producto')
     else:
         form = forms.ProductoForm()
     return render(request, 'miapp_CODEMC/principal/productos.html', {'form': form} )

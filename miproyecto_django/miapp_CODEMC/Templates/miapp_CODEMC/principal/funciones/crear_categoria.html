@@ -1,17 +1,33 @@
 {% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
 {% load static %}
+
 {% block head %}
-    <title>Crear categoria</title>
+    <title>Crear categoría y subcategoría</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-crear-categorias.css' %}">
 {% endblock %}
+
 {% block content %}
-<body>
-    <h1>Crear Nueva Categoría</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
+    <div class="form-container">
+        <!-- Formulario de creación de categoría -->
+        <div class="formulario">
+            <h2>Crear Nueva Categoría</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ categoria_form.as_p }}
+                <button type="submit">Guardar Categoría</button>
+            </form>
+        </div>
+
+        <!-- Formulario de creación de subcategoría -->
+        <div class="formulario">
+            <h2>Crear Nueva Subcategoría</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ subcategoria_form.as_p }}
+                <button type="submit" name="crear_subcategoria">Crear Subcategoría</button>
+            </form>
+        </div>
+    </div>
+
     <a href='{% url "categorias" %}'>Volver a la lista de categorías</a>
-</body>
-</html>
 {% endblock %}

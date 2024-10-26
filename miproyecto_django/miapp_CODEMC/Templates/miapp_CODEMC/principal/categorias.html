@@ -15,7 +15,7 @@
                     {% for subcategoria in categoria.subcategoria_set.all %}
                         <form action="{% url 'categorias' %}" method="GET">
                             <input type="hidden" name="subcategoria_id" value="{{ subcategoria.id }}">
-                            <button type="submit" class="subcategory-item">{{ subcategoria.nombre }}</button>
+                            <button type="submit" class="subcategory-item" >{{ subcategoria.nombre }}</button>
                         </form>
                     {% empty %}
                         <p>No hay subcategorías disponibles.</p>

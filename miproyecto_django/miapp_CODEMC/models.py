@@ -51,7 +51,9 @@ class Cliente(models.Model):
 class Provincia(models.Model):
     id_provincia = models.AutoField('ID Provincia', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)  
-    
+
+    def __str__(self):
+        return self.nombre    
 
 class Pais(models.Model):
     id_pais = models.AutoField('ID Pais', primary_key=True)
@@ -77,7 +79,7 @@ class Proveedor(models.Model):
 
 
 class Almacen(models.Model):
-    id_almacen = models.IntegerField('ID Almacén', primary_key=True)
+    id_almacen = models.AutoField('ID Almacén', primary_key=True)
     telefono = models.CharField('Teléfono', max_length=50)
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     ciudad = models.CharField('Ciudad', max_length=100)
@@ -86,6 +88,11 @@ class Almacen(models.Model):
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
     unidad_medida = models.CharField('Unidad de Medida', max_length=50)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Número: {self.id_almacen}'  
+
+
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
@@ -97,22 +104,36 @@ class Sucursal(models.Model):
     almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'Número: {self.id_sucursal}'  
+
+
+
 class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción', null=True, blank=True)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nombre
+
 class Subcategoria(models.Model):
     id_subcategoria = models.AutoField('ID Subcategoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categoría')
+
+    def __str__(self):
+        return self.nombre
    
 
 class Stock(models.Model):
     id_stock = models.AutoField('ID Stock', primary_key=True)
     cantidad = models.IntegerField('Cantidad')
+
+    def __str__(self):
+        return f'Número: {self.id_stock}'  
 
  
 class Producto(models.Model):
@@ -128,6 +149,8 @@ class Producto(models.Model):
     stock = models.OneToOneField(Stock, on_delete=models.CASCADE, verbose_name='Stock')
     almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, null=True, blank=True)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, null=True, blank=True)
+
+
 
     
 
