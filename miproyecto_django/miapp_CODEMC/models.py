@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Empresa(models.Model):
@@ -80,13 +81,21 @@ class Proveedor(models.Model):
 
 class Almacen(models.Model):
     id_almacen = models.AutoField('ID Almacén', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
+    telefono = PhoneNumberField('Teléfono', region='AR')
+    provincia = models.CharField('Provincia',max_length=50)
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
+
+    metro_cuadrado = 'Metros cuadrados'
+    MEDIDAS = [
+        (metro_cuadrado,'m²'),
+        ('Decámetros cuadrados','dam²'),
+        ('Hectómetros cuadrados','hm²'),
+    ]
+
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, default=metro_cuadrado)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
     def __str__(self):

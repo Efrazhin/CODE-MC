@@ -1,7 +1,7 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
-from localflavor.ar.forms import ARCUITField, ARDNIField, PROVINCE_CHOICES
+from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect
 
  
 class FormRegistroEmpresa(ModelForm):
@@ -26,16 +26,16 @@ class CategoriaForm(ModelForm):
         fields = ['nombre', 'descripcion', 'empresa']  # Excluye 'fecha_creacion' porque se genera automáticamente
 
 
-class ProvinciaForm(ModelForm):
-    class Meta:
-        model = Provincia
-        fields=["nombre"]
+# class ProvinciaForm(ModelForm):
+#     class Meta:
+#         model = Provincia
+#         fields=["nombre"]
 
 
-class PaisForm(ModelForm):
-    class Meta:
-        model = Pais
-        fields=["nombre"]
+# class PaisForm(ModelForm):
+#     class Meta:
+#         model = Pais
+#         fields=["nombre"]
 
 class ProveedorForm(ModelForm):
     class Meta:
@@ -47,11 +47,12 @@ class ProveedorForm(ModelForm):
         ]
 
 class AlmacenForm(ModelForm):
+    provincia = CharField(widget=ARProvinceSelect, label='Provincia')
     class Meta:
         model = Almacen
         fields = [
             'telefono', 'provincia', 'ciudad', 
-            'calle', 'nro_calle', 'tamaño', 'unidad_medida', 'empresa'
+            'calle', 'nro_calle', 'tamaño', 'unidad_medida'
         ]
 
 class SucursalForm(ModelForm):

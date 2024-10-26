@@ -94,7 +94,7 @@ def crear_categoria(request):
             subcategoria_form = forms.SubcategoriaForm(request.POST)
             if subcategoria_form.is_valid():
                 subcategoria_form.save()
-                return redirect('crear_categorias')
+                return redirect('crear_categoria')
         
 
     else:
@@ -110,8 +110,7 @@ def crear_almacen(request):
             almacen = form.save(commit=False)
             almacen.empresa = request.user.empresa
             almacen = form.save()
-            print(almacen.empresa)
-            return redirect('crear_almacen')  # Cambia esto a la vista que deseas redirigir después de guardar
+            return redirect('crear_almacen') 
     else:
         form = forms.AlmacenForm()
     almacenes = Almacen.objects.all()
