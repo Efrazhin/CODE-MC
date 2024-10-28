@@ -87,7 +87,7 @@ def productos_view(request):
 def crear_categoria(request):
     if request.method == 'POST':
         categoria_form = forms.CategoriaForm(request.POST)
-        if categoria_form.is_valid():
+        if 'crear_categoria' in request.POST:
             categoria = categoria_form.save(commit=False)
             categoria.empresa = request.user.empresa
             categoria = categoria_form.save()
