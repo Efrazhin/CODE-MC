@@ -6,52 +6,52 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Categorías y Subcategorías</h1>
-    <div class="category-container">
-        {% for categoria in categorias %}
-            <div class="category-card">
-                <div class="category-title">{{ categoria.nombre }}</div>
-                <div class="subcategory-list">
-                    {% for subcategoria in categoria.subcategoria_set.all %}
-                        <form action="{% url 'categorias' %}" method="GET">
-                            <input type="hidden" name="subcategoria_id" value="{{ subcategoria.id }}">
-                            <button type="submit" class="subcategory-item" >{{ subcategoria.nombre }}</button>
-                        </form>
-                    {% empty %}
-                        <p>No hay subcategorías disponibles.</p>
-                    {% endfor %}
-                </div>
+<h1>Categorías, Subcategorías y Productos</h1>
+
+<div class="category-container">
+    {% for categoria in categorias %}
+        <div class="category-card">
+            <div class="category-title" onclick="toggleDisplay(this)">
+                {{ categoria.nombre }}
             </div>
-        {% endfor %}
-    </div>
-
-    <div id="productos-container">
-        {% if subcategoria_seleccionada %}
-            <h2>Productos de la Subcategoría: {{ subcategoria_seleccionada.nombre }}</h2>
-            {% if productos %}
-                <table>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Tamaño</th>
-                    </tr>
-                    {% for producto in productos %}
-                        <tr>
-                            <td>{{ producto.nombre }}</td>
-                            <td>{{ producto.descripcion }}</td>
-                            <td>{{ producto.precio }}</td>
-                            <td>{{ producto.tamaño }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                <p>No hay productos disponibles para esta subcategoría.</p>
-            {% endif %}
-        {% endif %}
-    </div>
-
-    <a href='{% url "crear_categoria" %}'>Crear categoria<a/>
-
-    <script src='{% static "miapp_CODEMC/js/categorias.js"%}'></script>
+            
+            <ul class="subcategory-list" style="display: none;">
+                {% for subcategoria in categoria.subcategoria_set.all %}
+                    <li>
+                        <div class="subcategory-title" onclick="toggleDisplay(this)">
+                            {{ subcategoria.nombre }}
+                        </div>
+                        
+                        <div class="product-list" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producto in subcategoria.producto_set.all %}
+                                        <tr>
+                                            <td>{{ producto.nombre }}</td>
+                                            <td>{{ producto.descripcion }}</td>
+                                            <td>${{ producto.precio }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3">No hay productos disponibles.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+<a href='{% url "crear_categoria" %}'>Crear categoria</a>
+<script src="{% static 'miapp_CODEMC/js/categorias.js' %}"></script>
 {% endblock %}

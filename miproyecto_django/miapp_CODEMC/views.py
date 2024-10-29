@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.http import JsonResponse
 from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursal
 from . import forms
 
@@ -61,24 +62,17 @@ def clientes(request):
 def ventas(request):
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
-def categorias_view(request):
-    categorias = Categoria.objects.prefetch_related('subcategoria_set').filter(empresa=request.user.empresa)
-    productos = None
-    subcategoria_seleccionada = None
 
-    # Verificamos que 'subcategoria_id' exista en GET y no esté vacío
-    subcategoria_id = request.GET.get('subcategoria_id')
-    if subcategoria_id:
-        subcategoria_seleccionada = get_object_or_404(Subcategoria, id_subcategoria=subcategoria_id)
-        productos = Producto.objects.filter(subcategoria=subcategoria_seleccionada)
+def categorias_subcategorias_productos(request):
+    # Prefetch para optimizar la consulta
+    categorias = Categoria.objects.prefetch_related(
+        'subcategoria_set__producto_set'
+    ).all()
 
-    context = {
-        'categorias': categorias,
-        'productos': productos,
-        'subcategoria_seleccionada': subcategoria_seleccionada,
-    }
-    return render(request, 'miapp_CODEMC/principal/categorias.html', context)
-
+    return render(request, 'miapp_CODEMC/principal/categorias.html', {
+        'categorias': categorias
+    })
+    
 
 def productos_view(request):
     productos = Producto.objects.all()  # Obtiene todos los productos

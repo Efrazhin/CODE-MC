@@ -1,23 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const categoryCards = document.querySelectorAll('.category-card');
+// categorias.js
 
-    categoryCards.forEach(card => {
-        card.addEventListener('click', function() {
-            // Ocultar todas las listas de subcategorías
-            categoryCards.forEach(c => {
-                if (c !== card) {
-                    c.querySelector('.subcategory-list').style.display = 'none';
-                }
-            });
-
-            // Alternar la visibilidad de la subcategoría seleccionada
-            const subcategoryList = card.querySelector('.subcategory-list');
-            if (subcategoryList.style.display === 'block') {
-                subcategoryList.style.display = 'none';
-            } else {
-                subcategoryList.style.display = 'block';
-            }
-        });
-    });
-});
-
+// Alterna la visibilidad de los elementos hijos de un contenedor al hacer clic
+function toggleDisplay(element) {
+    const nextElement = element.nextElementSibling;
+    if (nextElement && nextElement.style.display === 'none') {
+        nextElement.style.display = 'block';
+    } else if (nextElement) {
+        nextElement.style.display = 'none';
+    }
+}

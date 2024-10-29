@@ -1,93 +1,98 @@
-/* Contenedor principal de categorías */
-.category-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif; /* Tipografía general */
+    background-color: #f9f9f9; /* Fondo claro */
+    margin: 0;
     padding: 20px;
 }
 
-/* Tarjeta de categoría */
+.category-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Estilos de las tarjetas de categorías */
 .category-card {
-    width: 250px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    text-align: center;
-}
-
-.category-card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.category-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-/* Lista de subcategorías */
-.subcategory-list {
-    display: none;
-    margin-top: 10px;
-    text-align: left;
-}
-
-.subcategory-item {
-    display: block;
-    width: 100%;
-    padding: 5px;
-    margin: 5px 0;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border: none;
+    background-color: #000; /* Fondo negro para las tarjetas */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #ddd; /* Borde gris claro */
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el color de fondo y texto */
 }
 
-.subcategory-item:hover {
-    background-color: #45a049;
+/* Efecto hover para las tarjetas */
+.category-card:hover {
+    background-color: #fff; /* Fondo blanco al pasar el ratón */
+    color: #000; /* Texto negro al pasar el ratón */
 }
 
-/* Tabla de productos */
-#productos-container {
-    margin-top: 30px;
+/* Títulos de categorías y subcategorías */
+.category-title, .subcategory-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+    transition: color 0.3s; /* Transición suave para el color del texto */
 }
 
-table {
+/* Efecto hover para títulos */
+.category-title:hover, .subcategory-title:hover {
+    color: #000; /* Texto negro al pasar el ratón */
+}
+
+/* Línea divisoria entre la categoría y las subcategorías */
+.category-card .subcategory-list {
+    border-top: 1px solid #ddd; /* Línea superior para las subcategorías */
+    padding-top: 10px; /* Espaciado arriba */
+}
+
+/* Listas */
+.subcategory-list, .product-list {
+    list-style-type: none;
+    padding-left: 0; /* Sin sangría */
+}
+
+/* Bordes entre subcategorías */
+.subcategory-list li {
+    border-bottom: 1px solid #ddd; /* Línea inferior para cada subcategoría */
+    padding: 10px 0; /* Espaciado vertical para las subcategorías */
+}
+
+.subcategory-list li:last-child {
+    border-bottom: none; /* Elimina el borde del último elemento */
+}
+
+/* Estilos de la tabla de productos */
+.product-list table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+    border-collapse: collapse; /* Sin espacio entre bordes */
+    margin-top: 10px;
 }
 
-th, td {
-    padding: 10px;
+.product-list th, .product-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
-th {
-    background-color: #4CAF50;
-    color: white;
+/* Títulos de productos con efecto hover */
+.product-list th {
+    background-color: #f2f2f2; /* Fondo claro para encabezados */
+    color: #000; /* Texto negro por defecto */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el fondo y texto */
 }
 
-tr:hover {
-    background-color: #f5f5f5;
+.product-list th:hover {
+    background-color: #000; /* Fondo negro al pasar el ratón */
+    color: #fff; /* Texto blanco al pasar el ratón */
 }
 
-a {
-    display: inline-block;
-    margin-top: 20px;
-    color: #4CAF50;
-    text-decoration: none;
-}
 
-a:hover {
-    text-decoration: underline;
+
+/* Estilo para mensajes de productos no disponibles */
+.product-list td[colspan="3"] {
+    text-align: center; /* Centra el texto */
+    font-style: italic; /* Estilo itálico */
 }
