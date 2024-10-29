@@ -109,7 +109,7 @@ def crear_almacen(request):
             return redirect('crear_almacen') 
     else:
         form = forms.AlmacenForm()
-    almacenes = Almacen.objects.all()
+    almacenes = Almacen.objects.filter(empresa=request.user.empresa)
     return render(request, 'miapp_CODEMC/principal/funciones/crear_almacen.html', {'form': form, 'almacenes': almacenes})
 
 def crear_sucursal(request):

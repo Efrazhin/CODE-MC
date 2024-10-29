@@ -57,6 +57,7 @@ class AlmacenForm(ModelForm):
         ]
 
 class SucursalForm(ModelForm):
+    provincia = CharField(widget=ARProvinceSelect, label='Provincia')
     class Meta:
         model = Sucursal
         fields = ['telefono', 'provincia', 'ciudad', 'calle', 'nro_calle', 'almacen', 'empresa']
@@ -65,6 +66,7 @@ class SubcategoriaForm(ModelForm):
     class Meta:
         model = Subcategoria
         fields = ['nombre', 'descripcion', 'categoria']
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user',None)
         super(SubcategoriaForm, self).__init__(*args, **kwargs)
