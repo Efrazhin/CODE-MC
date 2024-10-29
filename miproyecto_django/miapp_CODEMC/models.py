@@ -15,16 +15,16 @@ class Empresa(models.Model):
         return self.nombre
     
 class CustomUser(AbstractUser):
-    dni = models.CharField('DNI', max_length=120,unique=True)
+    dni = models.CharField('DNI', max_length=120,unique=True,null=True)
     telefono = models.CharField('Teléfono', max_length=120)
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
     rol = models.CharField('Rol', max_length=10, default=MANAGER, null=True)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,related_name='usuario', null=True)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
-    
+    ubicacion = models.CharField('Ubicación', max_length=100, null=True)
     def __str__(self):
         return f"{self.user.username} - {self.user.empresa.nombre}"
     
@@ -34,6 +34,7 @@ class BusinessManager(models.Model):
 class Empleado(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='empleado')
     jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleado')
+    ubicacion = models.CharField('Ubicación', max_length=100, null=True)
 
     def __str__(self):
         return self.user.username 

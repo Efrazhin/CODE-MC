@@ -51,6 +51,7 @@ def depositos(request):
     return render(request, "miapp_CODEMC/principal/depositos.html")
     
 def configuracion(request):
+    
     return render(request, "miapp_CODEMC/principal/configuracion.html")
     
 def compras(request):

@@ -56,6 +56,8 @@ class AlmacenForm(ModelForm):
             'calle', 'nro_calle', 'tamaño', 'unidad_medida'
         ]
 
+    
+
 class SucursalForm(ModelForm):
     provincia = CharField(widget=ARProvinceSelect, label='Provincia')
     class Meta:
