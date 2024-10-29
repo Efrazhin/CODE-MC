@@ -2,37 +2,40 @@
 {%load static%}
 {% block head %}
     <title>Empleados</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>Empleados</h1>
+    <h1 class="titulo">Empleados</h1>
     <a href='{% url "crear-empleado" %}'>Registrar empleado</a>
 
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Usuario</th>
-                <th>Documento de identificación</th>
-                <th>Telefono</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for empleado in empleados %}
-            <tr>
-                <td> {{ empleado.user.first_name }} </td>
-                <td> {{ empleado.user.last_name }} </td>
-                <td> {{ empleado.user.username }} </td>
-                <td> {{ empleado.user.dni }} </td>
-                <td> {{ empleado.user.telefono }} </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5"> Tu empresa aún no tiene empleados. ¡Comienza a agregar! </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    <table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Usuario</th>
+                    <th>Documento de identificación</th>
+                    <th>Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empleado in empleados %}
+                <tr>
+                    <td> {{ empleado.user.first_name }} </td>
+                    <td> {{ empleado.user.last_name }} </td>
+                    <td> {{ empleado.user.username }} </td>
+                    <td> {{ empleado.user.dni }} </td>
+                    <td> {{ empleado.user.telefono }} </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5"> Tu empresa aún no tiene empleados. ¡Comienza a agregar! </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        <table>
+
+    </div>
 {% endblock %}
