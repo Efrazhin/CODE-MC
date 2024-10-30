@@ -1,4 +1,4 @@
-from django.forms import ModelForm, CharField
+from django.forms import *
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect
@@ -14,7 +14,6 @@ class FormRegistroUser(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username','first_name','last_name','email', 'dni','telefono')
-
 
 class FormCliente(ModelForm):
     class Meta:
@@ -56,13 +55,32 @@ class AlmacenForm(ModelForm):
             'calle', 'nro_calle', 'tamaño', 'unidad_medida'
         ]
 
-    
-
 class SucursalForm(ModelForm):
     provincia = CharField(widget=ARProvinceSelect, label='Provincia')
     class Meta:
         model = Sucursal
         fields = ['telefono', 'provincia', 'ciudad', 'calle', 'nro_calle', 'almacen', 'empresa']
+
+
+class SeleccionUbicacion(forms.Form):
+    ubicacion = ChoiceField(
+        choices = [],
+        label = 'Ubicación')
+
+    def __init__(self,*args, **kwargs):
+        user = kwargs.pop('user',None)
+        super(SeleccionUbicacion, self).__init__(*args, **kwargs)
+
+        empresa = user.empresa
+
+        almacenes = Almacen.objects.filter(empresa=empresa)
+        sucursales = Sucursal.objects.filter(empresa=empresa)
+
+        opciones_almacenes = [(f"Almacén_{almacen.id_almacen}", f"Almacén: {almacen.calle} {almacen.nro_calle}") for almacen in almacenes]
+        opciones_sucursales = [(f"Sucursal_{sucursal.id_sucursal}", f"Sucursal: {sucursal.calle} {sucursal.nro_calle}") for sucursal in sucursales]
+
+        self.fields['ubicacion'].choices = opciones_almacenes + opciones_sucursales
+
 
 class SubcategoriaForm(ModelForm):
     class Meta:

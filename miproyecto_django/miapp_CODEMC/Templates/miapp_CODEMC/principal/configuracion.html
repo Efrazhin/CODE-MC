@@ -4,7 +4,9 @@
     <title>Configuracion</title>
 {% endblock %}
 {% block content %}
-<div>
-    
-</div>
+<form method='POST'>
+    {% csrf_token %}
+    {{ form_ubicacion.as_p }}
+    <button type='submit'>Guardar ubicación</button>
+</form>
 {% endblock %}

@@ -51,8 +51,35 @@ def depositos(request):
     return render(request, "miapp_CODEMC/principal/depositos.html")
     
 def configuracion(request):
-    
-    return render(request, "miapp_CODEMC/principal/configuracion.html")
+    if request.user.rol == 'manager':
+        perfil = request.user.manager
+    else:
+        perfil = request.user.empleado
+
+    if request.method == 'POST':
+        form = forms.SeleccionUbicacion(request.POST, user=request.user)
+        if form.is_valid():
+            ubicacion_seleccionada = form.cleaned_data['ubicacion']
+
+            tipo, id_ubicacion = ubicacion_seleccionada.split('_')
+
+            if tipo == 'Almacén':
+                perfil.ubicacion =  str(Almacen.objects.get(id_almacen = id_ubicacion))
+                print(perfil.ubicacion)
+                
+            elif tipo == 'Sucursal':
+                perfil.ubicacion = str(Sucursal.objects.get(id_sucursal = id_ubicacion))
+            
+            perfil.save()
+            
+            return redirect('configuracion')
+        
+    else:
+        form = forms.SeleccionUbicacion(user=request.user)
+
+    ctx = {'form_ubicacion':form}
+
+    return render(request, "miapp_CODEMC/principal/configuracion.html", ctx)
     
 def compras(request):
     return render(request,"miapp_CODEMC/principal/compras.html")
