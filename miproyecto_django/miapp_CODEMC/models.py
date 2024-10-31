@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
 from phonenumber_field import formfields
 
-
 class Empresa(models.Model):
     cuit = models.CharField('CUIT', max_length=50, primary_key=True, unique=True)
     nombre = models.CharField('Razón social', max_length=100)
@@ -14,6 +13,44 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nombre
     
+
+class Almacen(models.Model):
+    id_almacen = models.AutoField('id_almacen', primary_key=True)
+    telefono = models.CharField('Teléfono', max_length=50)
+    provincia = models.CharField('Provincia', max_length=100)
+    ciudad = models.CharField('Ciudad', max_length=100)
+    calle = models.CharField('Calle', max_length=100)
+    nro_calle = models.IntegerField('Número de Calle')
+    tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
+    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Almacén Nº{self.id_almacen} - {self.calle} {self.nro_calle}"
+
+
+class Sucursal(models.Model):
+    id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
+    telefono = models.CharField('Teléfono', max_length=50)
+    provincia = models.CharField('Provincia', max_length=50)
+    ciudad = models.CharField('Ciudad', max_length=100)
+    calle = models.CharField('Calle', max_length=100)
+    nro_calle = models.IntegerField('Número de Calle')
+    almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Sucursal Nº{self.id_sucursal} - {self.calle} {self.nro_calle}"
+    
+class Ubicacion(models.Model):
+    SUCURSAL = 'Sucursal'
+    ALMACEN = 'Almacen'
+    tipo = models.CharField(max_length=20)  # "almacen" o "sucursal"
+    almacen = models.ForeignKey(Almacen, null=True, blank=True, on_delete=models.CASCADE)
+    sucursal = models.ForeignKey(Sucursal, null=True, blank=True, on_delete=models.CASCADE)
+
+
+
 class CustomUser(AbstractUser):
     dni = models.CharField('DNI', max_length=120,unique=True,null=True)
     telefono = models.CharField('Teléfono', max_length=120)
@@ -24,7 +61,7 @@ class CustomUser(AbstractUser):
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
-    ubicacion = models.CharField('Ubicación', max_length=100, null=True)
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE,max_length=100, null=True)
     def __str__(self):
         return f"{self.user.username} - {self.user.empresa.nombre}"
     
@@ -34,7 +71,7 @@ class BusinessManager(models.Model):
 class Empleado(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='empleado')
     jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleado')
-    ubicacion = models.CharField('Ubicación', max_length=100, null=True)
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
     def __str__(self):
         return self.user.username 
@@ -79,30 +116,8 @@ class Proveedor(models.Model):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
 
-class Almacen(models.Model):
-    id_almacen = models.AutoField('id_almacen', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.CharField('Provincia', max_length=100)
-    ciudad = models.CharField('Ciudad', max_length=100)
-    calle = models.CharField('Calle', max_length=100)
-    nro_calle = models.IntegerField('Número de Calle')
-    tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.id_almacen)
 
 
-class Sucursal(models.Model):
-    id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.CharField('Provincia', max_length=50)
-    ciudad = models.CharField('Ciudad', max_length=100)
-    calle = models.CharField('Calle', max_length=100)
-    nro_calle = models.IntegerField('Número de Calle')
-    almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
 class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)

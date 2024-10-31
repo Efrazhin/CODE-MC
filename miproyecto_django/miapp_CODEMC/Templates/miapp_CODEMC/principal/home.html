@@ -5,8 +5,14 @@
 {% endblock %}
 {% block content %}
 <title>inicio gestion</title>
-<div class="text">
-    <h1>Contenido Personalizado</h1>
-    <p>Este es el contenido que se reemplaza en la sección home.</p>
-</div>
+
+{% if  ubicacion.tipo == "Almacen" %}
+    <h2>Estás en: {{ubicacion.tipo}} Nº{{ubicacion.almacen.id_almacen}}, {{ubicacion.almacen.calle}} {{ubicacion.almacen.nro_calle}}</h2> 
+{% elif ubicacion.tipo == "Sucursal"%}
+    <h2>Estás en: {{ubicacion.tipo}} Nº{{ubicacion.sucursal.id_sucursal}}, {{ubicacion.sucursal.calle}} {{ubicacion.sucursal.nro_calle}}</h2> 
+{% else %}
+    <h2>¡Escoge tu ubicación según el almacén o sucursal registrados!</h2> 
+{% endif %}
+
+
 {% endblock %}

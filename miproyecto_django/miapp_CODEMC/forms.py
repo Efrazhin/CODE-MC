@@ -64,22 +64,48 @@ class SucursalForm(ModelForm):
 
 class SeleccionUbicacion(forms.Form):
     ubicacion = ChoiceField(
+        initial= [('','Selecciona tu ubicación')],
         choices = [],
         label = 'Ubicación')
 
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user',None)
         super(SeleccionUbicacion, self).__init__(*args, **kwargs)
+        
+        ubicacion_actual = [('','Selecciona tu ubicación')]
+        ubicacion_actual_obj = None
 
-        empresa = user.empresa
+        if user:
+            empresa = user.empresa
+            if hasattr(user, 'manager'):
+                if hasattr(user.manager, 'ubicacion') and user.manager.ubicacion:
+                    ubicacion_actual_obj = user.manager.ubicacion
+                else:
+                    pass
+            elif hasattr(user, 'empleado'):
+                if hasattr(user.empleado, 'ubicacion') and user.empleado.ubicacion:
+                    ubicacion_actual_obj = user.empleado.ubicacion
+                else:
+                    pass
+            
+            # Si hay una ubicación registrada, se procede a obtener almacenes y sucursales
+            if ubicacion_actual_obj:
+                if ubicacion_actual_obj.tipo == 'Almacen':
+                    almacenes = Almacen.objects.filter(empresa=empresa).exclude(id_almacen=ubicacion_actual_obj.almacen.id_almacen)
+                    sucursales = Sucursal.objects.filter(empresa=empresa)
+                elif ubicacion_actual_obj.tipo == 'Sucursal':
+                    almacenes = Almacen.objects.filter(empresa=empresa)
+                    sucursales = Sucursal.objects.filter(empresa=empresa).exclude(id_sucursal=ubicacion_actual_obj.sucursal.id_sucursal)
+            else:
+                almacenes = Almacen.objects.filter(empresa=empresa)
+                sucursales = Sucursal.objects.filter(empresa=empresa)
 
-        almacenes = Almacen.objects.filter(empresa=empresa)
-        sucursales = Sucursal.objects.filter(empresa=empresa)
+            # Generar opciones para almacenes y sucursales
+            opciones_almacenes = [(f"Almacen_{almacen.id_almacen}", f"Almacén: {almacen.calle} {almacen.nro_calle}") for almacen in almacenes]
+            opciones_sucursales = [(f"Sucursal_{sucursal.id_sucursal}", f"Sucursal: {sucursal.calle} {sucursal.nro_calle}") for sucursal in sucursales]
 
-        opciones_almacenes = [(f"Almacén_{almacen.id_almacen}", f"Almacén: {almacen.calle} {almacen.nro_calle}") for almacen in almacenes]
-        opciones_sucursales = [(f"Sucursal_{sucursal.id_sucursal}", f"Sucursal: {sucursal.calle} {sucursal.nro_calle}") for sucursal in sucursales]
-
-        self.fields['ubicacion'].choices = opciones_almacenes + opciones_sucursales
+            # Establecer las opciones de elección
+            self.fields['ubicacion'].choices += opciones_almacenes + opciones_sucursales
 
 
 class SubcategoriaForm(ModelForm):

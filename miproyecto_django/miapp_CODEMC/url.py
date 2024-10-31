@@ -11,7 +11,7 @@ urlpatterns=[
     path("logout/",views.user_signout,name="logout"),
     path("user-registration/", views.user_registration, name="registro-usuario"),
 
-    path("home/",views.inicio_gestion,name="home"),
+    path("home/",views.home,name="home"),
     path("estadisticas/",views.estadisticas,name="estadisticas"),
     path("ventas/",views.ventas,name="ventas"),
     path("provedores/",views.provedores,name="provedores"),
