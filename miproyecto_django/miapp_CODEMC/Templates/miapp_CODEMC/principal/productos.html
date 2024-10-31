@@ -5,11 +5,19 @@
 {% endblock %}
 <body>
 {% block content %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         <h2>Agregue un producto:</h2>
 
-        {{ form.as_p }}
+        {{ producto_form.as_p }}
+        {{ stock_form.as_p }}
 
         <button type="submit">Registrar</button>
     </form>

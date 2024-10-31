@@ -106,7 +106,7 @@ class ProductoForm(ModelForm):
         fields = [
             'nombre', 'descripcion', 'precio', 'tamaño', 
             'unidad_medida', 'fecha_vencimiento', 'categoria', 
-            'subcategoria', 'stock', 'almacen', 'sucursal'
+            'subcategoria',  'almacen', 'sucursal'
         ]
 
 class RemitoForm(ModelForm):

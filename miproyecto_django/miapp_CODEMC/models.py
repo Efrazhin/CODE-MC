@@ -109,6 +109,8 @@ class Sucursal(models.Model):
     nro_calle = models.IntegerField('Número de Calle')
     almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    def __str__(self):
+        return f'Número: {self.id_sucursal}'  
 
 class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
