@@ -78,21 +78,27 @@ class Proveedor(models.Model):
     nro_calle = models.IntegerField('Número de Calle')
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
-
 class Almacen(models.Model):
-    id_almacen = models.AutoField('id_almacen', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.CharField('Provincia', max_length=100)
+    id_almacen = models.AutoField('ID Almacén', primary_key=True)
+    telefono = PhoneNumberField('Teléfono', region='AR')
+    provincia = models.CharField('Provincia',max_length=50)
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
+
+    metro_cuadrado = 'Metros cuadrados'
+    MEDIDAS = [
+        (metro_cuadrado,'m²'),
+        ('Decámetros cuadrados','dam²'),
+        ('Hectómetros cuadrados','hm²'),
+    ]
+
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, default=metro_cuadrado)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id_almacen)
-
+        return f'Número: {self.id_almacen}'  
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
@@ -125,6 +131,9 @@ class Subcategoria(models.Model):
 class Stock(models.Model):
     id_stock = models.AutoField('ID Stock', primary_key=True)
     cantidad = models.IntegerField('Cantidad')
+    def __str__(self):
+        return f'Número: {self.id_stock}'  
+
 
  
 class Producto(models.Model):
@@ -133,7 +142,24 @@ class Producto(models.Model):
     descripcion = models.TextField('Descripción')
     precio = models.DecimalField('Precio', max_digits=10, decimal_places=2)
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50, null=True, blank=True)
+
+    
+    MEDIDAS = [
+        ('Litros','L'),
+        ('Milílitros','ml'),
+        ('Centímetros cúbicos','cm³ - cc'),
+        ('Kilogramos','kg'),
+        ('Gramos','g'),
+        ('Centímetros cúbicos','cm³ - cc'),
+        ('Talla XS','Talla XS'),
+        ('Talla S','Talla S'),
+        ('Talla M','Talla M'),
+        ('Talla L','Talla L'),
+        ('Talla XL','Talla XL'),
+    ]
+
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, null=True)
+
     fecha_vencimiento = models.DateField('Fecha de vencimiento', null=True, blank=True)
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categorías')
@@ -141,7 +167,7 @@ class Producto(models.Model):
     almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, null=True, blank=True)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, null=True, blank=True)
 
-    
+
 
 # class Configuraciones(models.Model):
 #     id_config = models.AutoField('ID Configuración', primary_key=True)
