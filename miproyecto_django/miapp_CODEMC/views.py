@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import JsonResponse
-from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursal
+from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursal, Ubicacion
 from . import forms
 
 # Create your views here.
@@ -23,7 +23,18 @@ def planes(request):
 def contacto(request):
     return render(request, "miapp_CODEMC/presentacion/Contacto.html")
 
-def inicio_gestion(request):
+def home(request):
+
+    if request.user.manager:
+        ubicacion = request.user.manager.ubicacion
+    elif request.usuario.empleado:
+        ubicacion = request.user.empleado.ubicacion
+
+    if ubicacion is not None: 
+        ctx = {'ubicacion':ubicacion}
+        return render(request, "miapp_CODEMC/principal/home.html", ctx)
+
+
     return render(request, "miapp_CODEMC/principal/home.html")
 
 def sucursales(request):
@@ -53,7 +64,7 @@ def depositos(request):
 def configuracion(request):
     if request.user.rol == 'manager':
         perfil = request.user.manager
-    else:
+    elif request.user.rol == 'empleado':
         perfil = request.user.empleado
 
     if request.method == 'POST':
@@ -61,19 +72,32 @@ def configuracion(request):
         if form.is_valid():
             ubicacion_seleccionada = form.cleaned_data['ubicacion']
 
-            tipo, id_ubicacion = ubicacion_seleccionada.split('_')
+            try:
+                # Validar que la ubicación seleccionada tenga el formato correcto
+                if not ubicacion_seleccionada:
+                    raise ValueError("Ubicación no seleccionada")
 
-            if tipo == 'Almacén':
-                perfil.ubicacion =  str(Almacen.objects.get(id_almacen = id_ubicacion))
-                print(perfil.ubicacion)
-                
-            elif tipo == 'Sucursal':
-                perfil.ubicacion = str(Sucursal.objects.get(id_sucursal = id_ubicacion))
-            
-            perfil.save()
-            
-            return redirect('configuracion')
-        
+                # Obtenemos el objeto de la ubicación seleccionada
+                id_ubicacion = ubicacion_seleccionada.split('_')[1]
+                if ubicacion_seleccionada.startswith('Almacen'):
+                    almacen = Almacen.objects.get(id_almacen=id_ubicacion)
+                    ubicar = Ubicacion.objects.filter(tipo=Ubicacion.ALMACEN, almacen=almacen).first()
+                    if not ubicar:
+                        ubicar = Ubicacion.objects.create(tipo=Ubicacion.ALMACEN, almacen=almacen)
+                elif ubicacion_seleccionada.startswith('Sucursal'):
+                    sucursal = Sucursal.objects.get(id_sucursal=id_ubicacion)
+                    ubicar = Ubicacion.objects.filter(tipo=Ubicacion.SUCURSAL, sucursal=sucursal).first()
+                    if not ubicar:
+                        ubicar = Ubicacion.objects.create(tipo=Ubicacion.SUCURSAL, sucursal=sucursal)
+
+                perfil.ubicacion = ubicar
+                perfil.save()
+                return redirect('configuracion')  # Redirige después de guardar
+
+            except ObjectDoesNotExist:
+                return render(request, "miapp_CODEMC/principal/error.html", {"error": "Ubicación no encontrada"})
+            except ValueError as e:
+                return render(request, "miapp_CODEMC/principal/configuracion.html", {"form_ubicacion": form, "error": str(e)})
     else:
         form = forms.SeleccionUbicacion(user=request.user)
 
