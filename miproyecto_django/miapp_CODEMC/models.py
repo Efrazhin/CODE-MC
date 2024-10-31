@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
-from phonenumber_field import formfields
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Empresa(models.Model):
