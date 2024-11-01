@@ -30,6 +30,7 @@ urlpatterns=[
 
     path("products/add-product/",views.agregar_productos, name='agregar-producto'),
     path("products/", views.productos_view, name='productos'),
+    path('eliminar_producto/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
     path('crear_almacen/', views.crear_almacen, name='crear_almacen'),
     path("crear_sucursal/",views.crear_sucursal, name="crear_sucursal"),
     path('eliminar-almacen/<int:id_almacen>/', views.eliminar_almacen, name='eliminar_almacen'),

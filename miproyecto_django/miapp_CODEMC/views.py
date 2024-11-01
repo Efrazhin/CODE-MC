@@ -136,6 +136,12 @@ def productos_view(request):
     productos = Producto.objects.all()  
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id_producto=producto_id)
+    producto.delete()
+    messages.success(request, "Producto eliminado exitosamente.")
+    return redirect('productos')
+
 #<------------------------------Categorias------------------------------>
 def crear_categoria(request):
     if request.method == 'POST':

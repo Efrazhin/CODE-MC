@@ -117,33 +117,6 @@ class Proveedor(models.Model):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
 
 
-class Almacen(models.Model):
-    id_almacen = models.AutoField('id_almacen', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.CharField('Provincia', max_length=100)
-    ciudad = models.CharField('Ciudad', max_length=100)
-    calle = models.CharField('Calle', max_length=100)
-    nro_calle = models.IntegerField('Número de Calle')
-    tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.id_almacen)
-
-
-class Sucursal(models.Model):
-    id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
-    telefono = models.CharField('Teléfono', max_length=50)
-    provincia = models.CharField('Provincia', max_length=50)
-    ciudad = models.CharField('Ciudad', max_length=100)
-    calle = models.CharField('Calle', max_length=100)
-    nro_calle = models.IntegerField('Número de Calle')
-    almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
-    def __str__(self):
-        return f'Número: {self.id_sucursal}'  
-
 class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)

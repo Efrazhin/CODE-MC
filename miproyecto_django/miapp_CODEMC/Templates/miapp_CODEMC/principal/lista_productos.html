@@ -48,6 +48,7 @@
                         <th>Unidad de Medida</th>
                         <th>Almacén</th>
                         <th>Sucursal</th>
+                        <th>Acciones</th> <!-- Nueva columna para acciones -->
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,13 @@
                             <td>{{ producto.unidad_medida }}</td>
                             <td>Almacén #{{ producto.almacen.id_almacen }}</td>
                             <td>Sucursal #{{ producto.sucursal.id_sucursal }}</td>
+                            <!-- Botón de eliminar producto -->
+                            <td>
+                                <form action="{% url 'eliminar_producto' producto.id_producto %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Eliminar</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -70,4 +78,14 @@
     {% endif %}
 
     <a href="{% url 'categorias' %}" class="enlace-categorias">Volver a Categorías</a>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
