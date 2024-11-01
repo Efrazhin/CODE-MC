@@ -25,9 +25,11 @@ def contacto(request):
 
 def home(request):
 
-    if request.user.manager:
+    ubicacion = None
+
+    if request.user.manager.ubicacion:
         ubicacion = request.user.manager.ubicacion
-    elif request.usuario.empleado:
+    elif request.usuario.empleado.ubicacion:
         ubicacion = request.user.empleado.ubicacion
 
     if ubicacion is not None: 
@@ -112,11 +114,19 @@ def clientes(request):
     return render(request,"miapp_CODEMC/principal/clientes.html")
 
 def ventas(request):
+
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
+#RECORDATORIO: Crear función decoradora q' evite q' el usu' registre remito sin tener una ubicación
+def agregar_venta(request):
 
-#<------------------------------Productos------------------------------>
+
+    return render(request,"miapp_CODEMC/principal/crear-venta.html")
+
+#RECORDATORIO: Crear función decoradora q' evite q' el usu' registre producto sin tener una ubicación
 def agregar_productos(request):
+    if request.user:
+        user = request.user
     if request.method == "POST":
         producto_form = forms.ProductoForm(request.POST)
         stock_form = forms.StockForm(request.POST)
@@ -124,6 +134,10 @@ def agregar_productos(request):
             stock = stock_form.save()
             producto = producto_form.save(commit=False)
             producto.stock = stock  
+            if hasattr(user,'manager') and request.user.manager.ubicacion:
+                producto.ubicacion = request.user.manager.ubicacion
+            elif hasattr(user,'empleado') and request.user.empleado.ubicacion:
+                producto.ubicacion = request.user.empleado.ubicacion
             producto.save()  
             messages.success(request, '¡Tu producto se agregó exitosamente!')
             return redirect('agregar-producto')

@@ -25,8 +25,11 @@ urlpatterns=[
     path("compras/",views.compras,name="compras"),
     path("clientes/",views.clientes,name="clientes"),
 
-    path("categorias/",views.categorias_subcategorias_productos,name="categorias"),
-    path('categorias/crear_categoria/', views.crear_categoria, name='crear_categoria'),
+    path("sales/",views.ventas,name="ventas"),
+    path("sales/add-remmitance/",views.agregar_venta,name="agregar-venta"),
+
+    path("categories/",views.categorias_subcategorias_productos,name="categorias"),
+    path('categories/add-category/', views.crear_categoria, name='crear_categoria'),
 
     path("products/add-product/",views.agregar_productos, name='agregar-producto'),
     path("products/", views.productos_view, name='productos'),

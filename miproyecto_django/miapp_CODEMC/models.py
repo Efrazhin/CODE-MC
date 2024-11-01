@@ -171,8 +171,7 @@ class Producto(models.Model):
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categorías')
     stock = models.OneToOneField(Stock, on_delete=models.CASCADE, verbose_name='Stock')
-    almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, null=True, blank=True)
-    sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, null=True, blank=True)
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
 
 
@@ -201,7 +200,7 @@ class DetalleRemito(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Almacén')
     cantidad = models.IntegerField('Cantidad')
     descuento = models.DecimalField('Descuento', max_digits=5, decimal_places=2)
-    importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
+    importe = models.DecimalField('Importe', max_digits=10, decimal_places=2, default=1.00)
     remito = models.ForeignKey(Remito, on_delete=models.CASCADE, verbose_name='Remito')
 
 class Compra(models.Model):
@@ -210,7 +209,8 @@ class Compra(models.Model):
     descripcion = models.TextField('Descripción')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, verbose_name='Proveedor')
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado')
-   
+    almacen = models.ForeignKey(Almacen, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Almacén')
+    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Sucursal')
 
 class DetalleCompra(models.Model):
     id_detalle_compra = models.AutoField('ID Detalle Compra', primary_key=True)

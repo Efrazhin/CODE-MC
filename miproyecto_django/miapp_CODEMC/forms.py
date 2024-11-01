@@ -132,7 +132,8 @@ class ProductoForm(ModelForm):
         fields = [
             'nombre', 'descripcion', 'precio', 'tamaño', 
             'unidad_medida', 'fecha_vencimiento', 'categoria', 
-            'subcategoria',  'almacen', 'sucursal'
+            'subcategoria', 
+            # 'almacen', 'sucursal'
         ]
 
 class RemitoForm(ModelForm):
@@ -140,21 +141,39 @@ class RemitoForm(ModelForm):
         model = Remito
         fields = ['fecha', 'descripcion', 'cliente', 'empleado', 'almacen', 'sucursal']
 
-class CompraForm(ModelForm):
-    class Meta:
-        model = Compra
-        fields = ['fecha', 'descripcion', 'proveedor', 'empleado']
-
 class DetalleRemitoForm(ModelForm):
     class Meta:
         model = DetalleRemito
         fields = ['producto', 'cantidad', 'descuento', 'importe', 'remito']
 
+    def __init__(self,*args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(DetalleRemito, self).__init__(*args, **kwargs)
+
+        ubicar = None
+
+        if hasattr(user,'manager') and user.manager.ubicacion:
+            ubicar = user.manager.ubicacion
+        elif hasattr(user,'empleado') and user.empleado.ubicacion:
+            ubicar = user.empleado.ubicacion
+        else: 
+            pass
+        
+        if ubicar is not None:
+            self.fields['productos'].queryset = Producto.objects.filter(ubicacion=ubicar)
+        else:
+            pass
+
+class CompraForm(ModelForm):
+    class Meta:
+        model = Compra
+        fields = ['fecha', 'descripcion', 'proveedor', 'empleado']
 
 class DetalleCompraForm(ModelForm):
     class Meta:
         model = DetalleCompra
         fields = ['producto', 'cantidad', 'importe', 'compra']
+
 
 class PresupuestoForm(ModelForm):
     class Meta:
