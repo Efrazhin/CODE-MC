@@ -26,11 +26,15 @@ def contacto(request):
 def home(request):
 
     ubicacion = None
+    user = request.user
 
-    if request.user.manager.ubicacion:
-        ubicacion = request.user.manager.ubicacion
-    elif request.usuario.empleado.ubicacion:
-        ubicacion = request.user.empleado.ubicacion
+
+    if hasattr(user,'manager') and user.manager.ubicacion:
+        ubicacion = user.manager.ubicacion
+    elif hasattr(user,'empleado') and user.empleado.ubicacion:
+        ubicacion = user.empleado.ubicacion
+    else:
+        pass
 
     if ubicacion is not None: 
         ctx = {'ubicacion':ubicacion}
