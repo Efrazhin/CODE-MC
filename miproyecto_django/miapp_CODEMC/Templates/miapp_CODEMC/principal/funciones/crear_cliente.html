@@ -1,0 +1,18 @@
+{% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
+{% load static %}
+{% block head %}
+    <title>Crear cliente</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
+{% endblock %}
+<body>
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h2>Completa los datos de tu cliente:</h2>
+
+        {{ form.as_p }}    
+
+        <button type="submit">Registrar</button>
+    </form>
+{% endblock %}
+</body>

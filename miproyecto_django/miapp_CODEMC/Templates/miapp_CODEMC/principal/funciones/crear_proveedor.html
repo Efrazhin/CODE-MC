@@ -1,0 +1,18 @@
+{% extends "miapp_CODEMC/inheritances/barra lateral.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Agregar venta</title>
+    <link rel="stylesheet" href="">
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Completa los datos de tu proveedor:</h2>
+
+    {{ form.as_p }}    
+
+    <button type="submit">Registrar</button>
+</form>
+{% endblock %}

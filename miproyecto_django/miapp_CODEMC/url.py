@@ -14,16 +14,21 @@ urlpatterns=[
     path("home/",views.home,name="home"),
     path("estadisticas/",views.estadisticas,name="estadisticas"),
     path("ventas/",views.ventas,name="ventas"),
-    path("provedores/",views.provedores,name="provedores"),
+
+    path("suppliers/",views.proveedores,name="proveedores"),
+    path("suppliers/add-supplier",views.agregar_proveedor,name="agregar-proveedor"),
+
     path("libros/",views.libros,name="libros"),
 
     path("employees/",views.empleados,name="empleados"),
     path("employees/registration/",views.user_registration,name="crear-empleado"),
 
-    path("depositos/",views.depositos,name="depositos"),
+    path("warehouses/",views.almacenes,name="almacenes"),
     path("configuracion/",views.configuracion,name="configuracion"),
     path("compras/",views.compras,name="compras"),
-    path("clientes/",views.clientes,name="clientes"),
+
+    path("customers/",views.clientes,name="clientes"),
+    path("customers/add-customer",views.agregar_cliente,name="agregar-cliente"),
 
     path("sales/",views.ventas,name="ventas"),
     path("sales/add-remmitance/",views.agregar_venta,name="agregar-venta"),
@@ -34,6 +39,7 @@ urlpatterns=[
     path("products/add-product/",views.agregar_productos, name='agregar-producto'),
     path("products/", views.productos_view, name='productos'),
     path('eliminar_producto/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
+
     path('crear_almacen/', views.crear_almacen, name='crear_almacen'),
     path("crear_sucursal/",views.crear_sucursal, name="crear_sucursal"),
     path('eliminar-almacen/<int:id_almacen>/', views.eliminar_almacen, name='eliminar_almacen'),

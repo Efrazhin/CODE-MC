@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import JsonResponse
-from .models import CustomUser, BusinessManager, Empleado, Categoria, Producto, Subcategoria, Almacen, Sucursal, Ubicacion
+from .models import *
 from . import forms
 
 # Create your views here.
@@ -29,10 +29,8 @@ def home(request):
     user = request.user
 
 
-    if hasattr(user,'manager') and user.manager.ubicacion:
-        ubicacion = user.manager.ubicacion
-    elif hasattr(user,'empleado') and user.empleado.ubicacion:
-        ubicacion = user.empleado.ubicacion
+    if hasattr(user,'ubicacion') and user.ubicacion:
+        ubicacion = user.ubicacion
     else:
         pass
 
@@ -48,42 +46,72 @@ def sucursales(request):
 
 def estadisticas(request):
     return render(request, "miapp_CODEMC/principal/estadisticas.html")
-    
-def provedores(request):
-    return render(request, "miapp_CODEMC/principal/provedores.html")
+
+def almacenes(request):
+    return render(request, "miapp_CODEMC/principal/depositos.html")
+
+@permission_required('miapp_CODEMC.view_proveedor', raise_exception=True)
+def proveedores(request):
+    user = request.user
+    if hasattr(request.user,'manager'):
+        admin = user.manager
+    elif hasattr(request.user, 'empleado'):
+        admin = user.empleado.jefe
+
+    proveedor = Proveedor.objects.filter(manager=admin)
+
+    ctx = {"proveedores" : proveedor}
+    return render(request, "miapp_CODEMC/principal/provedores.html", ctx)
+
+@permission_required('miapp_CODEMC.add_proveedor', raise_exception=True)
+def agregar_proveedor(request):
+    user = request.user
+    if request.method == "POST":
+        form = forms.ProveedorForm(request.POST)
+        if form.is_valid():
+            proveedor = form.save(commit=False)
+            if hasattr(user,'manager') and request.user.manager:
+                proveedor.manager = request.user.manager
+            elif hasattr(user,'empleado') and request.user.empleado:
+                proveedor.manager = request.user.empleado.jefe
+            proveedor.save()  
+            messages.success(request, '¡Tu proveedor se agregó exitosamente!')
+            return redirect('proveedores')
+    else:
+        form = forms.ProveedorForm()
+        ctx = {'form':form}
+    return render(request, "miapp_CODEMC/principal/funciones/crear_proveedor.html", ctx )
 
 def libros(request):
     return render(request, "miapp_CODEMC/principal/libros.html")
 
 @permission_required('miapp_CODEMC.view_empleado', raise_exception=True)
 def empleados(request):
-    user_empresa = request.user.empresa
-    empleado = Empleado.objects.filter(user__empresa = user_empresa)
+    if request.user:
+        user = request.user
+    if hasattr(request.user,'manager'):
+        manager = user.manager
+    elif hasattr(request.user, 'empleado'):
+        manager = user.empleado.jefe
+
+    empleado = Empleado.objects.filter(jefe=manager)
 
     ctx = {"empleados" : empleado}
 
     return render(request, "miapp_CODEMC/principal/empleados.html", ctx)
     
-def depositos(request):
-    return render(request, "miapp_CODEMC/principal/depositos.html")
-    
-def configuracion(request):
-    if request.user.rol == 'manager':
-        perfil = request.user.manager
-    elif request.user.rol == 'empleado':
-        perfil = request.user.empleado
 
+def configuracion(request):
+    user= request.user
     if request.method == 'POST':
         form = forms.SeleccionUbicacion(request.POST, user=request.user)
         if form.is_valid():
             ubicacion_seleccionada = form.cleaned_data['ubicacion']
 
             try:
-                # Validar que la ubicación seleccionada tenga el formato correcto
                 if not ubicacion_seleccionada:
                     raise ValueError("Ubicación no seleccionada")
 
-                # Obtenemos el objeto de la ubicación seleccionada
                 id_ubicacion = ubicacion_seleccionada.split('_')[1]
                 if ubicacion_seleccionada.startswith('Almacen'):
                     almacen = Almacen.objects.get(id_almacen=id_ubicacion)
@@ -96,9 +124,9 @@ def configuracion(request):
                     if not ubicar:
                         ubicar = Ubicacion.objects.create(tipo=Ubicacion.SUCURSAL, sucursal=sucursal)
 
-                perfil.ubicacion = ubicar
-                perfil.save()
-                return redirect('configuracion')  # Redirige después de guardar
+                user.ubicacion = ubicar
+                user.save()
+                return redirect('configuracion') 
 
             except ObjectDoesNotExist:
                 return render(request, "miapp_CODEMC/principal/error.html", {"error": "Ubicación no encontrada"})
@@ -115,13 +143,53 @@ def compras(request):
     return render(request,"miapp_CODEMC/principal/compras.html")
     
 def clientes(request):
-    return render(request,"miapp_CODEMC/principal/clientes.html")
+    if request.user:
+        user = request.user
+    
+    if hasattr(user,'manager') and user.manager:
+        manager = user.manager
+    elif hasattr(user,'empleado') and user.empleado:
+        manager = user.empleado.jefe
+
+    clientes = Cliente.objects.filter(manager=manager)
+
+    ctx = {'clientes':clientes}
+
+    return render(request,"miapp_CODEMC/principal/clientes.html", ctx)
+
+def agregar_cliente(request):
+    if request.user:
+        user = request.user
+
+    if request.method == 'POST':
+        form = forms.FormCliente(request.POST)
+        if form.is_valid():
+            try:
+                cliente = form.save(commit=False)
+                if hasattr(user,'manager') and request.user.manager:
+                    cliente.manager = request.user.manager
+                elif hasattr(user,'empleado') and request.user.empleado:
+                    cliente.manager = request.user.empleado.jefe
+                
+                cliente = form.save()
+                messages.success(request, '¡Tu cliente se agregó exitosamente!')
+
+                return redirect('clientes')
+            except:
+                raise ValueError("Qe se yo")
+        else:
+            raise ValueError("Datos mal proporcionados")
+    else:
+        form = forms.FormCliente()
+        ctx = {'form':form}
+
+    return render(request,"miapp_CODEMC/principal/funciones/crear_cliente.html", ctx)
 
 def ventas(request):
 
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
-#RECORDATORIO: Crear función decoradora q' evite q' el usu' registre remito sin tener una ubicación
+#RECORDATORIO: Crear función decoradora q' evite q' el usu' registre remito sin tener una ubicación.
 def agregar_venta(request):
 
 
@@ -131,6 +199,7 @@ def agregar_venta(request):
 def agregar_productos(request):
     if request.user:
         user = request.user
+
     if request.method == "POST":
         producto_form = forms.ProductoForm(request.POST)
         stock_form = forms.StockForm(request.POST)
@@ -138,10 +207,8 @@ def agregar_productos(request):
             stock = stock_form.save()
             producto = producto_form.save(commit=False)
             producto.stock = stock  
-            if hasattr(user,'manager') and request.user.manager.ubicacion:
-                producto.ubicacion = request.user.manager.ubicacion
-            elif hasattr(user,'empleado') and request.user.empleado.ubicacion:
-                producto.ubicacion = request.user.empleado.ubicacion
+            if hasattr(user,'ubicacion') and request.user.ubicacion:
+                producto.ubicacion = request.user.ubicacion
             producto.save()  
             messages.success(request, '¡Tu producto se agregó exitosamente!')
             return redirect('agregar-producto')
@@ -160,7 +227,7 @@ def eliminar_producto(request, producto_id):
     messages.success(request, "Producto eliminado exitosamente.")
     return redirect('productos')
 
-#<------------------------------Categorias------------------------------>
+
 def crear_categoria(request):
     if request.method == 'POST':
         categoria_form = forms.CategoriaForm(request.POST)
@@ -294,7 +361,6 @@ def user_registration(request):
             if request.user.is_authenticated:
                 if form_user.is_valid():
                     user = form_user.save(commit=False)
-                    user.empresa = request.user.empresa
                     user.rol = CustomUser.EMPLEADO
                     user = form_user.save()
                     try:

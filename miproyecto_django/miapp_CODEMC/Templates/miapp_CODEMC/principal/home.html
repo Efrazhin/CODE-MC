@@ -7,9 +7,9 @@
 <title>inicio gestion</title>
 
 {% if  ubicacion.tipo == "Almacen" %}
-    <h2>Estás en: {{ubicacion.tipo}} Nº{{ubicacion.almacen.id_almacen}}, {{ubicacion.almacen.calle}} {{ubicacion.almacen.nro_calle}}</h2> 
+    <h2>Estás en: {{ubicacion.tipo}} {{ubicacion.almacen.nombre}}, en {{ubicacion.almacen.calle}} {{ubicacion.almacen.nro_calle}}</h2> 
 {% elif ubicacion.tipo == "Sucursal"%}
-    <h2>Estás en: {{ubicacion.tipo}} Nº{{ubicacion.sucursal.id_sucursal}}, {{ubicacion.sucursal.calle}} {{ubicacion.sucursal.nro_calle}}</h2> 
+    <h2>Estás en: {{ubicacion.tipo}} {{ubicacion.sucursal.nombre}}, en {{ubicacion.sucursal.calle}} {{ubicacion.sucursal.nro_calle}}</h2> 
 {% else %}
     <h2>¡Para comenzar a operar, escoge tu ubicación según el almacén o sucursal registrados!</h2> 
 {% endif %}

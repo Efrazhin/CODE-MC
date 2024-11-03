@@ -18,7 +18,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Provincia</th>
                     <th>Ciudad</th>
@@ -33,7 +33,7 @@
             <tbody>
                 {% for almacen in almacenes %}
                 <tr>
-                    <td>{{ almacen.id_almacen }}</td>
+                    <td>{{ almacen.nombre }}</td>
                     <td>{{ almacen.telefono }}</td>
                     <td>{{ almacen.provincia }}</td>
                     <td>{{ almacen.ciudad }}</td>

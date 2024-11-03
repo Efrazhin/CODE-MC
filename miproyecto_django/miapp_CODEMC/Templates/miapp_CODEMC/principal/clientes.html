@@ -2,10 +2,45 @@
 {%load static%}
 {% block head %}
     <title>Clientes</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
+
 {% block content %}
-<div class="text">
-    <h1>Contenido Personalizado</h1>
-    <p>Este es el contenido que se reemplaza en la sección home.</p>
-</div>
+    <h1 class="titulo">Clientes</h1>
+    <a href='{% url "agregar-cliente" %}'>Registrar cliente</a>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Documento de identidad</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Dirección</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de nacimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td> {{ cliente.dni_cliente }} </td>
+                    <td> {{ cliente.nombre }} </td>
+                    <td> {{ cliente.apellido }} </td>
+                    <td> {{ cliente.calle }} {{ cliente.nro_calle }} </td>
+                    <td> {{ cliente.email }} </td>
+                    <td> {{ cliente.telefono }} </td>
+                    <td> {{ cliente.fecha_nacimiento }} </td>
+                    
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5"> Tu empresa aún no tiene clientes. ¡Comienza a agregar! </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        <table>
+
+    </div>
 {% endblock %}

@@ -3,6 +3,22 @@ from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
+def generar_nombre_ubicacion(empresa,tipo):
+    if tipo == 'A':
+        ubicaciones = empresa.almacenes.filter(nombre__startswith='A').values_list('nombre',flat=True)
+    elif tipo == 'S':
+        ubicaciones = empresa.sucursales.filter(nombre__startswith='S').values_list('nombre',flat=True)
+    else:
+        pass
+
+    nros_ubicaciones = [int(nombre[1:]) for nombre in ubicaciones]
+
+    new_nro = 1
+
+    while new_nro in nros_ubicaciones:
+        new_nro+=1
+    
+    return f"{tipo}{new_nro:03}"
 
 class Empresa(models.Model):
     cuit = models.CharField('CUIT', max_length=50, primary_key=True, unique=True)
@@ -15,33 +31,60 @@ class Empresa(models.Model):
         return self.nombre
     
 
+    
+#"related_name" se trata de un atributo que permite definir el nombre de la relación
+#inversa en una relación entre modelos.
+
+
+
 class Almacen(models.Model):
     id_almacen = models.AutoField('id_almacen', primary_key=True)
+    nombre = models.CharField('Nombre', max_length=50)
     telefono = models.CharField('Teléfono', max_length=50)
     provincia = models.CharField('Provincia', max_length=100)
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
-    unidad_medida = models.CharField('Unidad de Medida', max_length=50)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+
+    metro_cuadrado = 'Metros cuadrados'
+    MEDIDAS = [
+        (metro_cuadrado,'m²'),
+        ('Decámetros cuadrados','dam²'),
+        ('Hectómetros cuadrados','hm²'),
+    ]
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, default=metro_cuadrado)
+
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='almacenes')
 
     def __str__(self):
         return f"Almacén Nº{self.id_almacen} - {self.calle} {self.nro_calle}"
 
+    def save(self, *args, **kwargs):
+        tipo = 'A'
+        if not self.nombre:
+            self.nombre = generar_nombre_ubicacion(self.empresa, tipo)
+        super().save(*args, **kwargs)
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField('ID Sucursal', primary_key=True)
+    nombre = models.CharField('Nombre', max_length=50)
     telefono = models.CharField('Teléfono', max_length=50)
     provincia = models.CharField('Provincia', max_length=50)
     ciudad = models.CharField('Ciudad', max_length=100)
     calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
     almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE, verbose_name='Almacén')
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='sucursales')
 
     def __str__(self):
         return f"Sucursal Nº{self.id_sucursal} - {self.calle} {self.nro_calle}"
+    
+    def save(self, *args, **kwargs):
+        tipo = 'S'
+        if not self.nombre:
+            self.nombre = generar_nombre_ubicacion(self.empresa, tipo)
+        super().save(*args, **kwargs)
     
 class Ubicacion(models.Model):
     SUCURSAL = 'Sucursal'
@@ -49,8 +92,7 @@ class Ubicacion(models.Model):
     tipo = models.CharField(max_length=20)  # "almacen" o "sucursal"
     almacen = models.ForeignKey(Almacen, null=True, blank=True, on_delete=models.CASCADE)
     sucursal = models.ForeignKey(Sucursal, null=True, blank=True, on_delete=models.CASCADE)
-
-
+    
 
 class CustomUser(AbstractUser):
     dni = models.CharField('DNI', max_length=120,unique=True,null=True)
@@ -58,36 +100,31 @@ class CustomUser(AbstractUser):
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
     rol = models.CharField('Rol', max_length=10, default=MANAGER, null=True)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
-    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE,max_length=100, null=True)
     def __str__(self):
-        return f"{self.user.username} - {self.user.empresa.nombre}"
-    
-#"related_name" se trata de un atributo que permite definir el nombre de la relación
-#inversa en una relación entre modelos.
+        return self.user.username 
 
 class Empleado(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='empleado')
     jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='empleado')
-    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
-
-    def __str__(self):
-        return self.user.username 
     
 
+    def __str__(self):
+        return f"{self.user.username} - Empleado de {self.jefe.user.first_name} {self.jefe.user.last_name}"    
+    
 class Cliente(models.Model):
     dni_cliente = models.CharField('DNI', primary_key=True, max_length=120)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     calle = models.CharField('Calle', max_length=100, null=True,blank=True)
     nro_calle = models.IntegerField('Número de Calle',null=True,blank=True)
-    telefono = models.CharField('Teléfono', max_length=50)
+    telefono = models.CharField('Teléfono', max_length=50, null=True,blank=True)
     email = models.EmailField('Email', null=True, blank=True)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    manager = models.ForeignKey(BusinessManager,on_delete=models.CASCADE)
     
 class Provincia(models.Model):
     id_provincia = models.AutoField('ID Provincia', primary_key=True)
@@ -100,21 +137,19 @@ class Pais(models.Model):
     
 
 class Proveedor(models.Model):
-    dni_proveedor = models.CharField('DNI', primary_key=True, max_length=120)
-    nombre = models.CharField('Nombre', max_length=100, null=True, blank=True)
-    apellido = models.CharField('Apellido', max_length=100, null=True, blank=True)
-    cuit = models.CharField('Razón social', max_length=25, null=True, blank=True)
+    cuit = models.CharField('CUIT', max_length=25, null=True, blank=True)
+    nombre = models.CharField('Razón social/Nombre', max_length=100)
     telefono = models.CharField('Teléfono', max_length=50)
     email = models.EmailField('Email')
-    calle = models.CharField('Calle', max_length=100)
-    ciudad = models.CharField('Ciudad', max_length=100)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     pais = CountryField('País de residencia')
-    descripcion = models.TextField('Descripción')
-    web = models.URLField('Web', null=True, blank=True)
-    comentarios = models.TextField('Observaciones', null=True, blank=True)
+    provincia = models.CharField('Provincia', max_length=100)
+    ciudad = models.CharField('Ciudad', max_length=100)
+    calle = models.CharField('Calle', max_length=100)
     nro_calle = models.IntegerField('Número de Calle')
-    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    descripcion = models.TextField('Descripción')
+    web = models.URLField('Web (opcional)', null=True, blank=True)
+    comentarios = models.TextField('Observaciones (opcional)', null=True, blank=True)
+    manager = models.ForeignKey(BusinessManager,on_delete=models.CASCADE)
 
 
 class Categoria(models.Model):
@@ -147,7 +182,7 @@ class Producto(models.Model):
     id_producto = models.AutoField('ID Producto', primary_key=True)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción')
-    precio = models.DecimalField('Precio', max_digits=10, decimal_places=2)
+    precio = models.DecimalField('Precio', max_digits=10, decimal_places=2, default=0.00)
     tamaño = models.DecimalField('Tamaño', max_digits=10, decimal_places=2)
 
     
@@ -190,17 +225,17 @@ class Remito(models.Model):
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
-    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado')
-    almacen = models.ForeignKey(Almacen, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Almacén')
-    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Sucursal')
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado', null=True)
+    jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='remito', verbose_name='Remito', null=True)
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
     
     
 class DetalleRemito(models.Model):
     id_detalle_remito = models.AutoField('ID Detalle Remito', primary_key=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Almacén')
     cantidad = models.IntegerField('Cantidad')
-    descuento = models.DecimalField('Descuento', max_digits=5, decimal_places=2)
-    importe = models.DecimalField('Importe', max_digits=10, decimal_places=2, default=1.00)
+    descuento = models.DecimalField('Descuento', max_digits=5, decimal_places=2, default=1.00, blank=True)
+    importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
     remito = models.ForeignKey(Remito, on_delete=models.CASCADE, verbose_name='Remito')
 
 class Compra(models.Model):
@@ -209,8 +244,7 @@ class Compra(models.Model):
     descripcion = models.TextField('Descripción')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, verbose_name='Proveedor')
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado')
-    almacen = models.ForeignKey(Almacen, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Almacén')
-    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Sucursal')
+    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
 class DetalleCompra(models.Model):
     id_detalle_compra = models.AutoField('ID Detalle Compra', primary_key=True)

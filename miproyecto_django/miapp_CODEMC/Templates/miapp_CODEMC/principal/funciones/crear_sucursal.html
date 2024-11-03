@@ -22,7 +22,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Provincia</th>
                     <th>Ciudad</th>
@@ -36,13 +36,13 @@
             <tbody>
                 {% for sucursal in sucursales %}
                     <tr>
-                        <td>{{ sucursal.id_sucursal }}</td>
+                        <td>{{ sucursal.nombre }}</td>
                         <td>{{ sucursal.telefono }}</td>
-                        <td>{{ sucursal.provincia.nombre }}</td>
+                        <td>{{ sucursal.provincia }}</td>
                         <td>{{ sucursal.ciudad }}</td>
                         <td>{{ sucursal.calle }}</td>
                         <td>{{ sucursal.nro_calle }}</td>
-                        <td>Almacén #{{ sucursal.almacen.id_almacen }}</td>
+                        <td>Almacén #{{ sucursal.almacen.nombre }}</td>
                         <td>{{ sucursal.empresa }}</td>
                         <td>
                             <form action="{% url 'eliminar_sucursal' sucursal.id_sucursal %}" method="post" style="display:inline;">
