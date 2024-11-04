@@ -20,6 +20,8 @@ def generar_nombre_ubicacion(empresa,tipo):
     
     return f"{tipo}{new_nro:03}"
 
+
+
 class Empresa(models.Model):
     cuit = models.CharField('CUIT', max_length=50, primary_key=True, unique=True)
     nombre = models.CharField('Razón social', max_length=100)
@@ -116,7 +118,7 @@ class Empleado(models.Model):
         return f"{self.user.username} - Empleado de {self.jefe.user.first_name} {self.jefe.user.last_name}"    
     
 class Cliente(models.Model):
-    dni_cliente = models.CharField('DNI', primary_key=True, max_length=120)
+    dni_cliente = models.CharField('DNI', max_length=120)
     nombre = models.CharField('Nombre', max_length=100)
     apellido = models.CharField('Apellido', max_length=100)
     calle = models.CharField('Calle', max_length=100, null=True,blank=True)
@@ -222,13 +224,19 @@ class Producto(models.Model):
 
 class Remito(models.Model):
     id_remito = models.AutoField('ID Remito', primary_key=True)
+    orden =  models.CharField('Número de remito')
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado', null=True)
     jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='remito', verbose_name='Remito', null=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
-    
+
+    def __str__(self):
+        if self.ubicacion.almacen:
+            return f"{self.ubicacion.almacen.nombre} {self.orden} - {self.fecha}" 
+        elif self.ubicacion.sucursal:
+            return f"{self.ubicacion.sucursal.nombre} {self.orden} - {self.fecha}" 
     
 class DetalleRemito(models.Model):
     id_detalle_remito = models.AutoField('ID Detalle Remito', primary_key=True)

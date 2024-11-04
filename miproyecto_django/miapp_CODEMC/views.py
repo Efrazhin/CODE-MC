@@ -187,12 +187,34 @@ def agregar_cliente(request):
 
 def ventas(request):
 
+
+
     return render(request,"miapp_CODEMC/principal/ventas.html")
 
 #RECORDATORIO: Crear función decoradora q' evite q' el usu' registre remito sin tener una ubicación.
 def agregar_venta(request):
+    if request.user:
+        user = request.user
 
+    if request.method == 'POST':
+        form_remito = forms.RemitoForm(request.POST, user=request.user)
+        if form_remito.is_valid():
+            remito = form_remito.save(commit=False)
+            remito.ubicacion = user.ubicacion
+            remito = form_remito.save()
+            return redirect('ventas')
 
+    else:
+        form_remito = forms.RemitoForm(user=request.user)
+
+    ctx = {
+        'remito_form':form_remito, 'detalle_form':forms.DetalleRemitoForm(user=request.user), 'detalles':[],
+    }
+
+    return render(request,"miapp_CODEMC/principal/crear-venta.html", ctx)
+
+def agregar_detalle(request):
+    #llenar
     return render(request,"miapp_CODEMC/principal/crear-venta.html")
 
 #RECORDATORIO: Crear función decoradora q' evite q' el usu' registre producto sin tener una ubicación

@@ -2,7 +2,7 @@ from django.forms import *
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect, PROVINCE_CHOICES
-from datetime import date, datetime
+from datetime import date, timezone
 
 
  
@@ -145,18 +145,47 @@ class ProductoForm(ModelForm):
 class RemitoForm(ModelForm):
     class Meta:
         model = Remito
-        fields = ['fecha', 'descripcion', 'cliente']
+        fields = ['orden','fecha', 'descripcion', 'cliente']
+        widgets = {
+            'orden': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'fecha': forms.DateInput(attrs={'readonly': 'readonly'}),
+        }
 
     def __init__(self,*args, **kwargs):
-        user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user', None)
         super(RemitoForm, self).__init__(*args,**kwargs)
-        self.fields['fecha'].initial = date.today()
-        self.fields['fecha'].widget.attrs['readonly'] = True
 
-        if hasattr(user, 'manager'):
-            self.fields['cliente'].queryset = Cliente.objects.filter(manager=user.empresa)
-        elif hasattr(user, 'empleado'):
-            self.fields['cliente'].queryset = Cliente.objects.filter(manager=user.empleado.jefe)
+        self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
+
+        if hasattr(self.user, 'manager'):
+            self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.manager)
+        elif hasattr(self.user, 'empleado'):
+            self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.empleado.jefe)
+
+        if self.instance and self.instance.pk:
+            self.fields['orden'].initial = self.instance.orden  #Por si tengo q llamar un formu de modificación
+        else:
+            self.fields['orden'].initial = self.generar_nro_orden()
+
+    def generar_nro_orden(self):
+
+        hoy = timezone.localtime(timezone.now()).date()
+
+        ubi_user = self.user.ubicacion
+
+        ubi_nombre = ubi_user.almacen.nombre if ubi_user.almacen else ubi_user.sucursal.nombre
+
+        ultimo_remito = Remito.objects.filter(
+            fecha=hoy, ubicacion=ubi_user).order_by('-orden').first()
+        
+        if ultimo_remito:
+            ultimo_nro = int(ultimo_remito.orden.split('-')[-1])
+            new_nro = ultimo_nro + 1
+        else:
+            new_nro = 1
+
+        return f"{ubi_nombre}-{new_nro:08}"
+
 
 
 #revisar
