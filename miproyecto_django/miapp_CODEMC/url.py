@@ -32,6 +32,8 @@ urlpatterns=[
 
     path("sales/",views.ventas,name="ventas"),
     path("sales/add-remmitance/",views.agregar_venta,name="agregar-venta"),
+    path("sales/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle"),
+    path("sales/add-remmitance/del-detail",views.sacar_detalle,name="eliminar_detalle"),
 
     path("categories/",views.categorias_subcategorias_productos,name="categorias"),
     path('categories/add-category/', views.crear_categoria, name='crear_categoria'),

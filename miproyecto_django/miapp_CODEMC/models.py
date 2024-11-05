@@ -224,7 +224,7 @@ class Producto(models.Model):
 
 class Remito(models.Model):
     id_remito = models.AutoField('ID Remito', primary_key=True)
-    orden =  models.CharField('Número de remito')
+    orden =  models.CharField('Número de remito', max_length=30)
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
@@ -242,7 +242,7 @@ class DetalleRemito(models.Model):
     id_detalle_remito = models.AutoField('ID Detalle Remito', primary_key=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Almacén')
     cantidad = models.IntegerField('Cantidad')
-    descuento = models.DecimalField('Descuento', max_digits=5, decimal_places=2, default=1.00, blank=True)
+    descuento = models.DecimalField('Descuento (porcentaje)', max_digits=5, decimal_places=2, default=1.00, blank=True)
     importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
     remito = models.ForeignKey(Remito, on_delete=models.CASCADE, verbose_name='Remito')
 

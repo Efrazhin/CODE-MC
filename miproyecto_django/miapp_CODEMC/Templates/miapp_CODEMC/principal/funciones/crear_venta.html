@@ -3,13 +3,29 @@
 
 {% block head %}
     <title>Agregar venta</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="">
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        
-        
-        <button type='submit'>
+    <form method="post" id="remito-form">
+        {% csrf_token %}
+        <h1>REGISTRAR REMITO</h1>
+        {{ remito_form.as_p}}
+
+        <h2>Crear detalles del remito</h2>
+        <div id="detalle-form-container">
+            {{ detalle_form.as_p }}
+            <button type='button' id="add-detalle-btn"> Agregar detalle</button>
+        </div>
+
+        <h3>- Detalles en cola -</h3>
+        <div id="detalles-container">
+
+        </div>
+
+        <button type='submit'>Registrar remito</button>
+
+        <script>src="{% static 'miapp_CODEMC/js/agregar-detalle.js' %}"</script>
     </form>
 {% endblock %}

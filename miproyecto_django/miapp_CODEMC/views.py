@@ -206,16 +206,46 @@ def agregar_venta(request):
 
     else:
         form_remito = forms.RemitoForm(user=request.user)
+        form_detalle = forms.DetalleRemitoForm(user=request.user)
 
     ctx = {
-        'remito_form':form_remito, 'detalle_form':forms.DetalleRemitoForm(user=request.user), 'detalles':[],
+        'remito_form':form_remito, 
+        'detalle_form':form_detalle, 
+        'detalles':[],
     }
 
     return render(request,"miapp_CODEMC/principal/crear-venta.html", ctx)
 
 def agregar_detalle(request):
-    #llenar
-    return render(request,"miapp_CODEMC/principal/crear-venta.html")
+    if request.user:
+        user = request.user
+    if request.method == 'POST':
+        form_detalle = forms.DetalleRemitoForm(request.POST)
+        if form_detalle.is_valid():
+            detalle = form_detalle.save(commit=False)
+            detalle.remito = request.POST.get('id_remito')
+            detalle.ubicacion = user.ubicacion
+            detalle.importe = (((100-(detalle.descuento))/100)*detalle.producto.precio)*detalle.cantidad
+            detalle.save()
+
+            ctx = {'id_detalle':detalle.id_detalle_remito,'producto':detalle.producto,'cantidad':detalle.cantidad}
+
+            return JsonResponse(ctx)
+        return JsonResponse({'error':'Formulario no válido, bro'}, status=400)
+    return JsonResponse({'error':'Método inesperado, bro'}, status=405) 
+
+def sacar_detalle(request,id_detalle):
+    if request == 'POST':
+        try:
+            detalle = DetalleRemito.objects.get(id_detalle_remito = id_detalle)
+            detalle.delete()
+            
+            return JsonResponse({'success':True})
+        except DetalleRemito.DoesNotExist:
+            return JsonResponse({'error':'El detalle no existe, bro, está en tu cabeza'}, status=404)
+        
+    return JsonResponse({'error':'El método no es el esperado, bro'})
+
 
 #RECORDATORIO: Crear función decoradora q' evite q' el usu' registre producto sin tener una ubicación
 def agregar_productos(request):

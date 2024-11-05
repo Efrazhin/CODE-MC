@@ -146,16 +146,15 @@ class RemitoForm(ModelForm):
     class Meta:
         model = Remito
         fields = ['orden','fecha', 'descripcion', 'cliente']
-        widgets = {
-            'orden': forms.TextInput(attrs={'readonly': 'readonly'}),
-            'fecha': forms.DateInput(attrs={'readonly': 'readonly'}),
-        }
 
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(RemitoForm, self).__init__(*args,**kwargs)
 
         self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
+        self.fields['fecha'].widget.attrs['readonly']
+
+        self.fields['orden'].widget.attrs['readonly']
 
         if hasattr(self.user, 'manager'):
             self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.manager)
@@ -163,7 +162,7 @@ class RemitoForm(ModelForm):
             self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.empleado.jefe)
 
         if self.instance and self.instance.pk:
-            self.fields['orden'].initial = self.instance.orden  #Por si tengo q llamar un formu de modificación
+            self.fields['orden'].initial = self.instance.orden  # Por si tengo q llamar un formu de modificación
         else:
             self.fields['orden'].initial = self.generar_nro_orden()
 
