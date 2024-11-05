@@ -53,12 +53,10 @@ def almacenes(request):
 @permission_required('miapp_CODEMC.view_proveedor', raise_exception=True)
 def proveedores(request):
     user = request.user
-    if hasattr(request.user,'manager'):
-        admin = user.manager
-    elif hasattr(request.user, 'empleado'):
-        admin = user.empleado.jefe
+    if hasattr(request.user,'empresa'):
+        empresadora = user.empresa
 
-    proveedor = Proveedor.objects.filter(manager=admin)
+    proveedor = Proveedor.objects.filter(empresa=empresadora)
 
     ctx = {"proveedores" : proveedor}
     return render(request, "miapp_CODEMC/principal/provedores.html", ctx)
@@ -70,10 +68,8 @@ def agregar_proveedor(request):
         form = forms.ProveedorForm(request.POST)
         if form.is_valid():
             proveedor = form.save(commit=False)
-            if hasattr(user,'manager') and request.user.manager:
-                proveedor.manager = request.user.manager
-            elif hasattr(user,'empleado') and request.user.empleado:
-                proveedor.manager = request.user.empleado.jefe
+            if hasattr(user,'empresa'):
+                proveedor.empresa = request.user.empresa
             proveedor.save()  
             messages.success(request, '¡Tu proveedor se agregó exitosamente!')
             return redirect('proveedores')
@@ -166,11 +162,9 @@ def agregar_cliente(request):
         if form.is_valid():
             try:
                 cliente = form.save(commit=False)
-                if hasattr(user,'manager') and request.user.manager:
-                    cliente.manager = request.user.manager
-                elif hasattr(user,'empleado') and request.user.empleado:
-                    cliente.manager = request.user.empleado.jefe
-                
+                if hasattr(user,'empresa'):
+                    cliente.empresa = request.user.empresa
+
                 cliente = form.save()
                 messages.success(request, '¡Tu cliente se agregó exitosamente!')
 

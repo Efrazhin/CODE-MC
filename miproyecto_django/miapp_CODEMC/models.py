@@ -23,11 +23,11 @@ def generar_nombre_ubicacion(empresa,tipo):
 
 
 class Empresa(models.Model):
-    cuit = models.CharField('CUIT', max_length=50, primary_key=True, unique=True)
-    nombre = models.CharField('Razón social', max_length=100)
-    telefono = models.CharField('Teléfono de contacto', max_length=50)
-    email = models.EmailField('Email de contacto')
-    descripcion = models.TextField('Descripción de actividades')
+    cuit = models.CharField('CUIT', max_length=50, unique=True)
+    nombre = models.CharField('Razón social', max_length=100, null=True)
+    telefono = models.CharField('Teléfono de contacto', max_length=50, null=True)
+    email = models.EmailField('Email de contacto', null=True)
+    descripcion = models.TextField('Descripción de actividades', null=True)
 
     def __str__(self):
         return self.nombre
@@ -102,6 +102,7 @@ class CustomUser(AbstractUser):
     MANAGER = 'manager'
     EMPLEADO = 'empleado'
     rol = models.CharField('Rol', max_length=10, default=MANAGER, null=True)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='usuarios')
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
 class BusinessManager(models.Model):
@@ -126,7 +127,7 @@ class Cliente(models.Model):
     telefono = models.CharField('Teléfono', max_length=50, null=True,blank=True)
     email = models.EmailField('Email', null=True, blank=True)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
-    manager = models.ForeignKey(BusinessManager,on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='clientes')
     
 class Provincia(models.Model):
     id_provincia = models.AutoField('ID Provincia', primary_key=True)
@@ -151,7 +152,7 @@ class Proveedor(models.Model):
     descripcion = models.TextField('Descripción')
     web = models.URLField('Web (opcional)', null=True, blank=True)
     comentarios = models.TextField('Observaciones (opcional)', null=True, blank=True)
-    manager = models.ForeignKey(BusinessManager,on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='proveedores')
 
 
 class Categoria(models.Model):
