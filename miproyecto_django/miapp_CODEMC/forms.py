@@ -2,7 +2,7 @@ from django.forms import *
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect, PROVINCE_CHOICES
-from datetime import date, timezone
+from django.utils import timezone
 
 
  
@@ -152,14 +152,12 @@ class RemitoForm(ModelForm):
         super(RemitoForm, self).__init__(*args,**kwargs)
 
         self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
-        self.fields['fecha'].widget.attrs['readonly']
+        self.fields['fecha'].widget.attrs['readonly']=True
 
-        self.fields['orden'].widget.attrs['readonly']
+        self.fields['orden'].widget.attrs['readonly']=True
 
-        if hasattr(self.user, 'manager'):
-            self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.manager)
-        elif hasattr(self.user, 'empleado'):
-            self.fields['cliente'].queryset = Cliente.objects.filter(manager=self.user.empleado.jefe)
+        if hasattr(self.user, 'empresa'):
+            self.fields['cliente'].queryset = Cliente.objects.filter(empresa=self.user.empresa)
 
         if self.instance and self.instance.pk:
             self.fields['orden'].initial = self.instance.orden  # Por si tengo q llamar un formu de modificación
@@ -195,7 +193,7 @@ class DetalleRemitoForm(ModelForm):
 
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user', None)
-        super(DetalleRemito, self).__init__(*args, **kwargs)
+        super(DetalleRemitoForm, self).__init__(*args, **kwargs)
 
         ubicar = None
 
@@ -203,7 +201,7 @@ class DetalleRemitoForm(ModelForm):
             ubicar = user.ubicacion
         
         if ubicar is not None:
-            self.fields['productos'].queryset = Producto.objects.filter(ubicacion=ubicar, empresa=user.empresa)
+            self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
         else:
             pass
 

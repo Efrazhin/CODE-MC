@@ -139,15 +139,16 @@ def compras(request):
     return render(request,"miapp_CODEMC/principal/compras.html")
     
 def clientes(request):
+    
     if request.user:
         user = request.user
     
-    if hasattr(user,'manager') and user.manager:
-        manager = user.manager
-    elif hasattr(user,'empleado') and user.empleado:
-        manager = user.empleado.jefe
-
-    clientes = Cliente.objects.filter(manager=manager)
+    if hasattr(user,'empresa'):
+        empresa=user.empresa
+    else:
+        raise AttributeError('qe se yo, no existe el usuario')
+    
+    clientes = Cliente.objects.filter(empresa=empresa)
 
     ctx = {'clientes':clientes}
 
@@ -180,10 +181,20 @@ def agregar_cliente(request):
     return render(request,"miapp_CODEMC/principal/funciones/crear_cliente.html", ctx)
 
 def ventas(request):
+    if request.user:
+        user = request.user
+    
+    if hasattr(user,'empresa'):
+        empresa=user.empresa
+    else:
+        raise AttributeError('qe se yo, no existe el usuario')
+    
+    remitos = Remito.objects.filter(empresa=empresa)
+
+    ctx = {'remitos':remitos}
 
 
-
-    return render(request,"miapp_CODEMC/principal/ventas.html")
+    return render(request,"miapp_CODEMC/principal/ventas.html", ctx)
 
 #RECORDATORIO: Crear función decoradora q' evite q' el usu' registre remito sin tener una ubicación.
 def agregar_venta(request):
@@ -194,7 +205,9 @@ def agregar_venta(request):
         form_remito = forms.RemitoForm(request.POST, user=request.user)
         if form_remito.is_valid():
             remito = form_remito.save(commit=False)
+            remito.user = user
             remito.ubicacion = user.ubicacion
+            remito.empresa = user.empresa
             remito = form_remito.save()
             return redirect('ventas')
 
@@ -208,7 +221,7 @@ def agregar_venta(request):
         'detalles':[],
     }
 
-    return render(request,"miapp_CODEMC/principal/crear-venta.html", ctx)
+    return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", ctx)
 
 def agregar_detalle(request):
     if request.user:
@@ -264,7 +277,7 @@ def agregar_productos(request):
     return render(request, 'miapp_CODEMC/principal/productos.html', {'producto_form':producto_form, 'stock_form':stock_form} )
 
 def productos_view(request):
-    productos = Producto.objects.all()  
+    productos = Producto.objects.filter(empresa=request.user.empresa)  
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
 def eliminar_producto(request, producto_id):
@@ -408,6 +421,7 @@ def user_registration(request):
                 if form_user.is_valid():
                     user = form_user.save(commit=False)
                     user.rol = CustomUser.EMPLEADO
+                    user.empresa = request.user.empresa
                     user = form_user.save()
                     try:
                         jefe = BusinessManager.objects.get(user=request.user)

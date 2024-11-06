@@ -105,10 +105,11 @@ class CustomUser(AbstractUser):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='usuarios')
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
+    
 class BusinessManager(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='manager')
     def __str__(self):
-        return self.user.username 
+        return f"{self.user.first_name} {self.user.last_name}, {self.user.rol}"
 
 class Empleado(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='empleado')
@@ -128,6 +129,9 @@ class Cliente(models.Model):
     email = models.EmailField('Email', null=True, blank=True)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='clientes')
+    def __str__(self):
+        return f"{self.dni_cliente}, {self.nombre} {self.apellido}"  
+    
     
 class Provincia(models.Model):
     id_provincia = models.AutoField('ID Provincia', primary_key=True)
@@ -229,9 +233,9 @@ class Remito(models.Model):
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
-    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado', null=True)
-    jefe = models.ForeignKey(BusinessManager, on_delete=models.CASCADE, related_name='remito', verbose_name='Remito', null=True)
+    usuario_a_cargo = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Usuario a cargo', null=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         if self.ubicacion.almacen:
@@ -254,6 +258,7 @@ class Compra(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, verbose_name='Proveedor')
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado')
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
 
 class DetalleCompra(models.Model):
     id_detalle_compra = models.AutoField('ID Detalle Compra', primary_key=True)
@@ -269,6 +274,7 @@ class Presupuesto(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Clientes')
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleados')
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, verbose_name='Sucursales')
+    empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
     
 class DetallePresupuesto(models.Model):
     id_detalle_presupuesto = models.AutoField('ID Detalle Presupuesto', primary_key=True)

@@ -2,11 +2,41 @@
 {%load static%}
 {% block head %}
     <title>Ventas</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
 {% block content %}
 
     <a href='{% url "agregar-venta" %}'> Registrar un nuevo remito <a/>
     
-        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Descripción</th>
+                        <th>Personal a cargo</th>
+                        <th>Ubicación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for remito in remitos %}
+                    <tr>
+                        <td> {{ empleado.user.first_name }} </td>
+                        <td> {{ empleado.user.last_name }} </td>
+                        <td> {{ empleado.user.username }} </td>
+                        <td> {{ empleado.user.dni }} </td>
+                        <td> {{ empleado.user.telefono }} </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5"> Tu empresa aún no tiene ventas. ¡Comienza a agregar! </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            <table>
+    
+        </div>    
     
 {% endblock %}
