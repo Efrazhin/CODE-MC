@@ -12,9 +12,10 @@ from . import forms
 
 # Create your views here.
 def index(request):
+    user = None
     if request.user.is_authenticated:
-        print(request.user)
-    ctx = {}
+        user = request.user
+    ctx = {'user':user}
     return render(request, 'miapp_CODEMC/presentacion/index.html', ctx)
 
 def planes(request):
@@ -208,17 +209,34 @@ def agregar_venta(request):
             remito.user = user
             remito.ubicacion = user.ubicacion
             remito.empresa = user.empresa
+            remito.usuario_a_cargo = request.user
             remito = form_remito.save()
+
+            detalles_temp = request.session.get('detalles_remito', [])
+            for detalle in detalles_temp:
+                id_producto = Producto.objects.get(id_producto=detalle['producto_id'])
+                DetalleRemito.objects.create(
+                    remito = remito,
+                    producto = id_producto,
+                    cantidad = detalle['cantidad'],
+                    descuento = detalle['descuento'],
+                    importe = detalle['importe'])
+                    
+            request.session['detalles_remito'] = []
+            
             return redirect('ventas')
 
     else:
-        form_remito = forms.RemitoForm(user=request.user)
-        form_detalle = forms.DetalleRemitoForm(user=request.user)
-
+        form_remito = forms.RemitoForm(user=user)
+        
+    form_detalle = forms.DetalleRemitoForm(user=user)
+    detalles_temp = request.session.get('detalles_remito',[])
+    
+    
     ctx = {
         'remito_form':form_remito, 
         'detalle_form':form_detalle, 
-        'detalles':[],
+        'detalles':detalles_temp,
     }
 
     return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", ctx)
@@ -227,29 +245,37 @@ def agregar_detalle(request):
     if request.user:
         user = request.user
     if request.method == 'POST':
-        form_detalle = forms.DetalleRemitoForm(request.POST)
+        form_detalle = forms.DetalleRemitoForm(request.POST, user=user)
+        
         if form_detalle.is_valid():
-            detalle = form_detalle.save(commit=False)
-            detalle.remito = request.POST.get('id_remito')
-            detalle.ubicacion = user.ubicacion
-            detalle.importe = (((100-(detalle.descuento))/100)*detalle.producto.precio)*detalle.cantidad
-            detalle.save()
+            
+            producto = form_detalle.cleaned_data['producto']
+            cantidad = form_detalle.cleaned_data['cantidad']
+            descuento = float(form_detalle.cleaned_data['descuento'])
+            importe = float((((100-(descuento))/100)*float(producto.precio))*cantidad)
 
-            ctx = {'id_detalle':detalle.id_detalle_remito,'producto':detalle.producto,'cantidad':detalle.cantidad}
+            detalles_temp = request.session.get('detalles_remito', [])
+            detalles_temp.append({'producto_id':producto.id_producto, 'producto_nombre':producto.nombre,
+                                  'producto_tamaño':float(producto.tamaño), 'producto_uM':producto.unidad_medida, 
+                                  'producto_precio':float(producto.precio), 
+                                  'cantidad':cantidad, 'descuento':descuento,
+                                  'importe':importe})
+            request.session['detalles_remito'] = detalles_temp
 
-            return JsonResponse(ctx)
+            return JsonResponse({'success':True, 'producto_id':producto.id_producto, 
+                                 'producto_nombre':producto.nombre, 'producto_precio':producto.precio, 
+                                 'cantidad':cantidad, 'importe':importe})
         return JsonResponse({'error':'Formulario no válido, bro'}, status=400)
     return JsonResponse({'error':'Método inesperado, bro'}, status=405) 
 
+
 def sacar_detalle(request,id_detalle):
     if request == 'POST':
-        try:
-            detalle = DetalleRemito.objects.get(id_detalle_remito = id_detalle)
-            detalle.delete()
-            
-            return JsonResponse({'success':True})
-        except DetalleRemito.DoesNotExist:
-            return JsonResponse({'error':'El detalle no existe, bro, está en tu cabeza'}, status=404)
+    
+        detalle = request.session['detalle_remito',[]]
+        detalle.pop()
+        
+        return JsonResponse({'success':True})
         
     return JsonResponse({'error':'El método no es el esperado, bro'})
 
@@ -277,7 +303,7 @@ def agregar_productos(request):
     return render(request, 'miapp_CODEMC/principal/productos.html', {'producto_form':producto_form, 'stock_form':stock_form} )
 
 def productos_view(request):
-    productos = Producto.objects.filter(empresa=request.user.empresa)  
+    productos = Producto.objects.all()  
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
 def eliminar_producto(request, producto_id):

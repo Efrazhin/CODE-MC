@@ -8,24 +8,29 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post" id="remito-form">
+    <h1>AGREGAR REMITO</h1>   
+    <form method="post" id="remitoForm" action='{% url "agregar-venta" %}'>
         {% csrf_token %}
-        <h1>REGISTRAR REMITO</h1>
         {{ remito_form.as_p}}
-
-        <h2>Crear detalles del remito</h2>
-        <div id="detalle-form-container">
-            {{ detalle_form.as_p }}
-            <button type='button' id="add-detalle-btn"> Agregar detalle</button>
-        </div>
-
-        <h3>- Detalles en cola -</h3>
-        <div id="detalles-container">
-
-        </div>
-
         <button type='submit'>Registrar remito</button>
-
-        <script>src="{% static 'miapp_CODEMC/js/agregar-detalle.js' %}"</script>
+ 
     </form>
+
+    <h2>Agrega detalles</h2>
+    <form method="post" id="detalleForm" action='{% url "agregar_detalle" %}'>
+        {% csrf_token %}
+        {{ detalle_form.as_p}}
+        <button type='button' id='agregarDetalleBtn'>Agregar detalle</button>
+    </form>
+
+    <h3> Ítems agregados: </h3>
+    <ul id='detallesList'> 
+        {% for detalle in detalles %}
+            <li> {{ detalle.producto_id }} {{ detalle.producto_nombre }} {{ detalle.producto_tamaño }} {{ detalle.producto_uM }}, {{ detalle.producto_precio }}
+                - Cantidad {{ detalle.cantidad }} - Importe: {{ detalle.importe }}</li>
+        {% endfor %}
+    </ul>
+    
+    
+    <script src="{% static 'miapp_CODEMC/js/agregar-detalles.js'%}"></script>
 {% endblock %}

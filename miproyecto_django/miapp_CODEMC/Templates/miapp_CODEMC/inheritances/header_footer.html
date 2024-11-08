@@ -7,7 +7,7 @@
         {% endblock %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
         <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-headerfooter.css' %}">
-        
+       
         
     </head>
     <!-- Encabezado-->
@@ -24,7 +24,12 @@
                     <li><a href='{% url "contacto" %}'>Contacto</a></li>
                 </ul>
             </nav>
+            {% if  user and user.is_authenticated %}
+            <a href='{% url "home"%}' class="btn-inicio" > <i class="material-symbols-outlined">login</i> </a>
+            {% else %}
             <a href='{% url "login"%}' class="btn-inicio" > <i class="ri-account-box-line"></i> </a>
+            {% endif %}
+            
         </header>
 
             {% block content %}

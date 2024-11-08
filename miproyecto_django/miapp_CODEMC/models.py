@@ -207,7 +207,7 @@ class Producto(models.Model):
         ('Talla XL','Talla XL'),
     ]
 
-    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, null=True)
+    unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, null=True, blank=True)
 
     fecha_vencimiento = models.DateField('Fecha de vencimiento', null=True, blank=True)
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías')
@@ -215,6 +215,8 @@ class Producto(models.Model):
     stock = models.OneToOneField(Stock, on_delete=models.CASCADE, verbose_name='Stock')
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
+    def __str__(self):
+        return f'{self.nombre}, ({self.tamaño} {self.unidad_medida})'  
 
 
 # class Configuraciones(models.Model):
@@ -245,9 +247,9 @@ class Remito(models.Model):
     
 class DetalleRemito(models.Model):
     id_detalle_remito = models.AutoField('ID Detalle Remito', primary_key=True)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Almacén')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Producto')
     cantidad = models.IntegerField('Cantidad')
-    descuento = models.DecimalField('Descuento (porcentaje)', max_digits=5, decimal_places=2, default=1.00, blank=True)
+    descuento = models.DecimalField('Descuento (porcentaje)', max_digits=5, decimal_places=2, default=0.00, blank=True)
     importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
     remito = models.ForeignKey(Remito, on_delete=models.CASCADE, verbose_name='Remito')
 
@@ -262,7 +264,7 @@ class Compra(models.Model):
 
 class DetalleCompra(models.Model):
     id_detalle_compra = models.AutoField('ID Detalle Compra', primary_key=True)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Producto')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='producto')
     cantidad = models.IntegerField('Cantidad')
     importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE, verbose_name='Compra')

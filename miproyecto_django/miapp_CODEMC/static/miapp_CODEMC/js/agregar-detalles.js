@@ -1,37 +1,23 @@
-$(document).ready(function() {
-    $('#add-detalle-btn').click(function() {
-        var detalleForm = $('#detalle-form-container form').serialize();
-        $.ajax({
-            url: '{% url "agregar_detalle" %}',
-            method: 'POST',
-            data: detalleForm,
-            success: function(response) {
-                var detalleHtml = `
-                    <div class="detalle" data-id="${response.id_detalle_remito}">
-                        <p>Producto: ${response.producto}</p>
-                        <p>Cantidad: ${response.cantidad}</p>
-                        <button class="delete-detalle-btn">Eliminar</button>
-                    </div>
-                `;
-                $('#detalles-container').append(detalleHtml);
-            },
-            error: function(response) {
-                alert('Error al agregar detalle');
-            }
-        });
-    });
+document.getElementById('agregarDetalleBtn').addEventListener('click', function () {
+    const form = document.getElementById('detalleForm');
+    const formData = new FormData(form);
 
-    $(document).on('click', '.delete-detalle-btn', function() {
-        var detalleId = $(this).closest('.detalle').data('id');
-        $.ajax({
-            url: '{% url "eliminar_detalle" id_detalle_remito=0 %}'.replace('0', detalleId),
-            method: 'POST',
-            success: function(response) {
-                $('.detalle[data-id="' + detalleId + '"]').remove();
-            },
-            error: function(response) {
-                alert('Error al eliminar detalle');
-            }
-        });
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const detallesList = document.getElementById('detallesList');
+            const li = document.createElement('li');
+            li.textContent = `${data.producto_id} ${data.producto_nombre}, ${data.producto_precio}- Cantidad: ${data.cantidad}. Importe: $${data.importe}` ;
+            detallesList.appendChild(li);
+        } else {
+            alert(data.error);
+        }
     });
 });

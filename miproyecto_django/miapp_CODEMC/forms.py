@@ -189,7 +189,7 @@ class RemitoForm(ModelForm):
 class DetalleRemitoForm(ModelForm):
     class Meta:
         model = DetalleRemito
-        fields = ['producto', 'cantidad', 'descuento', 'importe', 'remito']
+        fields = ['producto', 'cantidad', 'descuento',]
 
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user', None)
@@ -197,7 +197,7 @@ class DetalleRemitoForm(ModelForm):
 
         ubicar = None
 
-        if hasattr(user,'ubicacion') and user.ubicacion:
+        if hasattr(user,'ubicacion'):
             ubicar = user.ubicacion
         
         if ubicar is not None:

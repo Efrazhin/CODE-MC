@@ -73,7 +73,7 @@ a:-webkit-any-link {
     text-decoration: none;
     color: blanchedalmond;
     font-size: 5vmin;
-    font-weight: 100;
+    font-weight: 500;
     border-color: blanchedalmond;
     border-style: solid;
     border-radius: 3vmin;
@@ -90,7 +90,7 @@ a:-webkit-any-link {
     border-color: rgb(230, 161, 0);
 }
 
-.ri-account-box-line{
+.ri-account-box-line, .material-symbols-outlined{
     transition: all 200ms linear;
     text-decoration: none;
 }
