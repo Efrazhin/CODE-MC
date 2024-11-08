@@ -2,6 +2,7 @@ from django.forms import *
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.ar.forms import ARCUITField, ARDNIField, ARProvinceSelect, PROVINCE_CHOICES
+from django_countries import countries
 from django.utils import timezone
 
 
@@ -24,7 +25,7 @@ class FormCliente(ModelForm):
 class CategoriaForm(ModelForm):
     class Meta:
         model = Categoria
-        fields = ['nombre', 'descripcion']  # Excluye 'fecha_creacion' porque se genera automáticamente
+        fields = ['nombre', 'descripcion']  
 
 
 # class ProvinciaForm(ModelForm):
@@ -46,7 +47,11 @@ class ProveedorForm(ModelForm):
             'email', 'pais','provincia', 'ciudad', 'calle', 'nro_calle',   
             'descripcion', 'web', 'comentarios'  
         ]
-
+    def clean_pais(self):
+        pais_code = self.cleaned_data.get('pais')
+        pais_name = dict(countries).get(pais_code)
+        return pais_name
+    
 class AlmacenForm(ModelForm):
     provincia = ChoiceField(choices=PROVINCE_CHOICES, widget=ARProvinceSelect, label='Provincia')
     class Meta:
@@ -67,7 +72,7 @@ class SucursalForm(ModelForm):
     provincia = CharField(widget=ARProvinceSelect, label='Provincia')
     class Meta:
         model = Sucursal
-        fields = ['telefono', 'provincia', 'ciudad', 'calle', 'nro_calle', 'almacen', 'empresa']
+        fields = ['telefono', 'provincia', 'ciudad', 'calle', 'nro_calle', 'almacen']
 
     def clean_provincia(self):
         provincia_code = self.cleaned_data.get('provincia')

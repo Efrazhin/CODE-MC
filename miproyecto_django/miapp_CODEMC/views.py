@@ -241,6 +241,11 @@ def agregar_venta(request):
 
     return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", ctx)
 
+def cancelar_venta(request):
+    request.session['detalles_remito'] = []
+    sexitoMsj = '¡Remito cancelado exitosamente!'
+    return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", {'exito':sexitoMsj})
+
 def agregar_detalle(request):
     if request.user:
         user = request.user
@@ -303,7 +308,9 @@ def agregar_productos(request):
     return render(request, 'miapp_CODEMC/principal/productos.html', {'producto_form':producto_form, 'stock_form':stock_form} )
 
 def productos_view(request):
-    productos = Producto.objects.all()  
+    if request.user:
+        ubi = request.user.ubicacion
+    productos = Producto.objects.filter(ubicacion = ubi)  
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
 def eliminar_producto(request, producto_id):
@@ -368,7 +375,9 @@ def crear_sucursal(request):
     if request.method == 'POST':
         form = forms.SucursalForm(request.POST)
         if form.is_valid():
-            form.save()
+            sucursal = form.save(commit=False)
+            sucursal.empresa = request.user.empresa
+            sucursal = form.save()
             return redirect('crear_sucursal')  # Cambia esto a la vista que deseas redirigir después de guardar
     else:
         form = forms.SucursalForm()

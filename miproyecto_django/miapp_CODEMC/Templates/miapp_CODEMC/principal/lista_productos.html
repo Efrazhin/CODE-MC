@@ -46,8 +46,7 @@
                         <th>Precio</th>
                         <th>Tamaño</th>
                         <th>Unidad de Medida</th>
-                        <th>Almacén</th>
-                        <th>Sucursal</th>
+                        <th>Ubicación</th>
                         <th>Acciones</th> <!-- Nueva columna para acciones -->
                     </tr>
                 </thead>
@@ -59,8 +58,12 @@
                             <td>{{ producto.precio }}</td>
                             <td>{{ producto.tamaño }}</td>
                             <td>{{ producto.unidad_medida }}</td>
-                            <td>Almacén #{{ producto.almacen.id_almacen }}</td>
-                            <td>Sucursal #{{ producto.sucursal.id_sucursal }}</td>
+                            {% if producto.ubicacion.almacen  %}
+                            <td>Almacén #{{ producto.ubicacion.almacen.nombre }}</td>
+                            {% elif producto.ubicacion.sucursal %}
+                            <td>Sucursal #{{ producto.ubicacion.sucursal.nombre }}</td>
+                            {% endif %}
+                            
                             <!-- Botón de eliminar producto -->
                             <td>
                                 <form action="{% url 'eliminar_producto' producto.id_producto %}" method="post" style="display: inline;">

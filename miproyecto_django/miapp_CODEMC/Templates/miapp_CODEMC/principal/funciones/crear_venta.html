@@ -13,9 +13,9 @@
         {% csrf_token %}
         {{ remito_form.as_p}}
         <button type='submit'>Registrar remito</button>
- 
+        <button type='button'>Cancelar remito</button>
     </form>
-
+    
     <h2>Agrega detalles</h2>
     <form method="post" id="detalleForm" action='{% url "agregar_detalle" %}'>
         {% csrf_token %}
