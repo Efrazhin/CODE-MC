@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %} <!-- Carga el sistema de plantillas de Django para manejar archivos estáticos -->
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Importa la fuente 'Poppins' desde Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- Importa los iconos de Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Importa la hoja de estilos específica para esta vista -->
-    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-login.css'%}">
     <title>Inicio de sesión</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-vistas/style-login.css' %}">
 </head>
 <body>
-    <!-- Contenedor principal de la página -->
     <div class="flex">
-        
         <div class="contenedor">
-            <div>
-                <h1>Inicio de sesión</h1>
-            </div>
-            <!-- Botón para cerrar el formulario -->
-            <div class="cerrar-ventana" onclick="rederigir_principal()">
+            <h1>Inicio de sesión</h1>
+
+            <!-- Close button with redirect function -->
+            <div class="cerrar-ventana" onclick="redirigirPrincipal()">
                 <i class="fa-solid fa-rectangle-xmark"></i>
             </div>
-            
-            <!-- Caja que contiene el formulario de inicio de sesión -->
-            <div class="form-box-login">
-                <!-- Formulario de inicio de sesión -->
-                <form method="post" class="form_flex">
-                    <!-- Genera un token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
-                    {% csrf_token %}
-                    <!-- Campo para el correo electrónico -->
-                
-                    <div class="input-field" >
-                        <!-- Campo de entrada para el correo electrónico generado por Django -->
-                        {{ form.as_p}}
-                        <e><i class="fa-solid fa-envelope"></i></e>
-                    </div>
-                    <div class="input-field"> 
 
-                        <c class="fa-solid fa-lock"></c> 
+            <div class="form-box-login">
+                <!-- Login form -->
+                <form method="post" class="form_flex">
+                    {% csrf_token %}
+                    
+                    
+
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope"></i>
+                        {{ form.username }}
                     </div>
+                    
+                    <!-- Password input field with icon -->
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i> 
+                        {{ form.password }}
+                    </div>
+
+                    <!-- Display messages if they exist -->
                     {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
@@ -49,46 +51,41 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                    {{error}}
-                    <!-- Sección para opciones de usuario y enlace de contraseña olvidada -->
+                    {{ error }}
+
+                    <!-- Remember me and forgot password section -->
                     <div class="forget">
                         <label for="remember">
-                            <!-- Checkbox para recordar el usuario -->
                             <input type="checkbox" id="remember">
-                            <!-- Texto asociado al checkbox -->
-                            <p>Recordarme</p>
+                            <span>Recordarme</span>
                         </label>
-                        <!-- Enlace para recuperar la contraseña -->
                         <a href="#">¿Olvidaste tu contraseña?</a>
                     </div>
 
-                    <!-- Botón para enviar el formulario -->
+                    <!-- Submit button -->
                     <button type="submit">Iniciar sesión</button>
 
-                    <!-- Sección para registro de nuevo usuario -->
+                    <!-- Registration prompt -->
                     <div class="register">
-                        <p>¿No tenés una cuenta? <a href='{% url "registro-usuario" %}' class="register-link">¡Crea una!</a></p>
+                        <p>¿No tienes una cuenta? <a href="{% url 'registro-usuario' %}" class="register-link">¡Crea una!</a></p>
                     </div>
-
                 </form>
             </div>
         </div>  
+
+        <!-- Image container -->
         <div class="caja_img">
-            
+            <!-- Image content can go here -->
         </div>
     </div>
 
-
-
-    <!-- Importa el archivo JavaScript para funcionalidades del login -->
-    <script src="{% static 'miapp_CODEMC/js/java_scr_login.js'%}"></script>
+    <!-- JavaScript for login functionalities -->
+    <script src="{% static 'miapp_CODEMC/js/java_scr_login.js' %}"></script>
     <script>
-        /* Función para redirigir al usuario a la página principal */
-        function rederigir_principal(){
-            window.location.href="/"; /* Redirige al inicio */
+        // Redirect to homepage function
+        function redirigirPrincipal() {
+            window.location.href = "/"; // Redirects to home
         }
     </script>
-    
 </body>
 </html>
-
