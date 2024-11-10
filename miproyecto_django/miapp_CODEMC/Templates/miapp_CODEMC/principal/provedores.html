@@ -8,7 +8,15 @@
 {% block content %}
     <h1 class="titulo">Proveedores</h1>
     <a href='{% url "agregar-proveedor" %}'>Registrar proveedor</a>
-
+    {% if messages %}
+        {% for message in messages %}
+            {% if proveedor in message.messagge %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="table-container">
         <table>
             <thead>

@@ -41,23 +41,27 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Código</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Precio</th>
                         <th>Tamaño</th>
                         <th>Unidad de Medida</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
                         <th>Ubicación</th>
-                        <th>Acciones</th> <!-- Nueva columna para acciones -->
+                        <th>Acciones</th> <!-- Columna para acciones -->
                     </tr>
                 </thead>
                 <tbody>
                     {% for producto in productos %}
                         <tr>
+                            <td>{{ producto.cod_producto }}</td>
                             <td>{{ producto.nombre }}</td>
                             <td>{{ producto.descripcion }}</td>
-                            <td>{{ producto.precio }}</td>
                             <td>{{ producto.tamaño }}</td>
                             <td>{{ producto.unidad_medida }}</td>
+                            <td>{{ producto.precio }}</td>
+                            <td>{{ producto.stock.cantidad }}</td>
                             {% if producto.ubicacion.almacen  %}
                             <td>Almacén #{{ producto.ubicacion.almacen.nombre }}</td>
                             {% elif producto.ubicacion.sucursal %}
@@ -66,7 +70,7 @@
                             
                             <!-- Botón de eliminar producto -->
                             <td>
-                                <form action="{% url 'eliminar_producto' producto.id_producto %}" method="post" style="display: inline;">
+                                <form action="{% url 'eliminar_producto' producto.cod_producto %}" method="post" style="display: inline;">
                                     {% csrf_token %}
                                     <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Eliminar</button>
                                 </form>

@@ -5,6 +5,7 @@
     <title>Agregar venta</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
 {% block content %}
@@ -13,9 +14,14 @@
         {% csrf_token %}
         {{ remito_form.as_p}}
         <button type='submit'>Registrar remito</button>
-        <button type='button'>Cancelar remito</button>
+
     </form>
-    
+
+    <form method='post' id="cancelar_proceso_remito" action='{% url "cancelar_proceso_venta" %}'>
+        {% csrf_token %}
+        <button type='submit'>Cancelar remito</button>
+    </form>
+
     <h2>Agrega detalles</h2>
     <form method="post" id="detalleForm" action='{% url "agregar_detalle" %}'>
         {% csrf_token %}
@@ -26,11 +32,15 @@
     <h3> Ítems agregados: </h3>
     <ul id='detallesList'> 
         {% for detalle in detalles %}
-            <li> {{ detalle.producto_id }} {{ detalle.producto_nombre }} {{ detalle.producto_tamaño }} {{ detalle.producto_uM }}, {{ detalle.producto_precio }}
-                - Cantidad {{ detalle.cantidad }} - Importe: {{ detalle.importe }}</li>
+            <li> {{ detalle.producto_cod }} {{ detalle.producto_nombre }} {{ detalle.producto_tamaño }} {{ detalle.producto_uM }}, {{ detalle.producto_precio }}
+                - Cantidad {{ detalle.cantidad }} - Importe: {{ detalle.importe }}
+                <button onclick="eliminarDetalle(this, '{{ detalle.producto_cod }}')"> ELIMINAR </button>
+            </li>
+        
         {% endfor %}
     </ul>
     
     
-    <script src="{% static 'miapp_CODEMC/js/agregar-detalles.js'%}"></script>
+    <script src="{% static 'miapp_CODEMC/js/agregar-detalles.js'%}">
+    </script>
 {% endblock %}

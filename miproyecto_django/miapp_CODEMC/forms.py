@@ -47,11 +47,7 @@ class ProveedorForm(ModelForm):
             'email', 'pais','provincia', 'ciudad', 'calle', 'nro_calle',   
             'descripcion', 'web', 'comentarios'  
         ]
-    def clean_pais(self):
-        pais_code = self.cleaned_data.get('pais')
-        pais_name = dict(countries).get(pais_code)
-        return pais_name
-    
+        
 class AlmacenForm(ModelForm):
     provincia = ChoiceField(choices=PROVINCE_CHOICES, widget=ARProvinceSelect, label='Provincia')
     class Meta:
@@ -139,18 +135,17 @@ class StockForm(ModelForm):
 class ProductoForm(ModelForm):
     class Meta:
         model = Producto
-        fields = [
+        fields = [ 'cod_producto',
             'nombre', 'descripcion', 'precio', 'tamaño', 
             'unidad_medida', 'fecha_vencimiento', 'categoria', 
             'subcategoria', 
-            # 'almacen', 'sucursal'
         ]
     
 
 class RemitoForm(ModelForm):
     class Meta:
         model = Remito
-        fields = ['orden','fecha', 'descripcion', 'cliente']
+        fields = ['orden','fecha', 'descripcion', 'cliente','iva']
 
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)

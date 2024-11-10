@@ -186,7 +186,7 @@ class Stock(models.Model):
 
  
 class Producto(models.Model):
-    id_producto = models.AutoField('ID Producto', primary_key=True)
+    cod_producto = models.CharField('Código de producto', max_length=100)
     nombre = models.CharField('Nombre', max_length=100)
     descripcion = models.TextField('Descripción')
     precio = models.DecimalField('Precio', max_digits=10, decimal_places=2, default=0.00)
@@ -210,9 +210,10 @@ class Producto(models.Model):
     unidad_medida = models.CharField('Unidad de medida', max_length=30, choices=MEDIDAS, null=True, blank=True)
 
     fecha_vencimiento = models.DateField('Fecha de vencimiento', null=True, blank=True)
-    subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías')
+    subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, verbose_name='Subcategorías', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Categorías')
     stock = models.OneToOneField(Stock, on_delete=models.CASCADE, verbose_name='Stock')
+    descuento = models.DecimalField('Descuento', max_digits=4, decimal_places=2, default=0, null=True, blank=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
 
     def __str__(self):
@@ -234,6 +235,18 @@ class Remito(models.Model):
     orden =  models.CharField('Número de remito', max_length=30)
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
+
+    TIPOS_IVA = [(21,'General (21%)'),
+                 (10.5,'Reducido (10.5%)'),
+                 (27,'Aumentado (27%)')]
+
+    iva = models.DecimalField('IVA (%)', decimal_places=1, max_digits=4, default=21.0, choices=TIPOS_IVA)
+
+    TIPOS_PAGOS = [('Crédito', 'Crédito'),
+                   ('Débito','Débito'),
+                   ('Efectivo','Efectivo')]
+
+    forma_pago = models.CharField('Método de pago', max_length=50, choices=TIPOS_PAGOS)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
     usuario_a_cargo = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Usuario a cargo', null=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)

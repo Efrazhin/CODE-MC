@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import JsonResponse
 from .models import *
@@ -62,22 +61,28 @@ def proveedores(request):
     ctx = {"proveedores" : proveedor}
     return render(request, "miapp_CODEMC/principal/provedores.html", ctx)
 
+
 @permission_required('miapp_CODEMC.add_proveedor', raise_exception=True)
 def agregar_proveedor(request):
     user = request.user
     if request.method == "POST":
         form = forms.ProveedorForm(request.POST)
         if form.is_valid():
+            
             proveedor = form.save(commit=False)
             if hasattr(user,'empresa'):
                 proveedor.empresa = request.user.empresa
             proveedor.save()  
             messages.success(request, '¡Tu proveedor se agregó exitosamente!')
             return redirect('proveedores')
+        else:
+            
+            ctx = {'form':form}
+            messages.error(request,"Error al agregar el proveedor.")
     else:
         form = forms.ProveedorForm()
         ctx = {'form':form}
-    return render(request, "miapp_CODEMC/principal/funciones/crear_proveedor.html", ctx )
+    return render(request, "miapp_CODEMC/principal/funciones/crear_proveedor.html", ctx)
 
 def libros(request):
     return render(request, "miapp_CODEMC/principal/libros.html")
@@ -214,10 +219,10 @@ def agregar_venta(request):
 
             detalles_temp = request.session.get('detalles_remito', [])
             for detalle in detalles_temp:
-                id_producto = Producto.objects.get(id_producto=detalle['producto_id'])
+                cod_producto = Producto.objects.get(cod_producto=detalle['producto_cod'], ubicacion=user.ubicacion)
                 DetalleRemito.objects.create(
                     remito = remito,
-                    producto = id_producto,
+                    producto = cod_producto,
                     cantidad = detalle['cantidad'],
                     descuento = detalle['descuento'],
                     importe = detalle['importe'])
@@ -241,7 +246,7 @@ def agregar_venta(request):
 
     return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", ctx)
 
-def cancelar_venta(request):
+def cancelar_proceso_venta(request):
     request.session['detalles_remito'] = []
     sexitoMsj = '¡Remito cancelado exitosamente!'
     return render(request,"miapp_CODEMC/principal/funciones/crear_venta.html", {'exito':sexitoMsj})
@@ -260,31 +265,33 @@ def agregar_detalle(request):
             importe = float((((100-(descuento))/100)*float(producto.precio))*cantidad)
 
             detalles_temp = request.session.get('detalles_remito', [])
-            detalles_temp.append({'producto_id':producto.id_producto, 'producto_nombre':producto.nombre,
+            detalles_temp.append({'producto_cod':producto.cod_producto, 'producto_nombre':producto.nombre,
                                   'producto_tamaño':float(producto.tamaño), 'producto_uM':producto.unidad_medida, 
                                   'producto_precio':float(producto.precio), 
                                   'cantidad':cantidad, 'descuento':descuento,
                                   'importe':importe})
             request.session['detalles_remito'] = detalles_temp
 
-            return JsonResponse({'success':True, 'producto_id':producto.id_producto, 
-                                 'producto_nombre':producto.nombre, 'producto_precio':producto.precio, 
-                                 'cantidad':cantidad, 'importe':importe})
+            return JsonResponse({'success':True, 'producto_cod':producto.cod_producto, 'producto_nombre':producto.nombre,
+                                  'producto_tamaño':float(producto.tamaño), 'producto_uM':producto.unidad_medida, 
+                                  'producto_precio':float(producto.precio), 
+                                  'cantidad':cantidad, 'descuento':descuento,
+                                  'importe':importe})
         return JsonResponse({'error':'Formulario no válido, bro'}, status=400)
     return JsonResponse({'error':'Método inesperado, bro'}, status=405) 
 
 
-def sacar_detalle(request,id_detalle):
-    if request == 'POST':
-    
-        detalle = request.session['detalle_remito',[]]
-        detalle.pop()
+def sacar_detalle(request,producto_cod):
+    if request.method == 'POST':
+        detalles_temp = request.session.get('detalles_remito',[])
+        detalles_temp = [detalle for detalle in detalles_temp if detalle['producto_cod'] != producto_cod]
+        request.session['detalles_remito'] = detalles_temp
         
-        return JsonResponse({'success':True})
+        return JsonResponse({'success':True, 'producto_cod':producto_cod})
         
-    return JsonResponse({'error':'El método no es el esperado, bro'})
+    return JsonResponse({'error':'El método no es el esperado, bro'}, status=405)
 
-
+#<------------------------------ Productos ------------------------------>
 #RECORDATORIO: Crear función decoradora q' evite q' el usu' registre producto sin tener una ubicación
 def agregar_productos(request):
     if request.user:
@@ -302,6 +309,10 @@ def agregar_productos(request):
             producto.save()  
             messages.success(request, '¡Tu producto se agregó exitosamente!')
             return redirect('agregar-producto')
+        else:
+            messages.error(request, 'Hubo un problema al guardar el producto')
+            producto_form = forms.ProductoForm()
+            stock_form = forms.StockForm()
     else:
         producto_form = forms.ProductoForm()
         stock_form = forms.StockForm()
@@ -313,13 +324,13 @@ def productos_view(request):
     productos = Producto.objects.filter(ubicacion = ubi)  
     return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
 
-def eliminar_producto(request, producto_id):
-    producto = get_object_or_404(Producto, id_producto=producto_id)
+def eliminar_producto(request, producto_cod):
+    producto = get_object_or_404(Producto, cod_producto=producto_cod)
     producto.delete()
     messages.success(request, "Producto eliminado exitosamente.")
     return redirect('productos')
 
-
+#<------------------------------ Categorias y subcategorias ------------------------------>
 def crear_categoria(request):
     if request.method == 'POST':
         categoria_form = forms.CategoriaForm(request.POST)
