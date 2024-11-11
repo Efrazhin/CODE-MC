@@ -25,15 +25,21 @@ urlpatterns=[
 
     path("warehouses/",views.almacenes,name="almacenes"),
     path("configuracion/",views.configuracion,name="configuracion"),
-    path("compras/",views.compras,name="compras"),
 
     path("customers/",views.clientes,name="clientes"),
     path("customers/add-customer",views.agregar_cliente,name="agregar-cliente"),
 
+    path("purchases/",views.compras,name="compras"),
+    path("purchases/add-remmitance/",views.agregar_compra,name="agregar_compra"),
+    path("purchases/add-remmitance/del-remmitance",views.cancelar_proceso_venta_compra,name="cancelar_compra"),
+    path("purchases/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle_compra"),
+    path("purchases/add-remmitance/del-detail/<str:producto_cod>/",views.sacar_detalle,name="eliminar_detalle"),
+
+
     path("sales/",views.ventas,name="ventas"),
     path("sales/add-remmitance/",views.agregar_venta,name="agregar-venta"),
-    path("sales/add-remmitance/del-remmitance",views.cancelar_proceso_venta,name="cancelar_proceso_venta"),
-    path("sales/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle"),
+    path("sales/add-remmitance/del-remmitance",views.cancelar_proceso_venta_compra,name="cancelar_venta"),
+    path("sales/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle_venta"),
     path("sales/add-remmitance/del-detail/<str:producto_cod>/",views.sacar_detalle,name="eliminar_detalle"),
 
     path("categories/",views.categorias_subcategorias_productos,name="categorias"),

@@ -60,7 +60,7 @@ class Almacen(models.Model):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='almacenes')
 
     def __str__(self):
-        return f"Almacén Nº{self.id_almacen} - {self.calle} {self.nro_calle}"
+        return f"Almacén Nº{self.nombre} - {self.calle} {self.nro_calle}"
 
     def save(self, *args, **kwargs):
         tipo = 'A'
@@ -80,7 +80,7 @@ class Sucursal(models.Model):
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='sucursales')
 
     def __str__(self):
-        return f"Sucursal Nº{self.id_sucursal} - {self.calle} {self.nro_calle}"
+        return f"Sucursal Nº{self.nombre} - {self.calle} {self.nro_calle}"
     
     def save(self, *args, **kwargs):
         tipo = 'S'
@@ -94,7 +94,11 @@ class Ubicacion(models.Model):
     tipo = models.CharField(max_length=20)  # "almacen" o "sucursal"
     almacen = models.ForeignKey(Almacen, null=True, blank=True, on_delete=models.CASCADE)
     sucursal = models.ForeignKey(Sucursal, null=True, blank=True, on_delete=models.CASCADE)
-    
+    def __str__(self):
+        if self.almacen:
+            return f"#{self.almacen.nombre}"
+        elif self.sucursal:
+            return f"#{self.sucursal.nombre}"
 
 class CustomUser(AbstractUser):
     dni = models.CharField('DNI', max_length=120,unique=True,null=True)
@@ -132,16 +136,6 @@ class Cliente(models.Model):
     def __str__(self):
         return f"{self.dni_cliente}, {self.nombre} {self.apellido}"  
     
-    
-class Provincia(models.Model):
-    id_provincia = models.AutoField('ID Provincia', primary_key=True)
-    nombre = models.CharField('Nombre', max_length=100)  
-    
-
-class Pais(models.Model):
-    id_pais = models.AutoField('ID Pais', primary_key=True)
-    nombre = models.CharField('Nombre', max_length=100)  
-    
 
 class Proveedor(models.Model):
     cuit = models.CharField('CUIT', max_length=25, null=True, blank=True)
@@ -157,7 +151,9 @@ class Proveedor(models.Model):
     web = models.URLField('Web (opcional)', null=True, blank=True)
     comentarios = models.TextField('Observaciones (opcional)', null=True, blank=True)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, related_name='proveedores')
-
+    
+    def __str__(self):
+        return str(self.nombre)
 
 class Categoria(models.Model):
     id_categoria = models.AutoField('ID Categoría', primary_key=True)
@@ -246,7 +242,7 @@ class Remito(models.Model):
                    ('Débito','Débito'),
                    ('Efectivo','Efectivo')]
 
-    forma_pago = models.CharField('Método de pago', max_length=50, choices=TIPOS_PAGOS)
+    forma_pago = models.CharField('Método de pago', max_length=50, choices=TIPOS_PAGOS, null=True, default='Efectivo')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente', null=True, blank=True)
     usuario_a_cargo = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Usuario a cargo', null=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
@@ -260,7 +256,7 @@ class Remito(models.Model):
     
 class DetalleRemito(models.Model):
     id_detalle_remito = models.AutoField('ID Detalle Remito', primary_key=True)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Producto')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='Producto',related_name='detalles')
     cantidad = models.IntegerField('Cantidad')
     descuento = models.DecimalField('Descuento (porcentaje)', max_digits=5, decimal_places=2, default=0.00, blank=True)
     importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
@@ -268,10 +264,22 @@ class DetalleRemito(models.Model):
 
 class Compra(models.Model):
     id_compra = models.AutoField('ID Compra', primary_key=True)
+    orden =  models.CharField('Número de compra', max_length=30, null=True)
     fecha = models.DateField('Fecha')
     descripcion = models.TextField('Descripción')
+    TIPOS_IVA = [(21,'General (21%)'),
+                 (10.5,'Reducido (10.5%)'),
+                 (27,'Aumentado (27%)')]
+
+    iva = models.DecimalField('IVA (%)', decimal_places=1, max_digits=4, default=21.0, choices=TIPOS_IVA)
+
+    TIPOS_PAGOS = [('Crédito', 'Crédito'),
+                   ('Débito','Débito'),
+                   ('Efectivo','Efectivo')]
+
+    forma_pago = models.CharField('Método de pago', max_length=50, choices=TIPOS_PAGOS, null=True, default='Efectivo')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, verbose_name='Proveedor')
-    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name='Empleado')
+    usuario_a_cargo = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Usuario a cargo', null=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, max_length=100, null=True)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE, null=True)
 
@@ -280,7 +288,8 @@ class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name='producto')
     cantidad = models.IntegerField('Cantidad')
     importe = models.DecimalField('Importe', max_digits=10, decimal_places=2)
-    compra = models.ForeignKey(Compra, on_delete=models.CASCADE, verbose_name='Compra')
+    descuento = models.DecimalField('Descuento (porcentaje)', max_digits=5, decimal_places=2, default=0.00, blank=True)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE, verbose_name='Compra',related_name='detalles')
 
 class Presupuesto(models.Model):
     id_presupuesto = models.AutoField('ID Presupuesto', primary_key=True)

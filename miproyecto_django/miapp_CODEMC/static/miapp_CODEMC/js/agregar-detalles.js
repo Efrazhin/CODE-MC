@@ -1,24 +1,27 @@
-
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 // agregar detalle
 document.getElementById('agregarDetalleBtn').addEventListener('click', function () {
+
     const form = document.getElementById('detalleForm');
     const formData = new FormData(form);
 
+    console.log(form.action)
     fetch(form.action, {
         method: 'POST',
         body: formData,
         headers: {
-            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            'X-CSRFToken': csrftoken,
         }
     })
+    
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             const detallesList = document.getElementById('detallesList');
             const li = document.createElement('li');
             li.textContent = `${data.producto_cod} ${data.producto_nombre} ${data.producto_tamaño}${data.producto_uM}, 
-                ${data.producto_precio}- Cantidad: ${data.cantidad}. Importe: $${data.importe} ` ;
+                $${data.producto_precio}- Cantidad: ${data.cantidad}. Importe: $${data.importe} ` ;
 
             const button = document.createElement('button');
             button.textContent = 'ELIMINAR';
@@ -32,10 +35,14 @@ document.getElementById('agregarDetalleBtn').addEventListener('click', function 
         } else {
             alert(data.error);
         }
+    })
+
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un problema con la solicitud: ' + error.message);
     });
 });
 
-const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 function eliminarDetalle(button, producto_cod) {
     console.log(`Intentando eliminar el elemento con producto_cod: ${producto_cod}`);
@@ -64,6 +71,7 @@ function eliminarDetalle(button, producto_cod) {
         if (data.success) {
             // Eliminar el elemento <li> del DOM
             liElement.remove();
+            console.log(`${producto_cod} eliminao`);
         } else {
             console.error("Error del servidor:", data.error);
             alert("Hubo un problema al eliminar el detalle: " + data.error);

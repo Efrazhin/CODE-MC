@@ -143,7 +143,7 @@ def trigger_agregar_stock(sender, app_config,**kwargs):
                             FOR EACH ROW
                             BEGIN
                                UPDATE miapp_codemc_stock
-                               SET cantidad = cantidad - NEW.cantidad
+                               SET cantidad = cantidad + NEW.cantidad
                                WHERE id_stock = (SELECT stock_id FROM miapp_codemc_producto WHERE id = NEW.producto_id);
                             END;
                                """)

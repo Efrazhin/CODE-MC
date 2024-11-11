@@ -15,23 +15,33 @@
                         <th>Orden</th>
                         <th>Fecha</th>
                         <th>Cliente</th>
+                        <th>IVA</th>
+                        <th>Forma de pago</th>
                         <th>Descripción</th>
                         <th>Personal a cargo</th>
                         <th>Ubicación</th>
+                        <th>Detalles</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for remito in remitos %}
                     <tr>
-                        <td> {{ empleado.user.first_name }} </td>
-                        <td> {{ empleado.user.last_name }} </td>
-                        <td> {{ empleado.user.username }} </td>
-                        <td> {{ empleado.user.dni }} </td>
-                        <td> {{ empleado.user.telefono }} </td>
+                        <td> {{ remito.orden }} </td>
+                        <td> {{ remito.fecha }} </td>
+                        <td> {{ remito.cliente }} </td>
+                        <td> {{ remito.iva }} </td>
+                        <td> {{ remito.forma_pago }} </td>
+                        <td> {{ remito.descripcion }} </td>
+                        <td> {{ remito.usuario_a_cargo.dni }} </td>
+                        <td> {{ remito.ubicacion }} </td>
+                        <td> 
+                    
+
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5"> Tu empresa aún no tiene ventas. ¡Comienza a agregar! </td>
+                        <td colspan="9"> Tu empresa aún no tiene ventas. ¡Comienza a agregar! </td>
                     </tr>
                     {% endfor %}
                 </tbody>

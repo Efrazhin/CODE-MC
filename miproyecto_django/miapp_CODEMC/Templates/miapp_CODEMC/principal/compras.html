@@ -1,11 +1,52 @@
 {% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
 {%load static%}
 {% block head %}
-    <title>compras</title>
+    <title>Ventas</title>
+    <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
 {% block content %}
-<div class="text">
-    <h1>Contenido Personalizado</h1>
-    <p>Este es el contenido que se reemplaza en la sección home.</p>
-</div>
+
+    <a href='{% url "agregar_compra" %}'> Registrar una nueva compra <a/>
+    
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>IVA</th>
+                        <th>Forma de pago</th>
+                        <th>Descripción</th>
+                        <th>Personal a cargo</th>
+                        <th>Ubicación</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for compra in compras %}
+                    <tr>
+                        <td> {{ compra.orden }} </td>
+                        <td> {{ compra.fecha }} </td>
+                        <td> {{ compra.cliente }} </td>
+                        <td> {{ compra.iva }} </td>
+                        <td> {{ compra.forma_pago }} </td>
+                        <td> {{ compra.descripcion }} </td>
+                        <td> {{ compra.usuario_a_cargo.dni }} </td>
+                        <td> {{ compra.ubicacion }} </td>
+                        <td> 
+                    
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9"> Tu empresa aún no tiene compras. ¡Comienza a agregar! </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            <table>
+    
+        </div>    
+    
 {% endblock %}

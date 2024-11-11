@@ -2,28 +2,27 @@
 {% load static %}
 
 {% block head %}
-    <title>Agregar venta</title>
+    <title>Agregar compra</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="">
     <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
 {% block content %}
-    <h1>AGREGAR REMITO DE VENTA</h1>   
-    <form method="post" id="remitoForm" action='{% url "agregar-venta" %}'>
+    <h1> AGREGAR REMITO DE COMPRA </h1>   
+    <form method="post" id="compraForm" action='{% url "agregar_compra" %}'>
         {% csrf_token %}
-        {{ remito_form.as_p}}
-        <button type='submit'>Registrar remito</button>
-
+        {{ compra_form.as_p}}
+        <button type='submit'>Registrar compra</button>
     </form>
 
-    <form method='post' id="cancelar_proceso_remito" action='{% url "cancelar_venta" %}?from=agregar-venta'>
+    <form method='post' id="cancelar_proceso_compra" action='{% url "cancelar_compra" %}?from=agregar_compra'>
         {% csrf_token %}
-        <button type='submit'>Cancelar remito</button>
+        <button type='submit'>Cancelar compra</button>
     </form>
 
     <h2>Agrega detalles</h2>
-    <form method="post" id="detalleForm" action='{% url "agregar_detalle_venta" %}'>
+    <form method="post" id="detalleForm" action='{% url "agregar_detalle_compra" %}'>
         {% csrf_token %}
         {{ detalle_form.as_p}}
         <button type='button' id='agregarDetalleBtn'>Agregar detalle</button>

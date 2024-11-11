@@ -86,7 +86,6 @@ class SeleccionUbicacion(forms.Form):
         user = kwargs.pop('user',None)
         super(SeleccionUbicacion, self).__init__(*args, **kwargs)
         
-        ubicacion_actual = [('','Selecciona tu ubicación')]
         ubicacion_actual_obj = None
 
         if user:
@@ -145,7 +144,7 @@ class ProductoForm(ModelForm):
 class RemitoForm(ModelForm):
     class Meta:
         model = Remito
-        fields = ['orden','fecha', 'descripcion', 'cliente','iva']
+        fields = ['orden','fecha', 'descripcion', 'cliente','iva','forma_pago']
 
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -210,18 +209,66 @@ class DetalleRemitoForm(ModelForm):
 class CompraForm(ModelForm):
     class Meta:
         model = Compra
-        fields = ['fecha', 'descripcion', 'proveedor', 'empleado']
+        fields = ['orden','fecha', 'descripcion', 'proveedor', 'iva','forma_pago',]
+    def __init__(self,*args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(CompraForm, self).__init__(*args,**kwargs)
+
+        self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
+        self.fields['fecha'].widget.attrs['readonly']=True
+
+        self.fields['orden'].widget.attrs['readonly']=True
+
+        if hasattr(self.user, 'empresa'):
+            self.fields['proveedor'].queryset = Proveedor.objects.filter(empresa=self.user.empresa)
+
+        if self.instance and self.instance.pk:
+            self.fields['orden'].initial = self.instance.orden  # Por si tengo q llamar un formu de modificación
+        else:
+            self.fields['orden'].initial = self.generar_nro_orden()
+
+    def generar_nro_orden(self):
+
+        hoy = timezone.localtime(timezone.now()).date()
+
+        ubi_user = self.user.ubicacion
+
+        ubi_nombre = ubi_user.almacen.nombre if ubi_user.almacen else ubi_user.sucursal.nombre
+
+        ultima_compra = Compra.objects.filter(
+            fecha=hoy, ubicacion=ubi_user).order_by('-orden').first()
+        
+        if ultima_compra:
+            ultimo_nro = int(ultima_compra.orden.split('-')[-1])
+            new_nro = ultimo_nro + 1
+        else:
+            new_nro = 1
+
+        return f"{ubi_nombre}-{new_nro:08}"
 
 class DetalleCompraForm(ModelForm):
     class Meta:
         model = DetalleCompra
-        fields = ['producto', 'cantidad', 'importe', 'compra']
+        fields = ['producto', 'cantidad', 'descuento']
+    def __init__(self,*args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(DetalleCompraForm, self).__init__(*args, **kwargs)
+
+        ubicar = None
+
+        if hasattr(user,'ubicacion'):
+            ubicar = user.ubicacion
+        
+        if ubicar is not None:
+            self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
+        else:
+            pass
 
 
 class PresupuestoForm(ModelForm):
     class Meta:
         model = Presupuesto
-        fields = ['fecha', 'descripcion', 'cliente', 'empleado', 'sucursal']
+        fields = ['fecha', 'descripcion', 'cliente', 'sucursal']
 
 class DetallePresupuestoForm(ModelForm):
     class Meta:
