@@ -1,4 +1,4 @@
-from django.db import transaction
+from django.db import transaction, connection
 from django.db.models.signals import post_save, post_migrate
 from django.dispatch import receiver
 from django.contrib.auth.models import Group, Permission
@@ -8,7 +8,7 @@ from .models import CustomUser, BusinessManager, Empleado
 def crear_grupos(sender, app_config, **kwargs):
     def asignar_permisos():
         if app_config.name != 'miapp_CODEMC':
-            return print('Esta aplicación no corresponde a esta función')
+            return print(f'A {app_config} no le corresponde la función de asignar permisos.')
 
         if (Group.objects.filter(name='Managers').exists()) and (Group.objects.filter(name='Empleados').exists()):
             return print('Los grupos ya existen.')
@@ -93,3 +93,60 @@ def asignar_grupo(sender, instance, created, **kwargs):
             group, created = Group.objects.get_or_create(name='Empleados')
             instance.groups.add(group)
     print(instance.groups)
+
+@receiver(post_migrate)
+def trigger_descontar_stock(sender, app_config,**kwargs):
+    if app_config.name != "miapp_CODEMC":
+        return 
+    else:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                           SELECT COUNT(*)
+                           FROM information_schema.triggers
+                           WHERE trigger_name = 'update_stock_after_detalleremito_insert'
+                           AND event_object_table = 'miapp_codemc_detalleremito'; """)
+            
+            trigger_existe = cursor.fetchone()[0] > 0
+
+            if not trigger_existe:
+                cursor.execute("""
+                            CREATE TRIGGER update_stock_after_detalleremito_insert
+                            AFTER INSERT ON miapp_codemc_detalleremito
+                            FOR EACH ROW
+                            BEGIN
+                               UPDATE miapp_codemc_stock
+                               SET cantidad = cantidad - NEW.cantidad
+                               WHERE id_stock = (SELECT stock_id FROM miapp_codemc_producto WHERE id = NEW.producto_id);
+                            END;
+                               """)
+            else:
+                return print("Ya existe este trigger.")
+
+@receiver(post_migrate)
+def trigger_agregar_stock(sender, app_config,**kwargs):
+    if app_config.name != "miapp_CODEMC":
+        return 
+    else:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                           SELECT COUNT(*)
+                           FROM information_schema.triggers
+                           WHERE trigger_name = 'update_stock_after_detallecompra_insert'
+                           AND event_object_table = 'miapp_codemc_detallecompra'; """)
+            
+            trigger_existe = cursor.fetchone()[0] > 0
+
+            if not trigger_existe:
+                cursor.execute("""
+                            CREATE TRIGGER update_stock_after_detallecompra_insert
+                            AFTER INSERT ON miapp_codemc_detallecompra
+                            FOR EACH ROW
+                            BEGIN
+                               UPDATE miapp_codemc_stock
+                               SET cantidad = cantidad - NEW.cantidad
+                               WHERE id_stock = (SELECT stock_id FROM miapp_codemc_producto WHERE id = NEW.producto_id);
+                            END;
+                               """)
+                print("Trigger creado exitosamente.")
+            else:
+                return print("Ya existe este trigger.")
