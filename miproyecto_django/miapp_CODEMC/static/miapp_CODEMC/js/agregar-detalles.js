@@ -34,7 +34,9 @@ document.getElementById('agregarDetalleBtn').addEventListener('click', function 
 
             detallesList.appendChild(li);
         } else {
-            alert(data.error);
+            const errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.textContent = data.error;  // Aquí agregamos el mensaje de error
+            errorMessageDiv.style.display = 'block';  // Mostramos el mensaje
         }
     })
 
