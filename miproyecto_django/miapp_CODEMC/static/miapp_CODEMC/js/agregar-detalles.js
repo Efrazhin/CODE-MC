@@ -1,8 +1,9 @@
-const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-// agregar detalle
+
+// ------------------------ Agregar detalle de un remito en curso -----------------------------
 document.getElementById('agregarDetalleBtn').addEventListener('click', function () {
 
+    const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const form = document.getElementById('detalleForm');
     const formData = new FormData(form);
 
@@ -43,10 +44,11 @@ document.getElementById('agregarDetalleBtn').addEventListener('click', function 
     });
 });
 
+// -------------------------------- Eliminar detalle de un remito en curso--------------------------------
 
 function eliminarDetalle(button, producto_cod) {
     console.log(`Intentando eliminar el elemento con producto_cod: ${producto_cod}`);
-
+    const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     // Encuentra el elemento padre <li> del botón que se ha clicado
     const liElement = button.parentElement;
 

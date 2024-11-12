@@ -3,10 +3,11 @@
 {% block head %}
     <title>Ventas</title>
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
+    
 {% endblock %}
 {% block content %}
 
-    <a href='{% url "agregar-venta" %}'> Registrar un nuevo remito <a/>
+    <a href='{% url "agregar-venta" %}'> Registrar un nuevo remito </a>
     
         <div class="table-container">
             <table>
@@ -35,8 +36,7 @@
                         <td> {{ remito.usuario_a_cargo.dni }} </td>
                         <td> {{ remito.ubicacion }} </td>
                         <td> 
-                    
-
+                            <button class="btn-detalle" data-id="{{ remito.id_remito }}">Ver Detalles</button>
                         </td>
                     </tr>
                     {% empty %}
@@ -48,5 +48,14 @@
             <table>
     
         </div>    
-    
+
+        <div id="detalle-modal" style="display:none;">
+            <h2>Detalles del Remito</h2>
+            <div id="detalle-contenido"></div>
+            <button id="cerrar-modal">Cerrar</button>
+        </div>
+        
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{% static 'miapp_CODEMC/js/ver-detalles.js'%}"></script>    
 {% endblock %}

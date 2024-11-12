@@ -237,6 +237,10 @@ def agregar_detalle(request):
         return JsonResponse({'error':'Formulario no válido, bro'}, status=400)
     return JsonResponse({'error':'Método inesperado, bro'}, status=405) 
 
+def obtener_detalles(request,remito_id):
+    detalles = DetalleRemito.objects.filter(remito=remito_id).values('producto__nombre', 'cantidad', 'importe')
+    print(f"Detalles encontrados para remito_id {remito_id}: {list(detalles)}")
+    return JsonResponse({'detalles': list(detalles)})
 
 def sacar_detalle(request,producto_cod):
     if request.method == 'POST':
