@@ -14,7 +14,7 @@
                     <tr>
                         <th>Orden</th>
                         <th>Fecha</th>
-                        <th>Cliente</th>
+                        <th>Proveedor</th>
                         <th>IVA</th>
                         <th>Forma de pago</th>
                         <th>Descripción</th>
@@ -28,14 +28,16 @@
                     <tr>
                         <td> {{ compra.orden }} </td>
                         <td> {{ compra.fecha }} </td>
-                        <td> {{ compra.cliente }} </td>
+                        <td> {{ compra.proveedor }} </td>
                         <td> {{ compra.iva }} </td>
                         <td> {{ compra.forma_pago }} </td>
                         <td> {{ compra.descripcion }} </td>
                         <td> {{ compra.usuario_a_cargo.dni }} </td>
                         <td> {{ compra.ubicacion }} </td>
                         <td> 
-                    
+                            <button class="btn btn-info btn-detalle" 
+                            data-id="{{ compra.id_compra }}" data-orden="{{ compra.orden}}" data-fecha="{{ compra.fecha}}">
+                            Ver Detalles</button>
 
                         </td>
                     </tr>
@@ -48,5 +50,23 @@
             <table>
     
         </div>    
-    
+        <!-- Modal -->
+        <div class="modal fade" id="detalle-modal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="detalleModalLabel">Detalles de la compra {{ compra.id_compra }}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detalle-contenido">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <script src="{% static 'miapp_CODEMC/js/ver-detalles-compra.js'%}"></script>    
 {% endblock %}

@@ -2,6 +2,7 @@
 {%load static%}
 {% block head %}
     <title>Ventas</title>
+    
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
     
 {% endblock %}
@@ -36,7 +37,9 @@
                         <td> {{ remito.usuario_a_cargo.dni }} </td>
                         <td> {{ remito.ubicacion }} </td>
                         <td> 
-                            <button class="btn-detalle" data-id="{{ remito.id_remito }}">Ver Detalles</button>
+                            <button class="btn btn-info btn-detalle" 
+                            data-id="{{ remito.id_remito }}" data-orden="{{ remito.orden}}" data-fecha="{{ remito.fecha}}">
+                            Ver Detalles</button>
                         </td>
                     </tr>
                     {% empty %}
@@ -48,14 +51,24 @@
             <table>
     
         </div>    
-
-        <div id="detalle-modal" style="display:none;">
-            <h2>Detalles del Remito</h2>
-            <div id="detalle-contenido"></div>
-            <button id="cerrar-modal">Cerrar</button>
-        </div>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="detalle-modal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="detalleModalLabel">Detalles del remito {{ remito.id_remito }}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detalle-contenido">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{% static 'miapp_CODEMC/js/ver-detalles.js'%}"></script>    
+        <script src="{% static 'miapp_CODEMC/js/ver-detalles-ventas.js'%}"></script>    
 {% endblock %}

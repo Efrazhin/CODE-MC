@@ -22,7 +22,7 @@
 }
 body {
     min-height: 100vh;
-    background-color: var(--body-color);
+    background-color: var(--body-color) !important;
     transition: var(--tran-05);
 }
 ::selection{
@@ -49,6 +49,7 @@ body.dark{
 }
     
 .sidebar.close {
+    
     width: 88px;
 }
     
@@ -263,7 +264,11 @@ body.dark .home .text{
     overflow-y: auto;  /* Habilita el scroll vertical si el contenido excede la altura */
     overflow-x: hidden;
     scrollbar-width: thin;  /* Para navegadores que lo soportan, ajusta el ancho de la barra */
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
 }
+
 
 .menu-links::-webkit-scrollbar {
     width: 6px;  /* Ancho de la barra en navegadores que usan WebKit */
