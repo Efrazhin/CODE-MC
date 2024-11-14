@@ -23,6 +23,9 @@ def planes(request):
 def contacto(request):
     return render(request, "miapp_CODEMC/presentacion/Contacto.html")
 
+def adn(request):
+    return render(request, "miapp_CODEMC/presentacion/HTMLADN.html")
+
 def home(request):
 
     ubicacion = None

@@ -21,7 +21,7 @@ class FormRegistroUser(UserCreationForm):
             'dni': NumberInput(attrs={'class': 'form-control', 'placeholder': 'DNI'}),
             'first_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
             'last_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellido'}),
-            'email': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'email': EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
             
         }

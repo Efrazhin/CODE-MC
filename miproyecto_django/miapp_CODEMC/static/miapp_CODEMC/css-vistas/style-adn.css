@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    background-image: url('fondoADN.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover
+}
+
+header {
+    background-color: #604c4c3b;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #ff9d00;
+    margin: 0;
+    display: inline-block;
+}
+
+header nav {
+    float: right;
+    margin-top: 5px;
+}
+
+header nav a {
+    color: #a8cb0b;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #007BFF; /* Color de acento */
+}
+
+p, ul{
+    color: rgb(0, 0, 0);
+    font-size: 4vmin;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li{
+    padding: 5px 0;
+}
+
+footer {
+    background-color: #dd7b0b79;
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 20px;
+    color:#007BFF
+}
