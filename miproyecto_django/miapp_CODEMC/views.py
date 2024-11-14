@@ -84,6 +84,17 @@ def agregar_proveedor(request):
         ctx = {'form':form}
     return render(request, "miapp_CODEMC/principal/funciones/crear_proveedor.html", ctx)
 
+
+@permission_required('miapp_CODEMC.delete_proveedor', raise_exception=True)
+def eliminar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+
+    if request.method == 'POST':
+        proveedor.delete()
+        messages.success(request, 'Proveedor eliminado exitosamente.')
+
+    return redirect('proveedores')
+
 def libros(request):
     return render(request, "miapp_CODEMC/principal/libros.html")
 
@@ -102,6 +113,22 @@ def empleados(request):
 
     return render(request, "miapp_CODEMC/principal/empleados.html", ctx)
     
+def eliminar_empleado(request, empleado_id):
+    empleado = get_object_or_404(Empleado, id=empleado_id)
+    
+    if request.method == 'POST':
+        # Obtener el usuario asociado al empleado
+        custom_user = empleado.user
+        
+        # Eliminar el empleado
+        empleado.delete()
+
+        # Eliminar también el usuario, si se desea
+        custom_user.delete()  # Eliminar el usuario asociado
+
+        messages.success(request, 'Empleado eliminado con éxito.')
+    
+    return redirect('empleados')  # Asegúrate de redirigir a la página de lista de empleados
 
 def configuracion(request):
     user= request.user
@@ -185,6 +212,14 @@ def agregar_cliente(request):
 
     return render(request,"miapp_CODEMC/principal/funciones/crear_cliente.html", ctx)
 
+def eliminar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    
+    if request.method == 'POST':
+        cliente.delete()
+        messages.success(request, 'Cliente eliminado exitosamente.')
+    
+    return redirect('clientes')
 
 
 
@@ -237,16 +272,9 @@ def agregar_detalle(request):
         return JsonResponse({'error':'Formulario no válido, bro'}, status=400)
     return JsonResponse({'error':'Método inesperado, bro'}, status=405) 
 
-def obtener_detalles_compra(request,remito_id):
-    detalles = DetalleCompra.objects.filter(compra=remito_id).values('producto__cod_producto','producto__nombre', 
-                                                                     'producto__tamaño', 'producto__unidad_medida',
-                                                                     'cantidad', 'importe')
-    return JsonResponse({'detalles': list(detalles)})
-
-def obtener_detalles_venta(request,remito_id):
-    detalles = DetalleRemito.objects.filter(remito=remito_id).values('producto__cod_producto','producto__nombre', 
-                                                                     'producto__tamaño', 'producto__unidad_medida',
-                                                                     'cantidad', 'importe')
+def obtener_detalles(request,remito_id):
+    detalles = DetalleRemito.objects.filter(remito=remito_id).values('producto__nombre', 'cantidad', 'importe')
+    print(f"Detalles encontrados para remito_id {remito_id}: {list(detalles)}")
     return JsonResponse({'detalles': list(detalles)})
 
 def sacar_detalle(request,producto_cod):
