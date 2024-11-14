@@ -15,7 +15,7 @@ class FormRegistroEmpresa(ModelForm):
 class FormRegistroUser(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'dni','first_name','last_name','email', 'telefono', 'password')
+        fields = ('username', 'dni','first_name','last_name','email', 'telefono')
         widgets = {
             'username': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
             'dni': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
@@ -93,14 +93,16 @@ class AlmacenForm(ModelForm):
                 'calle': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
                 'nro_calle': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
                 'tamaño': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
-                'unidad_medida': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
 
             }
     def __init__(self,*args, **kwargs):
-        super(SucursalForm, self).__init__(*args, **kwargs)
+        super(AlmacenForm, self).__init__(*args, **kwargs)
         self.fields['provincia'].widget.attrs.update(
             {'class': 'form-control', 
                 'placeholder': 'Provincia'})
+        self.fields['unidad_medida'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Escoge la unidad de medida del tamaño de tu almacén'})
     # Agregamo' este bloq' para q' al momento de que se guarde la selección de una provincia, lo haga 
     # con su nombre y no con su código (usamos el selector de provincias del paquete de localflavor.ar, el cual se 
     # genera a partir de una lista con tuplas de valores con cada código de provincia y el nombre correspondiente)
@@ -198,7 +200,7 @@ class StockForm(ModelForm):
         model = Stock
         fields = ['cantidad']
         widgets = {
-            'cantidad': NumberInput(attrs={'class':'form-control','placeholder':'Stock'})
+            'cantidad': NumberInput(attrs={'class':'form-control','placeholder':'Stock del producto'})
         }
         
 
@@ -216,34 +218,55 @@ class ProductoForm(ModelForm):
             'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
             'precio': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio'}),
             'tamaño': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
-            'unidad_medida': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
             'fecha_vencimiento': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha de vencimiento'}),
-            'categoria': TextInput(attrs={'class': 'form-control', 'placeholder': 'Categoría'}),
-            'subcategoria': TextInput(attrs={'class': 'form-control', 'placeholder': 'Subcategoría'}),
         }
-    
+    def __init__(self,*args, **kwargs):
+        super(ProductoForm, self).__init__(*args, **kwargs)
+        self.fields['unidad_medida'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Escoge la unidad de medida del tamaño del producto'})
+        self.fields['categoria'].widget.attrs.update(
+            {'class': 'form-control', 
+            'placeholder': 'Escoge la categoría'})
+        self.fields['subcategoria'].widget.attrs.update(
+            {'class': 'form-control', 
+            'placeholder': 'Escoge la subcategoría'})
+           
 
 class RemitoForm(ModelForm):
     class Meta:
         model = Remito
         fields = ['orden','fecha', 'descripcion', 'cliente','iva','forma_pago']
         widgets = {
-            'orden': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Orden'}),
             'fecha': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha'}),
             'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
-            'proveedor': TextInput(attrs={'class': 'form-control', 'placeholder': 'Proveedor'}),
-            'iva': NumberInput(attrs={'class': 'form-control', 'placeholder': 'IVA (%)'}),
-            'forma_pago': TextInput(attrs={'class': 'form-control', 'placeholder': 'Forma de pago'}),
         }
 
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(RemitoForm, self).__init__(*args,**kwargs)
 
+        self.fields['cliente'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Cliente'}
+            )
+        self.fields['forma_pago'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Forma de pago'}
+            )
+        self.fields['iva'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'IVA (%)'}
+            )
+        
+
         self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
         self.fields['fecha'].widget.attrs['readonly']=True
 
         self.fields['orden'].widget.attrs['readonly']=True
+        self.fields['orden'].widget.attrs.update(
+                {'class': 'form-control'}
+            )
 
         if hasattr(self.user, 'empresa'):
             self.fields['cliente'].queryset = Cliente.objects.filter(empresa=self.user.empresa)
@@ -281,7 +304,7 @@ class DetalleRemitoForm(ModelForm):
         fields = ['producto', 'cantidad', 'descuento',]
         widgets = {
             'cantidad': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad'}),
-            'descuento': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
+            'descuento': TextInput(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
         }
 
     def __init__(self,*args, **kwargs):
@@ -309,16 +332,27 @@ class CompraForm(ModelForm):
         model = Compra
         fields = ['orden','fecha', 'descripcion', 'proveedor', 'iva','forma_pago',]
         widgets = {
-            'orden': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Orden'}),
+            'orden': NumberInput(attrs={'class': 'form-control'}),
             'fecha': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha'}),
             'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
-            'proveedor': TextInput(attrs={'class': 'form-control', 'placeholder': 'Proveedor'}),
-            'iva': NumberInput(attrs={'class': 'form-control', 'placeholder': 'IVA (%)'}),
-            'forma_pago': TextInput(attrs={'class': 'form-control', 'placeholder': 'Forma de pago'}),
         }
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(CompraForm, self).__init__(*args,**kwargs)
+
+        self.fields['proveedor'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Proveedor'}
+            )
+        self.fields['forma_pago'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Forma de pago'}
+            )
+        self.fields['iva'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'IVA (%)'}
+            )
+        
 
         self.fields['fecha'].initial = timezone.localtime(timezone.now()).date()
         self.fields['fecha'].widget.attrs['readonly']=True
@@ -358,7 +392,7 @@ class DetalleCompraForm(ModelForm):
         fields = ['producto', 'cantidad', 'descuento']
         widgets = {
             'cantidad': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad'}),
-            'descuento': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
+            'descuento': TextInput(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
         }
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user', None)
