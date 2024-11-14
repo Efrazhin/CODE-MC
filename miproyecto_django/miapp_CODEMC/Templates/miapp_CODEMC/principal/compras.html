@@ -1,30 +1,31 @@
 {% extends 'miapp_CODEMC/inheritances/barra lateral.html' %}
 {%load static%}
 {% block head %}
-    <title>Ventas</title>
+  {% block title %}Compras{% endblock %}
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
 {% block content %}
 
     <a href='{% url "agregar_compra" %}'> Registrar una nueva compra <a/>
-    
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Orden</th>
-                        <th>Fecha</th>
-                        <th>Proveedor</th>
-                        <th>IVA</th>
-                        <th>Forma de pago</th>
-                        <th>Descripción</th>
-                        <th>Personal a cargo</th>
-                        <th>Ubicación</th>
-                        <th>Detalles</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for compra in compras %}
+    <main class="container">
+
+        <div class="table-responsive">
+            <table class="table align-middle table-dark table table-striped">
+              <thead>
+                <tr>
+                    <th>Orden</th>
+                    <th>Fecha</th>
+                    <th>Proveedor</th>
+                    <th>IVA</th>
+                    <th>Forma de pago</th>
+                    <th>Descripción</th>
+                    <th>Personal a cargo</th>
+                    <th>Ubicación</th>
+                    <th>Detalles</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for compra in compras %}
                     <tr>
                         <td> {{ compra.orden }} </td>
                         <td> {{ compra.fecha }} </td>
@@ -46,10 +47,10 @@
                         <td colspan="9"> Tu empresa aún no tiene compras. ¡Comienza a agregar! </td>
                     </tr>
                     {% endfor %}
-                </tbody>
-            <table>
+              </tbody>
+            </table>
+        </div>
     
-        </div>    
         <!-- Modal -->
         <div class="modal fade" id="detalle-modal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -67,6 +68,6 @@
               </div>
             </div>
         </div>
-        
+    </main>   
         <script src="{% static 'miapp_CODEMC/js/ver-detalles-compra.js'%}"></script>    
 {% endblock %}

@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block head %}
-    <title>Agregar compra</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="">
+    {% block title %}Crear compra{% endblock %}
     <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 

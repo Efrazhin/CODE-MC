@@ -15,7 +15,16 @@ class FormRegistroEmpresa(ModelForm):
 class FormRegistroUser(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username','first_name','last_name','email', 'dni','telefono')
+        fields = ('username', 'dni','first_name','last_name','email', 'telefono', 'password')
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'dni': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
+            'first_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
+            'last_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
+            'email': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
+            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+            'password': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+        }
 
 class FormCliente(ModelForm):
     class Meta:
@@ -26,6 +35,11 @@ class CategoriaForm(ModelForm):
     class Meta:
         model = Categoria
         fields = ['nombre', 'descripcion']  
+        widgets = {
+                'nombre': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+                'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+            }
+
 
 
 # class ProvinciaForm(ModelForm):
@@ -47,7 +61,24 @@ class ProveedorForm(ModelForm):
             'email', 'pais','provincia', 'ciudad', 'calle', 'nro_calle',   
             'descripcion', 'web', 'comentarios'  
         ]
-        
+        widgets = {
+            'cuit': NumberInput(attrs={'class': 'form-control', 'placeholder': 'CUIT'}),
+            'nombre': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'email': TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'provincia': TextInput(attrs={'class': 'form-control', 'placeholder': 'Provincia'}),
+            'ciudad': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
+            'calle': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
+            'nro_calle': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
+            'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+            'web': TextInput(attrs={'class': 'form-control', 'placeholder': 'Página web (opcional)'}),
+            'comentarios': TextInput(attrs={'class': 'form-control', 'placeholder': 'Comentarios (opcional)'}),
+        }
+    def __init__(self,*args, **kwargs):
+        super(SucursalForm, self).__init__(*args, **kwargs)
+        self.fields['pais'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Pais'})
 class AlmacenForm(ModelForm):
     provincia = ChoiceField(choices=PROVINCE_CHOICES, widget=ARProvinceSelect, label='Provincia')
     class Meta:
@@ -56,6 +87,20 @@ class AlmacenForm(ModelForm):
             'telefono', 'provincia', 'ciudad', 
             'calle', 'nro_calle', 'tamaño', 'unidad_medida'
         ]
+        widgets = {
+                'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+                'ciudad': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
+                'calle': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
+                'nro_calle': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
+                'tamaño': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
+                'unidad_medida': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+
+            }
+    def __init__(self,*args, **kwargs):
+        super(SucursalForm, self).__init__(*args, **kwargs)
+        self.fields['provincia'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Provincia'})
     # Agregamo' este bloq' para q' al momento de que se guarde la selección de una provincia, lo haga 
     # con su nombre y no con su código (usamos el selector de provincias del paquete de localflavor.ar, el cual se 
     # genera a partir de una lista con tuplas de valores con cada código de provincia y el nombre correspondiente)
@@ -69,7 +114,21 @@ class SucursalForm(ModelForm):
     class Meta:
         model = Sucursal
         fields = ['telefono', 'provincia', 'ciudad', 'calle', 'nro_calle', 'almacen']
-
+        widgets = {
+            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'ciudad': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
+            'calle': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
+            'nro_calle': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
+        }
+    def __init__(self,*args, **kwargs):
+        super(SucursalForm, self).__init__(*args, **kwargs)
+        self.fields['almacen'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Almacén'})
+        self.fields['provincia'].widget.attrs.update(
+            {'class': 'form-control', 
+                'placeholder': 'Provincia'})
+        
     def clean_provincia(self):
         provincia_code = self.cleaned_data.get('provincia')
         provincia_name = dict(PROVINCE_CHOICES).get(provincia_code)
@@ -117,6 +176,10 @@ class SubcategoriaForm(ModelForm):
     class Meta:
         model = Subcategoria
         fields = ['nombre', 'descripcion', 'categoria']
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+        }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user',None)
@@ -124,12 +187,20 @@ class SubcategoriaForm(ModelForm):
 
         if user and user.empresa:
             self.fields['categoria'].queryset = Categoria.objects.filter(empresa=user.empresa)
+            self.fields['categoria'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Categoría'}
+            )
 
 
 class StockForm(ModelForm):
     class Meta:
         model = Stock
         fields = ['cantidad']
+        widgets = {
+            'cantidad': NumberInput(attrs={'class':'form-control','placeholder':'Stock'})
+        }
+        
 
 class ProductoForm(ModelForm):
     class Meta:
@@ -139,12 +210,31 @@ class ProductoForm(ModelForm):
             'unidad_medida', 'fecha_vencimiento', 'categoria', 
             'subcategoria', 
         ]
+        widgets = {
+            'cod_producto': TextInput(attrs={'class': 'form-control', 'placeholder': 'Código de producto'}),
+            'nombre': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
+            'precio': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio'}),
+            'tamaño': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
+            'unidad_medida': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+            'fecha_vencimiento': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha de vencimiento'}),
+            'categoria': TextInput(attrs={'class': 'form-control', 'placeholder': 'Categoría'}),
+            'subcategoria': TextInput(attrs={'class': 'form-control', 'placeholder': 'Subcategoría'}),
+        }
     
 
 class RemitoForm(ModelForm):
     class Meta:
         model = Remito
         fields = ['orden','fecha', 'descripcion', 'cliente','iva','forma_pago']
+        widgets = {
+            'orden': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Orden'}),
+            'fecha': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha'}),
+            'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
+            'proveedor': TextInput(attrs={'class': 'form-control', 'placeholder': 'Proveedor'}),
+            'iva': NumberInput(attrs={'class': 'form-control', 'placeholder': 'IVA (%)'}),
+            'forma_pago': TextInput(attrs={'class': 'form-control', 'placeholder': 'Forma de pago'}),
+        }
 
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -189,6 +279,10 @@ class DetalleRemitoForm(ModelForm):
     class Meta:
         model = DetalleRemito
         fields = ['producto', 'cantidad', 'descuento',]
+        widgets = {
+            'cantidad': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad'}),
+            'descuento': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
+        }
 
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user', None)
@@ -201,6 +295,10 @@ class DetalleRemitoForm(ModelForm):
         
         if ubicar is not None:
             self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
+            self.fields['producto'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Producto'}
+            )
         else:
             pass
 
@@ -210,6 +308,14 @@ class CompraForm(ModelForm):
     class Meta:
         model = Compra
         fields = ['orden','fecha', 'descripcion', 'proveedor', 'iva','forma_pago',]
+        widgets = {
+            'orden': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Orden'}),
+            'fecha': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha'}),
+            'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
+            'proveedor': TextInput(attrs={'class': 'form-control', 'placeholder': 'Proveedor'}),
+            'iva': NumberInput(attrs={'class': 'form-control', 'placeholder': 'IVA (%)'}),
+            'forma_pago': TextInput(attrs={'class': 'form-control', 'placeholder': 'Forma de pago'}),
+        }
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(CompraForm, self).__init__(*args,**kwargs)
@@ -250,6 +356,10 @@ class DetalleCompraForm(ModelForm):
     class Meta:
         model = DetalleCompra
         fields = ['producto', 'cantidad', 'descuento']
+        widgets = {
+            'cantidad': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad'}),
+            'descuento': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descuento'}),
+        }
     def __init__(self,*args, **kwargs):
         user = kwargs.pop('user', None)
         super(DetalleCompraForm, self).__init__(*args, **kwargs)
@@ -261,6 +371,10 @@ class DetalleCompraForm(ModelForm):
         
         if ubicar is not None:
             self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
+            self.fields['producto'].widget.attrs.update(
+                {'class': 'form-control', 
+                 'placeholder': 'Producto'}
+            )
         else:
             pass
 
