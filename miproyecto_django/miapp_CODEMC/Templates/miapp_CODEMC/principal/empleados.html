@@ -8,15 +8,7 @@
 {% block content %}
     <h1 class="titulo">Empleados</h1>
     <a href='{% url "crear-empleado" %}'>Registrar empleado</a>
-    {% if messages %}
-        {% for message in messages %}
-            {% if proveedor in message.messagge %}
-                <div class="alert {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+
     <div class="table-container">
         <table>
             <thead>
@@ -26,6 +18,7 @@
                     <th>Usuario</th>
                     <th>Documento de identificación</th>
                     <th>Telefono</th>
+                    <th>acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +29,13 @@
                     <td> {{ empleado.user.username }} </td>
                     <td> {{ empleado.user.dni }} </td>
                     <td> {{ empleado.user.telefono }} </td>
+                    <td>
+                        <form action="{% url 'eliminar_empleado' empleado.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">Eliminar</button>
+                        </form>
+
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
