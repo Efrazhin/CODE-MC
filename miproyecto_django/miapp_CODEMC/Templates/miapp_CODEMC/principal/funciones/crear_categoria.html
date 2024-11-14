@@ -7,27 +7,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form-container">
-        <!-- Formulario de creación de categoría -->
-        <div class="formulario">
-            <h2>Crear Nueva Categoría</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ categoria_form.as_p }}
-                <button type="submit" name="crear_categoria">Guardar Categoría</button>
-            </form>
-        </div>
 
-        <!-- Formulario de creación de subcategoría -->
-        <div class="formulario">
-            <h2>Crear Nueva Subcategoría</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ subcategoria_form.as_p }}
-                <button type="submit" name="crear_subcategoria">Crear Subcategoría</button>
-            </form>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-5 offset-md-4   ">
+                <form method="post" class="card card-body text-center mb-3 mx-3">
+                    {% csrf_token %}
+                    <h2>Crear nueva categoría</h2>
+                    {{ categoria_form.as_p }}
+                    <button type="submit" name="crear_categoria">Guardar Categoría</button>
+                </form>
+                <form method="post" class="card card-body text-center mx-3">
+                    {% csrf_token %}
+                    <h2>Crear nueva subcategoría</h2>
+                    {{ subcategoria_form.as_p }}
+                    <button type="submit" name="crear_subcategoria">Crear Subcategoría</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </main>
 
     <a href='{% url "categorias" %}'>Volver a la lista de categorías</a>
 {% endblock %}

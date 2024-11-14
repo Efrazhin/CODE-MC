@@ -15,21 +15,40 @@ class FormRegistroEmpresa(ModelForm):
 class FormRegistroUser(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'dni','first_name','last_name','email', 'telefono')
+        fields = ('username', 'dni','first_name','last_name','email', 'telefono','password1','password2')
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
-            'dni': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
-            'first_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
-            'last_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
-            'email': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
-            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
-            'password': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+            'username': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
+            'dni': NumberInput(attrs={'class': 'form-control', 'placeholder': 'DNI'}),
+            'first_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'last_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellido'}),
+            'email': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            
         }
+
+    def __init__(self,*args, **kwargs):
+        super(FormRegistroUser, self).__init__(*args, **kwargs)
+       
+        self.fields['password1'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['password2'].widget.attrs.update(
+            {'class': 'form-control'})
+        
 
 class FormCliente(ModelForm):
     class Meta:
         model = Cliente
         fields = ["dni_cliente","nombre","apellido","calle","nro_calle","telefono","email","fecha_nacimiento"]
+        widgets = {
+            'dni_cliente': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'nombre': TextInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño'}),
+            'apellido': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ciudad'}),
+            'calle': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de calle'}),
+            'nro_calle': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de calle'}),
+            'telefono': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+            'email': TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+            'fecha_nacimiento': DateInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de medida'}),
+        }
 
 class CategoriaForm(ModelForm):
     class Meta:
@@ -75,10 +94,12 @@ class ProveedorForm(ModelForm):
             'comentarios': TextInput(attrs={'class': 'form-control', 'placeholder': 'Comentarios (opcional)'}),
         }
     def __init__(self,*args, **kwargs):
-        super(SucursalForm, self).__init__(*args, **kwargs)
+        super(ProveedorForm, self).__init__(*args, **kwargs)
+        self.fields['pais'].empty_label = "Selecciona un país"
         self.fields['pais'].widget.attrs.update(
-            {'class': 'form-control', 
-                'placeholder': 'Pais'})
+            {'class': 'form-control'})
+        
+
 class AlmacenForm(ModelForm):
     provincia = ChoiceField(choices=PROVINCE_CHOICES, widget=ARProvinceSelect, label='Provincia')
     class Meta:
@@ -97,9 +118,13 @@ class AlmacenForm(ModelForm):
             }
     def __init__(self,*args, **kwargs):
         super(AlmacenForm, self).__init__(*args, **kwargs)
+
+        self.fields['provincia'].empty_label = "Selecciona una provincia"
         self.fields['provincia'].widget.attrs.update(
             {'class': 'form-control', 
                 'placeholder': 'Provincia'})
+        
+        self.fields['provincia'].empty_label = "Selecciona una unidad de medida del tamaño"
         self.fields['unidad_medida'].widget.attrs.update(
             {'class': 'form-control', 
                 'placeholder': 'Escoge la unidad de medida del tamaño de tu almacén'})
@@ -124,9 +149,12 @@ class SucursalForm(ModelForm):
         }
     def __init__(self,*args, **kwargs):
         super(SucursalForm, self).__init__(*args, **kwargs)
+        self.fields['almacen'].empty_label = "Selecciona un almacén"
         self.fields['almacen'].widget.attrs.update(
             {'class': 'form-control', 
                 'placeholder': 'Almacén'})
+        
+        self.fields['provincia'].empty_label = "Selecciona una provincia"
         self.fields['provincia'].widget.attrs.update(
             {'class': 'form-control', 
                 'placeholder': 'Provincia'})
@@ -154,24 +182,20 @@ class SeleccionUbicacion(forms.Form):
             if hasattr(user, 'ubicacion'):
                 ubicacion_actual_obj = user.ubicacion
             
-            # Si hay una ubicación registrada, se procede a obtener almacenes y sucursales
-            if ubicacion_actual_obj:
-                if ubicacion_actual_obj.tipo == 'Almacen':
-                    almacenes = Almacen.objects.filter(empresa=empresa).exclude(id_almacen=ubicacion_actual_obj.almacen.id_almacen)
-                    sucursales = Sucursal.objects.filter(empresa=empresa)
-                elif ubicacion_actual_obj.tipo == 'Sucursal':
-                    almacenes = Almacen.objects.filter(empresa=empresa)
-                    sucursales = Sucursal.objects.filter(empresa=empresa).exclude(id_sucursal=ubicacion_actual_obj.sucursal.id_sucursal)
-            else:
-                almacenes = Almacen.objects.filter(empresa=empresa)
-                sucursales = Sucursal.objects.filter(empresa=empresa)
+            almacenes = Almacen.objects.filter(empresa=empresa)
+            sucursales = Sucursal.objects.filter(empresa=empresa)
 
             # Generar opciones para almacenes y sucursales
             opciones_almacenes = [(f"Almacen_{almacen.id_almacen}", f"Almacén {almacen.nombre}: {almacen.calle} {almacen.nro_calle}") for almacen in almacenes]
             opciones_sucursales = [(f"Sucursal_{sucursal.id_sucursal}", f"Sucursal {sucursal.nombre}: {sucursal.calle} {sucursal.nro_calle}") for sucursal in sucursales]
 
             # Establecer las opciones de elección
+            if ubicacion_actual_obj == None:
+                self.fields['ubicacion'].empty_label = "Selecciona una ubicación"
+            else:
+                self.fields['ubicacion'].empty_label = ubicacion_actual_obj
             self.fields['ubicacion'].choices += opciones_almacenes + opciones_sucursales
+            
 
 
 class SubcategoriaForm(ModelForm):
@@ -189,6 +213,8 @@ class SubcategoriaForm(ModelForm):
 
         if user and user.empresa:
             self.fields['categoria'].queryset = Categoria.objects.filter(empresa=user.empresa)
+
+            self.fields['categoria'].empty_label = "Selecciona una categoria"
             self.fields['categoria'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'Categoría'}
@@ -222,12 +248,17 @@ class ProductoForm(ModelForm):
         }
     def __init__(self,*args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)
+
+        self.fields['unidad_medida'].empty_label = "Escoge la unidad de medida"
         self.fields['unidad_medida'].widget.attrs.update(
-            {'class': 'form-control', 
-                'placeholder': 'Escoge la unidad de medida del tamaño del producto'})
+            {'class': 'form-control'})
+        
+        self.fields['categoria'].empty_label = "Selecciona la categoría"
         self.fields['categoria'].widget.attrs.update(
             {'class': 'form-control', 
             'placeholder': 'Escoge la categoría'})
+        
+        self.fields['subcategoria'].empty_label = "Selecciona la subcategoría"
         self.fields['subcategoria'].widget.attrs.update(
             {'class': 'form-control', 
             'placeholder': 'Escoge la subcategoría'})
@@ -246,6 +277,7 @@ class RemitoForm(ModelForm):
         self.user = kwargs.pop('user', None)
         super(RemitoForm, self).__init__(*args,**kwargs)
 
+        self.fields['cliente'].empty_label = "Selecciona un cliente"
         self.fields['cliente'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'Cliente'}
@@ -254,6 +286,8 @@ class RemitoForm(ModelForm):
                 {'class': 'form-control', 
                  'placeholder': 'Forma de pago'}
             )
+        
+        self.fields['iva'].empty_label = "Selecciona el tipo de IVA"
         self.fields['iva'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'IVA (%)'}
@@ -318,6 +352,7 @@ class DetalleRemitoForm(ModelForm):
         
         if ubicar is not None:
             self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
+            self.fields['producto'].empty_label = "Selecciona un producto"
             self.fields['producto'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'Producto'}
@@ -332,7 +367,6 @@ class CompraForm(ModelForm):
         model = Compra
         fields = ['orden','fecha', 'descripcion', 'proveedor', 'iva','forma_pago',]
         widgets = {
-            'orden': NumberInput(attrs={'class': 'form-control'}),
             'fecha': DateInput(attrs={'class': 'form-control', 'placeholder': 'Fecha'}),
             'descripcion': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
         }
@@ -340,14 +374,16 @@ class CompraForm(ModelForm):
         self.user = kwargs.pop('user', None)
         super(CompraForm, self).__init__(*args,**kwargs)
 
+        self.fields['proveedor'].empty_label = "Selecciona un proveedor"
         self.fields['proveedor'].widget.attrs.update(
-                {'class': 'form-control', 
-                 'placeholder': 'Proveedor'}
+                {'class': 'form-control', }
             )
         self.fields['forma_pago'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'Forma de pago'}
             )
+        
+        self.fields['iva'].empty_label = "Selecciona el tipo de IVA"
         self.fields['iva'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'IVA (%)'}
@@ -358,6 +394,9 @@ class CompraForm(ModelForm):
         self.fields['fecha'].widget.attrs['readonly']=True
 
         self.fields['orden'].widget.attrs['readonly']=True
+        self.fields['orden'].widget.attrs.update(
+                {'class': 'form-control'}
+            )
 
         if hasattr(self.user, 'empresa'):
             self.fields['proveedor'].queryset = Proveedor.objects.filter(empresa=self.user.empresa)
@@ -405,6 +444,7 @@ class DetalleCompraForm(ModelForm):
         
         if ubicar is not None:
             self.fields['producto'].queryset = Producto.objects.filter(ubicacion=ubicar)
+            self.fields['producto'].empty_label = "Selecciona un producto"
             self.fields['producto'].widget.attrs.update(
                 {'class': 'form-control', 
                  'placeholder': 'Producto'}
