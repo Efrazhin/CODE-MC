@@ -20,6 +20,7 @@
                     <th>Email</th>
                     <th>Teléfono</th>
                     <th>Fecha de nacimiento</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,13 @@
                     <td> {{ cliente.email }} </td>
                     <td> {{ cliente.telefono }} </td>
                     <td> {{ cliente.fecha_nacimiento }} </td>
+                    <td>
+                        <form action="{% url 'eliminar_cliente' cliente.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">Eliminar</button>
+                        </form>
+
+                    </td>
                     
                 </tr>
                 {% empty %}
