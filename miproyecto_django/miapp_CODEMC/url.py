@@ -34,7 +34,7 @@ urlpatterns=[
     path("purchases/add-remmitance/del-remmitance",views.cancelar_proceso_venta_compra,name="cancelar_compra"),
     path("purchases/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle_compra"),
     path("purchases/add-remmitance/del-detail/<str:producto_cod>/",views.sacar_detalle,name="eliminar_detalle"),
-    path("purchases/details/<int:remito_id>/",views.obtener_detalles_compra,name="get_detalles_compra"),
+    path("purchases/details/<int:remito_id>",views.obtener_detalles,name="get_detalles"),
 
 
     path("sales/",views.ventas,name="ventas"),
@@ -42,7 +42,7 @@ urlpatterns=[
     path("sales/add-remmitance/del-remmitance",views.cancelar_proceso_venta_compra,name="cancelar_venta"),
     path("sales/add-remmitance/add-detail",views.agregar_detalle,name="agregar_detalle_venta"),
     path("sales/add-remmitance/del-detail/<str:producto_cod>/",views.sacar_detalle,name="eliminar_detalle"),
-    path("sales/details/<int:remito_id>/",views.obtener_detalles_venta,name="get_detalles_venta"),
+    path("sales/details/<int:remito_id>/",views.obtener_detalles,name="get_detalles"),
 
     path("categories/",views.categorias_subcategorias_productos,name="categorias"),
     path('categories/add-category/', views.crear_categoria, name='crear_categoria'),
@@ -55,5 +55,8 @@ urlpatterns=[
     path("crear_sucursal/",views.crear_sucursal, name="crear_sucursal"),
     path('eliminar-almacen/<int:id_almacen>/', views.eliminar_almacen, name='eliminar_almacen'),
     path('eliminar-sucursal/<int:id_sucursal>/', views.eliminar_sucursal, name='eliminar_sucursal'),
+    path('eliminar_empleado/<int:empleado_id>/', views.eliminar_empleado, name='eliminar_empleado'),
+    path('eliminar_cliente/<int:cliente_id>/', views.eliminar_cliente, name='eliminar_cliente'),
+    path('eliminar_proveedor/<int:proveedor_id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
     
 ]
