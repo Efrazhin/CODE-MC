@@ -11,23 +11,23 @@
 
     <!-- Formulario de filtros -->
     <form method="GET" action="{% url 'productos' %}" class="formulario-filtros">
-        <label for="almacen">Filtrar por Almacén:</label>
-        <select name="almacen" id="almacen">
+        <label for="categoria">Filtrar por Categoria:</label>
+        <select name="categoria" id="categoria">
             <option value="">Todos</option>
-            {% for almacen in almacenes %}
-                <option value="{{ almacen.id_almacen }}"
-                    {% if id_almacen == almacen.id_almacen|stringformat:"s" %}selected{% endif %}>
-                    Almacén #{{ almacen.id_almacen }}
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id}}"
+                    {% if categoria.id|stringformat:"s" == categoria_id %}selected{% endif %}>
+                    {{ categoria.nombre }}
                 </option>
             {% endfor %}
         </select>
 
-        <label for="sucursal">Filtrar por Sucursal:</label>
-        <select name="sucursal" id="sucursal">
+        <label for="subcategoria">Filtrar por SubCategoria:</label>
+        <select name="subcategoria" id="subcategoria">
             <option value="">Todas</option>
-            {% for sucursal in sucursales %}
-                <option value="{{ sucursal.id_sucursal }}"
-                    {% if id_sucursal == sucursal.id_sucursal|stringformat:"s" %}selected{% endif %}>
+            {% for subcategoria in subcategorias %}
+                <option value="{{ subcategoria.id }}"
+                    {% if subcategoria.id|stringformat:"s" == subcategoria_id %}selected{% endif %}>
                     Sucursal #{{ sucursal.id_sucursal }}
                 </option>
             {% endfor %}
