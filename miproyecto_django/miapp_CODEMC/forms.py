@@ -463,3 +463,21 @@ class DetallePresupuestoForm(ModelForm):
         model = DetallePresupuesto
         fields = ['producto', 'cantidad', 'descuento', 'importe', 'presupuesto']
 
+class FiltroProductoModelForm(ModelForm):
+    class Meta:
+        model = Categoria
+        fields = []  # No necesitamos ningún campo editable directamente desde el modelo
+
+    subcategoria = ModelChoiceField(
+        queryset=Subcategoria.objects.all(),
+        required=False,
+        label="Subcategoría"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['categoria'] = ModelChoiceField(
+            queryset=Categoria.objects.all(),
+            required=False,
+            label="Categoría"
+        )

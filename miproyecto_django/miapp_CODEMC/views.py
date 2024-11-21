@@ -450,10 +450,28 @@ def agregar_productos(request):
     return render(request, 'miapp_CODEMC/principal/productos.html', {'producto_form':producto_form, 'stock_form':stock_form} )
 
 def productos_view(request):
-    if request.user:
-        ubi = request.user.ubicacion
-    productos = Producto.objects.filter(ubicacion = ubi)  
-    return render(request, 'miapp_CODEMC/principal/lista_productos.html', {'productos': productos})
+    # Obtén los valores directamente desde request.GET
+    categoria_id = request.GET.get('categoria')
+    subcategoria_id = request.GET.get('subcategoria')
+
+    # Filtra productos
+    productos = Producto.objects.all()
+    if categoria_id:
+        productos = productos.filter(categoria_id=categoria_id)
+    if subcategoria_id:
+        productos = productos.filter(subcategoria_id=subcategoria_id)
+
+    # Instancia el formulario para renderizar en el template
+    form = forms.FiltroProductoModelForm(initial={
+        'categoria': categoria_id,
+        'subcategoria': subcategoria_id
+    })
+
+    context = {
+        'productos': productos,
+        'form': form
+    }
+    return render(request, 'miapp_CODEMC/principal/lista_productos.html', context)
 
 def eliminar_producto(request, producto_cod):
     producto = get_object_or_404(Producto, cod_producto=producto_cod)
