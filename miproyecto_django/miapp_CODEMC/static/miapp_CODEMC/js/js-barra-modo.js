@@ -14,20 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebar.classList.remove("close");
     });
 
-    modeswitch.addEventListener("click", () => {
-        const isDarkMode = body.classList.toggle("dark");
-        const theme = isDarkMode ? "dark" : "light";
-        localStorage.setItem("theme", theme);
-        modeText.innerText = isDarkMode ? "light mode" : "dark mode";
-    });
+    // modeswitch.addEventListener("click", () => {
+    //     const isDarkMode = body.classList.toggle("dark");
+    //     const theme = isDarkMode ? "dark" : "light";
+    //     localStorage.setItem("theme", theme);
+    //     modeText.innerText = isDarkMode ? "light mode" : "dark mode";
+    // });
 
-    // Función para cargar el tema del almacenamiento local
-    function loadTheme() {
-        const savedTheme = localStorage.getItem("theme") || "light"; // Valor por defecto
-        body.classList.toggle("dark", savedTheme === "dark");
-        modeText.innerText = savedTheme === "dark" ? "light mode" : "dark mode";
-    }
+    // // Función para cargar el tema del almacenamiento local
+    // function loadTheme() {
+    //     const savedTheme = localStorage.getItem("theme") || "light"; // Valor por defecto
+    //     body.classList.toggle("dark", savedTheme === "dark");
+    //     modeText.innerText = savedTheme === "dark" ? "light mode" : "dark mode";
+    // }
 
-    // Cargar el tema al iniciar
-    window.onload = loadTheme;
+    // // Cargar el tema al iniciar
+    // window.onload = loadTheme;
 });
