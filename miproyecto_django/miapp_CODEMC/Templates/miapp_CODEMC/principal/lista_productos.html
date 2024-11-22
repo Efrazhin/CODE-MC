@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    {% block title %}Productos{% endblock %}
+    <title>Lista de productos</title>
     <link rel="stylesheet" href="{% static 'miapp_CODEMC/css-herencias/style-table.css' %}">
 {% endblock %}
 
@@ -10,89 +10,55 @@
     <h1 class="titulo">Lista de Productos</h1>
 
     <!-- Formulario de filtros -->
+<<<<<<< HEAD
     <form method="GET" action="{% url 'productos' %}" class="formulario-filtros">
-        <label for="almacen">Filtrar por Almacén:</label>
-        <select name="almacen" id="almacen">
+        <label for="categoria">Filtrar por Categoria:</label>
+        <select name="categoria" id="categoria">
             <option value="">Todos</option>
-            {% for almacen in almacenes %}
-                <option value="{{ almacen.id_almacen }}"
-                    {% if id_almacen == almacen.id_almacen|stringformat:"s" %}selected{% endif %}>
-                    Almacén #{{ almacen.id_almacen }}
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id}}"
+                    {% if categoria.id|stringformat:"s" == categoria_id %}selected{% endif %}>
+                    {{ categoria.nombre }}
                 </option>
             {% endfor %}
         </select>
 
-        <label for="sucursal">Filtrar por Sucursal:</label>
-        <select name="sucursal" id="sucursal">
+        <label for="subcategoria">Filtrar por SubCategoria:</label>
+        <select name="subcategoria" id="subcategoria">
             <option value="">Todas</option>
-            {% for sucursal in sucursales %}
-                <option value="{{ sucursal.id_sucursal }}"
-                    {% if id_sucursal == sucursal.id_sucursal|stringformat:"s" %}selected{% endif %}>
+            {% for subcategoria in subcategorias %}
+                <option value="{{ subcategoria.id }}"
+                    {% if subcategoria.id|stringformat:"s" == subcategoria_id %}selected{% endif %}>
                     Sucursal #{{ sucursal.id_sucursal }}
                 </option>
             {% endfor %}
         </select>
 
+=======
+    <form method="GET" action="{% url 'productos' %}">
+        {{ form.as_p }}
+>>>>>>> 6250929788d07a5d46df2d33f9ae94c9e76cdc32
         <button type="submit">Filtrar</button>
     </form>
-
-    {% if productos %}
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Tamaño</th>
-                        <th>Unidad de Medida</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Ubicación</th>
-                        <th>Acciones</th> <!-- Columna para acciones -->
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for producto in productos %}
-                        <tr>
-                            <td>{{ producto.cod_producto }}</td>
-                            <td>{{ producto.nombre }}</td>
-                            <td>{{ producto.descripcion }}</td>
-                            <td>{{ producto.tamaño }}</td>
-                            <td>{{ producto.unidad_medida }}</td>
-                            <td>{{ producto.precio }}</td>
-                            <td>{{ producto.stock.cantidad }}</td>
-                            {% if producto.ubicacion.almacen  %}
-                            <td>Almacén #{{ producto.ubicacion.almacen.nombre }}</td>
-                            {% elif producto.ubicacion.sucursal %}
-                            <td>Sucursal #{{ producto.ubicacion.sucursal.nombre }}</td>
-                            {% endif %}
-                            
-                            <!-- Botón de eliminar producto -->
-                            <td>
-                                <form action="{% url 'eliminar_producto' producto.cod_producto %}" method="post" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <p class="mensaje-vacio">No hay productos disponibles.</p>
-    {% endif %}
-
-    <a href="{% url 'categorias' %}" class="enlace-categorias">Volver a Categorías</a>
-
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    {{ message }}
-                </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Subcategoría</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td>{{ producto.subcategoria.nombre }}</td>
+                </tr>
             {% endfor %}
-        </div>
-    {% endif %}
+        </tbody>
+    </table>
 {% endblock %}
